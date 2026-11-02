@@ -163,13 +163,13 @@ footer a { color: var(--ink-2); }
         <p data-l="en">I am a master's student in Mechatronics, Robotics and Biomechanical Engineering (MRBE) at the <a href="https://www.tum.de/en/" target="_blank" rel="noopener">Technical University of Munich (TUM)</a>. My research focuses on <b>robot learning</b>, in particular <b>learning from cross-embodiment data</b> such as human videos, on <b>human-robot interaction</b>, and on <b>simulation frameworks for robotics</b>, with diffusion policies and vision-language-action (VLA) models. I have worked through the full loop, from deriving an algorithm and validating it in simulation to deploying it on real robots.</p>
         <p data-l="en">I wrote my master's thesis at the <a href="https://www.ce.cit.tum.de/lsy/home/" target="_blank" rel="noopener">Learning Systems and Robotics Lab</a> of <a href="https://scholar.google.com/citations?user=QMfeRz0AAAAJ" target="_blank" rel="noopener">Prof. Angela P. Schoellig</a>, on learning trustworthy human-robot collaboration policies from human-human demonstrations.</p>
         <p data-l="en">Before that, I wrote my semester thesis at the <a href="https://www.ce.cit.tum.de/cps/home/" target="_blank" rel="noopener">Cyber-Physical Systems Group</a> of <a href="https://scholar.google.com/citations?user=E3zazJAAAAAJ" target="_blank" rel="noopener">Prof. Matthias Althoff</a>, where I built CommonRoad-Game, a human-in-the-loop simulation framework for autonomous driving.</p>
-        <p data-l="en">I also worked as a research intern at the Siemens Technology Center in Garching.</p>
-        <p data-l="en">I am currently a working student in the foundation-models team of Agile Robots SE, working on post-training and inference acceleration of VLA models.</p>
+        <p data-l="en">I also worked as a research intern at the <a href="https://www.siemens.com/" target="_blank" rel="noopener">Siemens</a> Technology Center in Garching.</p>
+        <p data-l="en">I am currently a working student in the foundation-models team of <a href="https://www.agile-robots.com/" target="_blank" rel="noopener">Agile Robots SE</a>, working on post-training and inference acceleration of VLA models.</p>
         <p data-l="zh">本科毕业于同济大学汽车学院，现于<a href="https://www.tum.de/en/" target="_blank" rel="noopener">慕尼黑工业大学（TUM）</a>攻读机电、机器人与生物力学工程（MRBE）硕士。研究方向为<b>机器人学习</b>，重点关注<b>跨具身（cross-embodiment）数据学习</b>、<b>人机交互</b>以及<b>机器人仿真框架搭建</b>，技术上以扩散策略（Diffusion Policy）和视觉-语言-动作（VLA）模型为主。熟悉 Python 与 C++ 开发，拥有从算法数学推导、仿真验证到真机落地部署的完整闭环经验。</p>
         <p data-l="zh">硕士论文在 <a href="https://scholar.google.com/citations?user=QMfeRz0AAAAJ" target="_blank" rel="noopener">Angela P. Schoellig 教授</a>的<a href="https://www.ce.cit.tum.de/lsy/home/" target="_blank" rel="noopener">学习系统与机器人实验室（LSY）</a>完成，课题为通过人类-人类操作视频学习可信的人机交互扩散策略。</p>
         <p data-l="zh">此前在 <a href="https://scholar.google.com/citations?user=E3zazJAAAAAJ" target="_blank" rel="noopener">Matthias Althoff 教授</a>的<a href="https://www.ce.cit.tum.de/cps/home/" target="_blank" rel="noopener">信息物理系统实验室（CPS）</a>完成学期论文，开发了人在环自动驾驶仿真框架 CommonRoad-Game。</p>
-        <p data-l="zh">此外，曾在西门子 Garching 研究中心担任研究型实习生。</p>
-        <p data-l="zh">目前在 Agile Robots SE（思灵机器人）机器人基础模型小组实习，从事 VLA 模型的后训练与推理加速。</p>
+        <p data-l="zh">此外，曾在<a href="https://www.siemens.com/" target="_blank" rel="noopener">西门子</a> Garching 研究中心担任研究型实习生。</p>
+        <p data-l="zh">目前在 <a href="https://www.agile-robots.com/" target="_blank" rel="noopener">Agile Robots SE（思灵机器人）</a>机器人基础模型小组实习，从事 VLA 模型的后训练与推理加速。</p>
       </div>
       <div class="links">
         <a href="mailto:yunfei.bi@tum.de"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="3" width="13" height="10" rx="1.5"/><path d="m2 4 6 4.6L14 4"/></svg>yunfei.bi@tum.de</a>
@@ -213,17 +213,17 @@ footer a { color: var(--ink-2); }
         <p class="sub" data-l="zh">一种人类在环的自动驾驶仿真框架</p>
         <p class="authors"><b><span data-l="en">Yunfei Bi</span><span data-l="zh">毕云飞</span></b>, Youran Wang</p>
         <p class="venue"><span data-l="en">arXiv preprint, 2026 · semester thesis at TUM</span><span data-l="zh">arXiv 预印本 · 2026 年 · 第一作者 · 慕尼黑工业大学学期论文</span></p>
-        <p class="desc" data-l="en">A lightweight simulation framework, built into the <a href="https://commonroad.in.tum.de/" target="_blank" rel="noopener">CommonRoad</a> platform, in which human drivers and motion planners act in the same traffic scene, for testing planners in interactive scenarios.</p>
+        <p class="desc" data-l="en">Motion planners should be tested with humans in the loop, yet existing simulators often replay recorded datasets, lack interfaces for real-time human interaction, are only loosely tied to an autonomous-driving ecosystem, or are too heavy for rapid prototyping. CommonRoad-Game is a lightweight human-in-the-loop simulation framework tightly integrated with <a href="https://commonroad.in.tum.de/" target="_blank" rel="noopener">CommonRoad</a>, for testing motion planners with human participants and for analyzing human driving in interactive scenarios.</p>
         <ul class="pts" data-l="en">
-          <li><b>Real-time architecture:</b> a multi-threaded design keeps simulation time bounded to wall-clock time, cutting the drift from 402&nbsp;ms to 1.5&nbsp;ms.</li>
-          <li><b>Human and automated vehicles:</b> both run on one time base; the IDM and the sampling-based reactive planner are integrated and compared.</li>
-          <li><b>Reproducible scenarios:</b> recorded human drives become reproducible traffic scenarios for planner testing.</li>
+          <li><b>Time synchronization:</b> a multi-threaded architecture aligns simulation time with wall-clock time, so autonomous and human-driven vehicles interact deterministically and consistently in time; the drift drops from 402&nbsp;ms to 1.5&nbsp;ms.</li>
+          <li><b>Scenario generation:</b> driving logs recorded during human-in-the-loop experiments become diverse, reproducible test cases.</li>
+          <li><b>Results:</b> stable temporal synchronization, scalable multi-agent simulation, and seamless integration of CommonRoad-compatible motion planners such as IDM and a sampling-based reactive planner.</li>
         </ul>
-        <p class="desc" data-l="zh">基于 <a href="https://commonroad.in.tum.de/" target="_blank" rel="noopener">CommonRoad</a> 平台的轻量级人在环仿真框架，让真人司机与运动规划算法在同一交通场景中交互，用于测试规控算法在交互场景下的表现。</p>
+        <p class="desc" data-l="zh">运动规划算法需要在人在环环境中测试，才能确保交互时行为安全高效；而现有仿真平台大多依赖录制数据集回放，缺少实时人机交互接口，与自动驾驶生态集成度低，或计算开销过大，不适合早期研究的快速原型验证。CommonRoad-Game 是与 <a href="https://commonroad.in.tum.de/" target="_blank" rel="noopener">CommonRoad</a> 平台深度集成的轻量级人在环仿真框架，用于在真人参与下系统测试运动规划器，并分析交互场景中的人类驾驶行为。</p>
         <ul class="pts" data-l="zh">
-          <li><b>实时仿真架构：</b>多线程设计解决仿真时间与物理墙钟的有界同步问题，偏差从 402&nbsp;ms 降至 1.5&nbsp;ms。</li>
-          <li><b>人驾与智驾同步：</b>人驾与智驾车辆在统一时间基准下稳定运行；集成并对比评估 IDM 与 Sampling-based Reactive Planner 等规划算法。</li>
-          <li><b>可复现场景：</b>真人驾驶记录可直接生成可复现的复杂交通场景，为规控算法验证提供稳定的测试基建。</li>
+          <li><b>时间同步：</b>多线程架构配合同步机制，使仿真时间与物理墙钟对齐，智驾车辆与人驾车辆的交互确定且时序一致，偏差从 402&nbsp;ms 降至 1.5&nbsp;ms。</li>
+          <li><b>场景生成：</b>记录人在环实验中的驾驶日志，构建多样且可复现的测试用例。</li>
+          <li><b>实验结果：</b>时间同步稳定，支持可扩展的多智能体仿真，并能无缝接入 IDM、基于采样的反应式规划器等兼容 CommonRoad 的运动规划器。</li>
         </ul>
         <div class="btns"><a href="https://arxiv.org/abs/2607.01382" target="_blank" rel="noopener">arXiv</a><a href="https://github.com/Yunfei-Bi8/CommonRoad-Game" target="_blank" rel="noopener"><span data-l="en">Code</span><span data-l="zh">代码</span></a></div>
       </div>
@@ -237,7 +237,7 @@ footer a { color: var(--ink-2); }
         <p class="when"><span data-l="en">05/2026 – present</span><span data-l="zh">2026.05 – 至今</span></p>
         <div class="what">
           <h3><span data-l="en">Working Student, Foundation Models for Robotics</span><span data-l="zh">机器人基础模型小组 · 实习生</span></h3>
-          <p class="org"><span data-l="en">Agile Robots SE, Munich</span><span data-l="zh">Agile Robots SE（思灵机器人），慕尼黑</span></p>
+          <p class="org"><span data-l="en"><a href="https://www.agile-robots.com/" target="_blank" rel="noopener">Agile Robots SE</a>, Munich</span><span data-l="zh"><a href="https://www.agile-robots.com/" target="_blank" rel="noopener">Agile Robots SE（思灵机器人）</a>，慕尼黑</span></p>
           <ul data-l="en">
             <li><b>VLA post-training:</b> built a simulation evaluation pipeline covering LIBERO, LIBERO-Plus, CALVIN and MetaWorld, and fine-tuned π0.5 and GR00T N1.7; π0.5 reached 84&nbsp;% average success on LIBERO-Plus.</li>
             <li><b>Inference acceleration:</b> traced the latency of the in-house VLA model to kernel-launch overhead in the action expert; capturing and replaying it with CUDA Graphs cut the latency to 27&nbsp;% of the original (about 3.7× faster) and removed the first-call torch.compile overhead.</li>
@@ -263,7 +263,7 @@ footer a { color: var(--ink-2); }
         <p class="when"><span data-l="en">08/2025 – 11/2025</span><span data-l="zh">2025.08 – 2025.11</span></p>
         <div class="what">
           <h3><span data-l="en">Research Intern: Lyapunov-Based Formation Control of Mobile Robots</span><span data-l="zh">研究型实习生 · 基于李雅普诺夫方法的移动机器人编队控制</span></h3>
-          <p class="org"><span data-l="en">Siemens AG, Garching</span><span data-l="zh">西门子 Garching 研究中心 · 无人系统与控制小组</span></p>
+          <p class="org"><span data-l="en"><a href="https://www.siemens.com/" target="_blank" rel="noopener">Siemens AG</a>, Technology Center Garching</span><span data-l="zh"><a href="https://www.siemens.com/" target="_blank" rel="noopener">西门子</a> Garching 研究中心 · 无人系统与控制小组</span></p>
           <ul data-l="en">
             <li>Designed a Lyapunov-based formation control algorithm for mobile robots with communication delays, derived its stability and validated it in simulation.</li>
             <li>Ported it to C++ on the real robots with an MQTT-based distributed communication architecture, and containerised algorithm and runtime with Docker for deployment on the robot platform.</li>
