@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="zh-CN" data-lang="zh" data-default="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>毕云飞 · 个人主页</title>
+<meta name="description" content="毕云飞的个人主页：慕尼黑工业大学机器人方向硕士在读，研究扩散策略与 VLA 模型、人机协作和自动驾驶仿真。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=JetBrains+Mono:wght@500;600&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+<style>
+/* Layout: one 880px column in the order of Oliver's page (about, research, then the rest); research entries put a
+   looping clip on the left and the text on the right, timelines put the dates in a mono column. */
+:root {
+  --bg: #ffffff;
+  --panel: #f4f6f9;
+  --ink: #111622;
+  --ink-2: #434c5b;
+  --ink-3: #6c7586;
+  --line: #e1e5ec;
+  --accent: #2e62e8;
+  --accent-wash: #e9effd;
+  --font: "Archivo", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #0e1218; --panel: #151b24; --ink: #e9edf3; --ink-2: #b6bfcd; --ink-3: #8b95a6; --line: #253041; --accent: #6b93ff; --accent-wash: #18233b; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --bg: #0e1218; --panel: #151b24; --ink: #e9edf3; --ink-2: #b6bfcd; --ink-3: #8b95a6; --line: #253041; --accent: #6b93ff; --accent-wash: #18233b; color-scheme: dark; }
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 1.0625rem; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+img, video { max-width: 100%; }
+[hidden] { display: none !important; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+h1, h2, h3, p, ul { margin: 0; }
+html:not([data-lang]) [data-l="zh"], html[data-lang="en"] [data-l="zh"], html[data-lang="zh"] [data-l="en"] { display: none !important; }
+
+.wrap { max-width: 880px; margin-inline: auto; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+
+/* top bar */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px 20px; padding-block: 12px; flex-wrap: wrap; }
+.brand { font-weight: 750; font-stretch: 92%; font-size: 1.2rem; color: var(--ink); letter-spacing: -.01em; }
+.brand:hover { text-decoration: none; }
+nav { display: flex; align-items: center; gap: 4px 18px; flex-wrap: wrap; font-size: .96rem; font-weight: 600; }
+nav a { color: var(--ink-2); }
+nav a:hover { color: var(--ink); text-decoration: none; }
+.lang { appearance: none; border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 999px; padding: 4px 12px; font: inherit; font-size: .88rem; font-weight: 650; cursor: pointer; }
+.lang:hover { border-color: var(--ink-3); }
+
+/* about */
+.about { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 34px; align-items: start; padding-block: 48px 8px; }
+@media (max-width: 680px) { .about { grid-template-columns: 1fr; gap: 20px; padding-top: 32px; } .about .portrait { width: 150px; } }
+.portrait { width: 190px; height: auto; aspect-ratio: 1; border-radius: 16px; object-fit: cover; display: block; border: 1px solid var(--line); background: #fff; }
+.about h1 { font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.3rem); font-weight: 760; font-stretch: 92%; line-height: 1.1; letter-spacing: -.012em; }
+.about .role { margin-top: 8px; font-family: var(--mono); font-size: .8rem; font-weight: 500; letter-spacing: .04em; color: var(--ink-3); }
+.about .bio { margin-top: 16px; display: grid; gap: 12px; color: var(--ink-2); }
+.links { display: flex; flex-wrap: wrap; gap: 8px 10px; margin-top: 18px; }
+.links a { display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--line); border-radius: 999px; padding: 5px 13px; color: var(--ink); font-size: .9rem; font-weight: 600; }
+.links a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+.links svg { width: 15px; height: 15px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+/* sections */
+section { padding-block: 48px 0; scroll-margin-top: 70px; }
+h2 { font-size: 1.35rem; font-weight: 740; font-stretch: 92%; letter-spacing: -.005em; padding-bottom: 10px; border-bottom: 1px solid var(--line); margin-bottom: 22px; }
+
+/* research entries */
+.pub { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 24px; align-items: start; }
+.pub + .pub { margin-top: 30px; }
+@media (max-width: 680px) { .pub { grid-template-columns: 1fr; gap: 12px; } }
+.thumb { position: relative; aspect-ratio: 4 / 3; border-radius: 10px; overflow: hidden; background: #0c0f15; border: 1px solid var(--line); }
+.thumb video, .thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.pub h3 { font-size: 1.08rem; font-weight: 700; font-stretch: 95%; line-height: 1.3; }
+.pub h3 a { color: var(--ink); }
+.pub h3 a:hover { color: var(--accent); }
+.authors { margin-top: 5px; font-size: .95rem; color: var(--ink-2); }
+.authors b { color: var(--ink); }
+.venue { margin-top: 2px; font-size: .92rem; font-style: italic; color: var(--ink-3); }
+.desc { margin-top: 8px; font-size: .96rem; color: var(--ink-2); }
+.btns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 11px; }
+.btns a { font-family: var(--mono); font-size: .76rem; font-weight: 600; letter-spacing: .02em; padding: 4px 10px; border-radius: 6px; background: var(--accent-wash); color: var(--accent); }
+.btns a:hover { background: var(--accent); color: #fff; text-decoration: none; }
+
+/* timelines */
+.tl { display: grid; gap: 24px; }
+.item { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 4px 22px; }
+@media (max-width: 680px) { .item { grid-template-columns: 1fr; } }
+.when { font-family: var(--mono); font-size: .8rem; font-weight: 500; color: var(--ink-3); padding-top: 3px; white-space: nowrap; }
+.what h3 { font-size: 1.05rem; font-weight: 700; font-stretch: 95%; line-height: 1.3; }
+.org { font-size: .95rem; color: var(--ink-2); margin-top: 2px; }
+.what ul { margin-top: 8px; padding-left: 1.1em; display: grid; gap: 5px; color: var(--ink-2); font-size: .96rem; }
+.what li::marker { color: var(--ink-3); }
+.what li b { color: var(--ink); font-weight: 650; }
+.note { margin-top: 6px; font-size: .95rem; color: var(--ink-2); }
+.ppl { margin-top: 3px; font-size: .92rem; color: var(--ink-3); }
+footer .credit { flex-basis: 100%; }
+
+/* skills */
+.skills { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 10px 22px; margin: 0; }
+@media (max-width: 680px) { .skills { grid-template-columns: 1fr; gap: 2px 0; } .skills dd { margin-bottom: 10px; } }
+.skills dt { font-family: var(--mono); font-size: .8rem; font-weight: 500; color: var(--ink-3); padding-top: 3px; }
+.skills dd { margin: 0; color: var(--ink-2); }
+
+footer { margin-top: 64px; border-top: 1px solid var(--line); padding-block: 22px 36px; font-size: .9rem; color: var(--ink-3); }
+footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 20px; }
+footer a { color: var(--ink-2); }
+
+/* interests */
+.hobby { display: flex; gap: 12px; align-items: flex-start; color: var(--ink-2); }
+.hobby svg { width: 24px; height: 24px; flex: none; margin-top: 1px; fill: none; stroke: #e57a12; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+/* awards and campus activities, in the spirit of the Misc section of Oliver's page */
+.misc { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+@media (max-width: 760px) { .misc { grid-template-columns: 1fr; } }
+.misc-col { border: 1px solid var(--line); border-radius: 12px; padding: 18px 18px 16px; background: var(--panel); min-width: 0; }
+.misc-h { display: flex; align-items: center; gap: 10px; font-size: 1.02rem; font-weight: 700; font-stretch: 95%; margin-bottom: 12px; }
+.misc-h svg { width: 22px; height: 22px; flex: none; fill: none; stroke: var(--accent); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.misc-list { list-style: none; padding: 0; display: grid; gap: 12px; }
+.misc-list li { display: grid; gap: 2px; }
+.misc-list b { font-weight: 650; font-size: .97rem; line-height: 1.35; color: var(--ink); }
+.misc-list li > span { font-size: .9rem; color: var(--ink-2); line-height: 1.45; }
+.pub .sub { margin-top: 3px; font-size: .95rem; color: var(--ink-2); }
+</style>
+<link rel="alternate" hreflang="en" href="https://yunfei-bi8.github.io/">
+<link rel="alternate" hreflang="zh-CN" href="https://yunfei-bi8.github.io/zh/">
+<meta property="og:title" content="Yunfei Bi">
+<meta property="og:image" content="https://yunfei-bi8.github.io/static/media/portrait.jpg">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#about"><span data-l="en">Yunfei Bi</span><span data-l="zh">毕云飞</span></a>
+    <nav aria-label="Sections">
+      <a href="#about"><span data-l="en">About</span><span data-l="zh">简介</span></a>
+      <a href="#research"><span data-l="en">Research</span><span data-l="zh">研究成果</span></a>
+      <a href="#experience"><span data-l="en">Experience</span><span data-l="zh">经历</span></a>
+      <a href="#education"><span data-l="en">Education</span><span data-l="zh">教育背景</span></a>
+      <a href="#awards"><span data-l="en">Awards</span><span data-l="zh">荣誉与校园</span></a>
+      <a href="#skills"><span data-l="en">Skills</span><span data-l="zh">专业技能</span></a>
+      <a href="#interests"><span data-l="en">Interests</span><span data-l="zh">兴趣爱好</span></a>
+      <button class="lang" type="button" id="lang-btn" aria-label="Switch language"><span data-l="en">中文</span><span data-l="zh">English</span></button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="about" id="about">
+    <img class="portrait" src="../static/media/portrait.jpg" alt="Portrait of Yunfei Bi" width="520" height="520">
+    <div>
+      <h1><span data-l="en">Hi, I'm Yunfei Bi</span><span data-l="zh">你好，我是毕云飞</span></h1>
+      <p class="role"><span data-l="en">M.Sc. student · Technical University of Munich</span><span data-l="zh">慕尼黑工业大学 · 硕士在读</span></p>
+      <div class="bio">
+        <p data-l="en">After a B.Sc. in Vehicle Engineering at Tongji University, I am now a master's student in Mechatronics, Robotics and Biomechanical Engineering at the <a href="https://www.tum.de/en/" target="_blank" rel="noopener">Technical University of Munich (TUM)</a>. My research is on robot learning, in particular on learning from cross-embodiment data such as human videos and on human-robot interaction, with diffusion policies and vision-language-action (VLA) models. I have worked through the full loop, from deriving an algorithm and validating it in simulation to deploying it on real robots.</p>
+        <p data-l="en">For my master's thesis at the <a href="https://www.ce.cit.tum.de/lsy/home/" target="_blank" rel="noopener">Learning Systems and Robotics Lab</a> of <a href="https://scholar.google.com/citations?user=QMfeRz0AAAAJ" target="_blank" rel="noopener">Prof. Angela P. Schoellig</a>, supervised by <a href="http://oliver.hausdoerfer.de/" target="_blank" rel="noopener">Oliver Hausdörfer, M.Sc.</a> and <a href="https://scholar.google.com/citations?user=LM0X-vQAAAAJ&amp;hl=en" target="_blank" rel="noopener">Niklas Schlüter, M.Sc.</a>, I taught a robot arm to collaborate with people from videos of two people, with a safety layer that stops motions its gripper cannot perform. Before that, I wrote my semester thesis at the <a href="https://www.ce.cit.tum.de/cps/home/" target="_blank" rel="noopener">Cyber-Physical Systems Group</a> of <a href="https://scholar.google.com/citations?user=E3zazJAAAAAJ" target="_blank" rel="noopener">Prof. Matthias Althoff</a>, supervised by <a href="https://scholar.google.com/citations?user=-t6RqycAAAAJ&amp;hl=en" target="_blank" rel="noopener">Youran Wang, M.Sc.</a>, where I built CommonRoad-Game, a human-in-the-loop driving simulator released as a first-author arXiv preprint. I am currently a working student in the foundation-models team of Agile Robots SE, working on post-training and inference acceleration of VLA models.</p>
+        <p data-l="zh">本科毕业于同济大学汽车学院，现于<a href="https://www.tum.de/en/" target="_blank" rel="noopener">慕尼黑工业大学（TUM）</a>攻读机电、机器人与生物力学工程硕士。研究方向为机器人学习，重点关注跨具身（cross-embodiment）数据学习与人机交互，技术上以扩散策略（Diffusion Policy）和视觉-语言-动作（VLA）模型为主。熟悉 Python 与 C++ 开发，拥有从算法数学推导、仿真验证到真机落地部署的完整闭环经验。</p>
+        <p data-l="zh">硕士论文在 <a href="https://scholar.google.com/citations?user=QMfeRz0AAAAJ" target="_blank" rel="noopener">Angela P. Schoellig 教授</a>的<a href="https://www.ce.cit.tum.de/lsy/home/" target="_blank" rel="noopener">学习系统与机器人实验室（LSY）</a>完成，导师为 <a href="http://oliver.hausdoerfer.de/" target="_blank" rel="noopener">Oliver Hausdörfer, M.Sc.</a> 和 <a href="https://scholar.google.com/citations?user=LM0X-vQAAAAJ&amp;hl=en" target="_blank" rel="noopener">Niklas Schlüter, M.Sc.</a>，课题为通过人类-人类操作视频学习可信的人机交互扩散策略。此前在 <a href="https://scholar.google.com/citations?user=E3zazJAAAAAJ" target="_blank" rel="noopener">Matthias Althoff 教授</a>的<a href="https://www.ce.cit.tum.de/cps/home/" target="_blank" rel="noopener">信息物理系统实验室（CPS）</a>完成学期论文，导师为 <a href="https://scholar.google.com/citations?user=-t6RqycAAAAJ&amp;hl=en" target="_blank" rel="noopener">Youran Wang, M.Sc.</a>，开发了人在环自动驾驶仿真框架 CommonRoad-Game，并以第一作者发表 arXiv 预印本。目前在 Agile Robots SE（思灵机器人）机器人基础模型小组实习，从事 VLA 模型的后训练与推理加速。</p>
+      </div>
+      <div class="links">
+        <a href="mailto:yunfei.bi@tum.de"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="3" width="13" height="10" rx="1.5"/><path d="m2 4 6 4.6L14 4"/></svg>yunfei.bi@tum.de</a>
+        <a href="mailto:bi_yunfei1999@163.com"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="3" width="13" height="10" rx="1.5"/><path d="m2 4 6 4.6L14 4"/></svg>bi_yunfei1999@163.com</a>
+        <a href="https://github.com/Yunfei-Bi8" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 4 1.8 8l3.7 4M10.5 4l3.7 4-3.7 4"/></svg>GitHub</a>
+        <a href="https://yunfei-bi8.github.io/Trustworthy-HRC-from-Human-human-videos/" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 4.5h11v8h-11z M6.5 7l3 1.5-3 1.5z"/></svg><span data-l="en">Thesis project page</span><span data-l="zh">硕士论文项目主页</span></a>
+      </div>
+    </div>
+  </div>
+
+  <section id="research" aria-labelledby="h-research">
+    <h2 id="h-research"><span data-l="en">Research</span><span data-l="zh">研究成果</span></h2>
+
+    <article class="pub">
+      <div class="thumb"><video data-src="../static/media/thesis_hrc.mp4" poster="../static/media/thesis_hrc.jpg" muted loop playsinline preload="none" aria-label="UR10e robot arm collaborating with a person"></video></div>
+      <div>
+        <h3><a href="https://yunfei-bi8.github.io/Trustworthy-HRC-from-Human-human-videos/" target="_blank" rel="noopener">Learning Trustworthy Human-Robot Collaboration Policies from Human-Human Demonstrations</a></h3>
+        <p class="sub" data-l="zh">通过人类-人类操作视频学习可信的人机交互扩散策略</p>
+        <p class="authors"><b><span data-l="en">Yunfei Bi</span><span data-l="zh">毕云飞</span></b></p>
+        <p class="venue"><span data-l="en">Master's thesis, TUM, 2026 · paper to be submitted to IEEE RA-L</span><span data-l="zh">硕士论文 · 慕尼黑工业大学 · 2026 年，论文拟投稿 IEEE RA-L</span></p>
+        <p class="desc" data-l="en">A UR10e robot learns handovers and jar opening from markerless RGB videos of two people, including roles with no robot demonstration at all (zero-shot). An embodiment-feasibility safety layer, which measures feasibility in diffusion noise steps, stops motions the gripper cannot perform: 18/20 successful runs against 5/20 for a robot-only policy, and 19/20 infeasible motions stopped before contact.</p>
+        <p class="desc" data-l="zh">基于 ROS&nbsp;2 搭建 UR10e 遥操作系统，打通采集-训练-部署全流程；通过三维重建提取人手骨骼轨迹，与少量遥操作数据映射到统一动作空间协同训练扩散策略，并通过角色互换实现无机器人示范角色的零样本（zero-shot）学习；设计任务无关的动作块可行性度量，构建部署期安全层，无需人工标注即可对输出动作做可行性打分。真机实验中任务成功率 18/20（纯机器人示范基线为 5/20），不可行动作在接触前被拦截 19/20 次。</p>
+        <div class="btns"><a href="https://yunfei-bi8.github.io/Trustworthy-HRC-from-Human-human-videos/" target="_blank" rel="noopener"><span data-l="en">Project page</span><span data-l="zh">项目主页</span></a></div>
+      </div>
+    </article>
+
+    <article class="pub">
+      <div class="thumb"><video data-src="../static/media/commonroad_game.mp4" poster="../static/media/commonroad_game.jpg" muted loop playsinline preload="none" aria-label="CommonRoad-Game driving simulation with an autonomous and a human-driven vehicle"></video></div>
+      <div>
+        <h3><a href="https://arxiv.org/abs/2607.01382" target="_blank" rel="noopener">CommonRoad-Game: A Human-in-the-Loop Simulation Framework for Autonomous Driving</a></h3>
+        <p class="sub" data-l="zh">一种人类在环的自动驾驶仿真框架</p>
+        <p class="authors"><b><span data-l="en">Yunfei Bi</span><span data-l="zh">毕云飞</span></b>, Youran Wang</p>
+        <p class="venue"><span data-l="en">arXiv preprint, 2026 · semester thesis at TUM</span><span data-l="zh">arXiv 预印本 · 2026 年 · 第一作者 · 慕尼黑工业大学学期论文</span></p>
+        <p class="desc" data-l="en">A lightweight human-in-the-loop driving simulator built into the <a href="https://commonroad.in.tum.de/" target="_blank" rel="noopener">CommonRoad</a> platform, for testing motion planners against human drivers. Its multi-threaded real-time architecture cuts the drift between simulation time and wall-clock time from 402&nbsp;ms to 1.5&nbsp;ms. IDM and sampling-based planners are integrated, and recorded drives become reproducible test scenarios.</p>
+        <p class="desc" data-l="zh">基于 <a href="https://commonroad.in.tum.de/" target="_blank" rel="noopener">CommonRoad</a> 平台，主导设计并实现基于 Python 的人在环自动驾驶仿真系统：构建多线程实时仿真架构，解决仿真时间与物理墙钟的有界同步问题（偏差从 402&nbsp;ms 降至 1.5&nbsp;ms）；设计人驾与智驾车辆的同步机制，保证多模块在统一时间基准下稳定运行；集成并对比评估 IDM 与 Sampling-based Reactive Planner 等规划算法，支持可复现的复杂交通场景生成，为规控算法验证提供稳定的测试基建。</p>
+        <div class="btns"><a href="https://arxiv.org/abs/2607.01382" target="_blank" rel="noopener">arXiv</a><a href="https://github.com/Yunfei-Bi8/CommonRoad-Game" target="_blank" rel="noopener"><span data-l="en">Code</span><span data-l="zh">代码</span></a></div>
+      </div>
+    </article>
+  </section>
+
+  <section id="experience" aria-labelledby="h-exp">
+    <h2 id="h-exp"><span data-l="en">Experience</span><span data-l="zh">项目与实习经历</span></h2>
+    <div class="tl">
+      <div class="item">
+        <p class="when"><span data-l="en">05/2026 – present</span><span data-l="zh">2026.05 – 至今</span></p>
+        <div class="what">
+          <h3><span data-l="en">Working Student, Foundation Models for Robotics</span><span data-l="zh">机器人基础模型小组 · 实习生</span></h3>
+          <p class="org"><span data-l="en">Agile Robots SE, Munich</span><span data-l="zh">Agile Robots SE（思灵机器人），慕尼黑</span></p>
+          <ul data-l="en">
+            <li><b>VLA post-training:</b> built a simulation evaluation pipeline covering LIBERO, LIBERO-Plus, CALVIN and MetaWorld, and fine-tuned π0.5 and GR00T N1.7; π0.5 reached 84&nbsp;% average success on LIBERO-Plus.</li>
+            <li><b>Inference acceleration:</b> traced the latency of the in-house VLA model to kernel-launch overhead in the action expert; capturing and replaying it with CUDA Graphs cut the latency to 27&nbsp;% of the original (about 3.7× faster) and removed the first-call torch.compile overhead.</li>
+            <li><b>Model development:</b> replaced cross-layer KV sharing in the action expert with per-layer K/V computation to increase model capacity, reproduced the existing ablations and evaluated on RoboTwin.</li>
+          </ul>
+          <ul data-l="zh">
+            <li><b>模型后训练：</b>搭建覆盖 LIBERO / LIBERO-Plus / CALVIN / MetaWorld 的 VLA 仿真评测流水线，完成 π0.5、GR00T N1.7 微调，π0.5 在 LIBERO-Plus 上平均成功率达 84%。</li>
+            <li><b>推理加速：</b>定位自研 VLA 模型的推理瓶颈在于 Action Expert 的 kernel launch 开销，通过 CUDA Graph 捕获与重放将推理时延降至原版的 27%（约 3.7× 加速），并消除 torch.compile 的首次编译开销。</li>
+            <li><b>模型特征开发：</b>将 Action Expert 的跨层 KV 共享改为逐层独立计算 K/V 以提升模型容量，复现既有消融实验并在 RoboTwin 上评测。</li>
+          </ul>
+        </div>
+      </div>
+      <div class="item">
+        <p class="when"><span data-l="en">03/2026 – present</span><span data-l="zh">2026.03 – 至今</span></p>
+        <div class="what">
+          <h3><span data-l="en">Master's Thesis</span><span data-l="zh">硕士论文 · 通过人类-人类操作视频学习可信的人机交互扩散策略</span></h3>
+          <p class="org"><span data-l="en"><a href="https://www.ce.cit.tum.de/lsy/home/" target="_blank" rel="noopener">Learning Systems and Robotics Lab (LSY)</a>, TUM, Munich</span><span data-l="zh"><a href="https://www.ce.cit.tum.de/lsy/home/" target="_blank" rel="noopener">学习系统与机器人实验室（LSY）</a>，慕尼黑工业大学</span></p>
+          <p class="ppl"><span data-l="en">Supervisors: <a href="http://oliver.hausdoerfer.de/" target="_blank" rel="noopener">Oliver Hausdörfer, M.Sc.</a>, <a href="https://scholar.google.com/citations?user=LM0X-vQAAAAJ&amp;hl=en" target="_blank" rel="noopener">Niklas Schlüter, M.Sc.</a> · Examiner: <a href="https://scholar.google.com/citations?user=QMfeRz0AAAAJ" target="_blank" rel="noopener">Prof. Angela P. Schoellig</a></span><span data-l="zh">导师：<a href="http://oliver.hausdoerfer.de/" target="_blank" rel="noopener">Oliver Hausdörfer, M.Sc.</a>、<a href="https://scholar.google.com/citations?user=LM0X-vQAAAAJ&amp;hl=en" target="_blank" rel="noopener">Niklas Schlüter, M.Sc.</a> ｜ 考官：<a href="https://scholar.google.com/citations?user=QMfeRz0AAAAJ" target="_blank" rel="noopener">Angela P. Schoellig 教授</a></span></p>
+          <p class="note"><span data-l="en">Human-robot collaboration policies learned from human-human videos, with an embodiment-feasibility safety layer; see <a href="#research">Research</a>.</span><span data-l="zh">跨具身数据协同训练人机协作扩散策略，并提出本体可行性安全层，详见上方<a href="#research">“研究成果”</a>。</span></p>
+        </div>
+      </div>
+      <div class="item">
+        <p class="when"><span data-l="en">08/2025 – 11/2025</span><span data-l="zh">2025.08 – 2025.11</span></p>
+        <div class="what">
+          <h3><span data-l="en">Research Intern: Lyapunov-Based Formation Control of Mobile Robots</span><span data-l="zh">研究型实习生 · 基于李雅普诺夫方法的移动机器人编队控制</span></h3>
+          <p class="org"><span data-l="en">Siemens AG, Garching</span><span data-l="zh">西门子 Garching 研究中心 · 无人系统与控制小组</span></p>
+          <ul data-l="en">
+            <li>Designed a Lyapunov-based formation control algorithm for mobile robots with communication delays, derived its stability and validated it in simulation.</li>
+            <li>Ported it to C++ on the real robots with an MQTT-based distributed communication architecture, and containerised algorithm and runtime with Docker for deployment on the robot platform.</li>
+            <li>Under communication delay and noise, the steady-state tracking error stayed within about 0.02&nbsp;m.</li>
+          </ul>
+          <ul data-l="zh">
+            <li>基于李雅普诺夫方法设计考虑通信延迟的移动机器人编队控制算法，完成稳定性推导并在 MATLAB/Simulink 中仿真验证。</li>
+            <li>用 C++ 完成真机移植，搭建基于 MQTT 的分布式通信架构；以 Docker 容器化封装算法与运行环境，解决依赖问题并完成移动机器人平台部署。</li>
+            <li>在含通信延迟与噪声的条件下，系统稳态追踪误差控制在约 0.02&nbsp;m 以内。</li>
+          </ul>
+        </div>
+      </div>
+      <div class="item">
+        <p class="when"><span data-l="en">07/2025 – 02/2026</span><span data-l="zh">2025.07 – 2026.02</span></p>
+        <div class="what">
+          <h3><span data-l="en">Semester Thesis: CommonRoad-Game</span><span data-l="zh">学期论文 · CommonRoad-Game：一种人类在环的自动驾驶仿真框架</span></h3>
+          <p class="org"><span data-l="en"><a href="https://www.ce.cit.tum.de/cps/home/" target="_blank" rel="noopener">Cyber-Physical Systems Group</a> (Informatics 6), TUM, Munich</span><span data-l="zh"><a href="https://www.ce.cit.tum.de/cps/home/" target="_blank" rel="noopener">信息物理系统实验室（Cyber-Physical Systems Group）</a>，慕尼黑工业大学</span></p>
+          <p class="ppl"><span data-l="en">Supervisor: <a href="https://scholar.google.com/citations?user=-t6RqycAAAAJ&amp;hl=en" target="_blank" rel="noopener">Youran Wang, M.Sc.</a> · Examiner: <a href="https://scholar.google.com/citations?user=E3zazJAAAAAJ" target="_blank" rel="noopener">Prof. Matthias Althoff</a></span><span data-l="zh">导师：<a href="https://scholar.google.com/citations?user=-t6RqycAAAAJ&amp;hl=en" target="_blank" rel="noopener">Youran Wang, M.Sc.</a> ｜ 考官：<a href="https://scholar.google.com/citations?user=E3zazJAAAAAJ" target="_blank" rel="noopener">Matthias Althoff 教授</a></span></p>
+          <p class="note"><span data-l="en">Human-in-the-loop driving simulator, first-author arXiv preprint; see <a href="#research">Research</a>.</span><span data-l="zh">人在环自动驾驶仿真系统，以第一作者发表 arXiv 预印本，详见上方<a href="#research">“研究成果”</a>。</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="education" aria-labelledby="h-edu">
+    <h2 id="h-edu"><span data-l="en">Education</span><span data-l="zh">教育背景</span></h2>
+    <div class="tl">
+      <div class="item">
+        <p class="when"><span data-l="en">04/2024 – present</span><span data-l="zh">2024.04 – 至今</span></p>
+        <div class="what">
+          <h3><span data-l="en">M.Sc. Mechatronics, Robotics and Biomechanical Engineering</span><span data-l="zh">慕尼黑工业大学 · 硕士</span></h3>
+          <p class="org"><span data-l="en">Technical University of Munich, Germany</span><span data-l="zh">机电、机器人与生物力学工程</span></p>
+          <p class="note"><span data-l="en">Grade 1.4 (94/100)</span><span data-l="zh">绩点 1.4/1.0（94/100）</span></p>
+        </div>
+      </div>
+      <div class="item">
+        <p class="when"><span data-l="en">09/2018 – 07/2023</span><span data-l="zh">2018.09 – 2023.07</span></p>
+        <div class="what">
+          <h3><span data-l="en">B.Sc. Vehicle Engineering (five-year program)</span><span data-l="zh">同济大学 · 学士</span></h3>
+          <p class="org"><span data-l="en">Tongji University, Shanghai, China</span><span data-l="zh">车辆工程（五年制），汽车学院</span></p>
+          <p class="note"><span data-l="en">Grade 4.35/5.0 (88/95)</span><span data-l="zh">绩点 4.35/5.0（88/95）</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="awards" aria-labelledby="h-awards">
+    <h2 id="h-awards"><span data-l="en">Awards &amp; Activities</span><span data-l="zh">荣誉奖项与校园经历</span></h2>
+    <div class="misc">
+      <div class="misc-col">
+        <h3 class="misc-h"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10v4a5 5 0 0 1-10 0z M7 6H4.5a2.5 2.5 0 0 0 2.6 3.7 M17 6h2.5a2.5 2.5 0 0 1-2.6 3.7 M12 13v4 M8.5 20h7 M9.5 17h5"/></svg><span data-l="en">Honors &amp; Awards</span><span data-l="zh">荣誉奖项</span></h3>
+        <ul class="misc-list">
+          <li><b><span data-l="en">Nominated for TUM: Junge Akademie, class of 2027</span><span data-l="zh">慕尼黑工业大学 2027 届 Junge Akademie 奖项提名</span></b><span><span data-l="en">Technical University of Munich · top 5&nbsp;% of the year by grades</span><span data-l="zh">年度成绩排名前 5%</span></span></li>
+          <li><b><span data-l="en">University Scholarship</span><span data-l="zh">同济大学校级奖学金</span></b><span><span data-l="en">Tongji University</span><span data-l="zh">同济大学</span></span></li>
+          <li><b><span data-l="en">Third Prize (university level), Challenge Cup Science and Technology Competition</span><span data-l="zh">同济大学“挑战杯”科创竞赛校级三等奖</span></b><span><span data-l="en">Tongji University</span><span data-l="zh">同济大学</span></span></li>
+        </ul>
+      </div>
+      <div class="misc-col">
+        <h3 class="misc-h"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0 M16 5.2a3 3 0 0 1 0 5.6 M17.5 13.5A5.5 5.5 0 0 1 20.5 19"/></svg><span data-l="en">Campus &amp; Activities</span><span data-l="zh">校园经历</span></h3>
+        <ul class="misc-list">
+          <li><b><span data-l="en">Teaching Assistant, Advanced Robot Learning and Decision Making</span><span data-l="zh">《Advanced Robot Learning and Decision Making》课程助教</span></b><span><span data-l="en">TUM · designed the Python programming assignments, answered questions on them and guided students through the lab tasks</span><span data-l="zh">慕尼黑工业大学 · 负责课程 Python 编程作业的设计与答疑，指导学生完成相关实验任务</span></span></li>
+          <li><b><span data-l="en">BOE Overseas Campus Ambassador (Germany)</span><span data-l="zh">京东方（BOE）海外校园大使（德国区）</span></b><span><span data-l="en">Promoted BOE at TUM and other leading technical universities, and helped plan and run online and on-site recruiting events abroad</span><span data-l="zh">负责京东方在慕尼黑工业大学（TUM）等顶尖理工高校的品牌推广，协助策划并执行海外线上/线下招聘活动</span></span></li>
+          <li><b><span data-l="en">Outstanding Volunteer, World Artificial Intelligence Conference (WAIC), Shanghai</span><span data-l="zh">世界人工智能大会（上海）优秀志愿者</span></b><span><span data-l="en">Took the meeting minutes</span><span data-l="zh">负责整理会议纪要</span></span></li>
+          <li><b><span data-l="en">Vice Head, Vehicle Management Department, Innovation Base of the School of Automotive Studies</span><span data-l="zh">同济大学汽车学院创新基地车管部副部长</span></b><span><span data-l="en">Tongji University · coordinated and managed the student racing team</span><span data-l="zh">负责学院大学生赛车队的协调与管理工作</span></span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" aria-labelledby="h-skills">
+    <h2 id="h-skills"><span data-l="en">Skills</span><span data-l="zh">专业技能</span></h2>
+    <dl class="skills">
+      <dt><span data-l="en">Programming</span><span data-l="zh">编程语言</span></dt><dd><span data-l="en">Python, C++ (object-oriented programming)</span><span data-l="zh">熟悉 Python、C++，具备良好的面向对象编程思想</span></dd>
+      <dt><span data-l="en">Algorithms</span><span data-l="zh">算法理论</span></dt><dd><span data-l="en">Diffusion models and imitation learning, vision-language-action (VLA) models</span><span data-l="zh">熟悉扩散模型与模仿学习、视觉-语言-动作（VLA）模型</span></dd>
+      <dt><span data-l="en">Tools</span><span data-l="zh">工程工具</span></dt><dd><span data-l="en">ROS, Linux, PyTorch, LeRobot, Docker, Git</span><span data-l="zh">熟悉 ROS 框架与 Linux 开发环境，熟悉 PyTorch、LeRobot、Docker 容器化部署和 Git 版本控制</span></dd>
+      <dt><span data-l="en">Languages</span><span data-l="zh">外语能力</span></dt><dd><span data-l="en">Chinese (native), English (C1, IELTS 7.0), German (B2, TestDaF 17)</span><span data-l="zh">英语：雅思 7.0（欧标 C1），大学英语六级 595 分；德语：TestDaF 17 分（欧标 B2）</span></dd>
+    </dl>
+  </section>
+
+  <section id="interests" aria-labelledby="h-int">
+    <h2 id="h-int"><span data-l="en">Interests</span><span data-l="zh">兴趣爱好</span></h2>
+    <p class="hobby"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3v18M5.6 5.6c3 2.6 3 10.2 0 12.8M18.4 5.6c-3 2.6-3 10.2 0 12.8"/></svg><span data-l="en">Outside the lab I play basketball and train at the gym, and I am a loyal supporter of the Chinese men's national basketball team.</span><span data-l="zh">业余时间喜欢打篮球、去健身房锻炼，也是中国男篮的忠实球迷。</span></p>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 <span data-l="en">Yunfei Bi · Munich</span><span data-l="zh">毕云飞 · 慕尼黑</span></span>
+    <span><a href="mailto:yunfei.bi@tum.de">yunfei.bi@tum.de</a> · <a href="mailto:bi_yunfei1999@163.com">bi_yunfei1999@163.com</a> · <a href="https://github.com/Yunfei-Bi8" target="_blank" rel="noopener">GitHub</a></span>
+    <span class="credit"><span data-l="en">Design inspired by <a href="http://oliver.hausdoerfer.de/" target="_blank" rel="noopener">Oliver Hausdörfer's website</a>.</span><span data-l="zh">网站设计灵感来自 <a href="http://oliver.hausdoerfer.de/" target="_blank" rel="noopener">Oliver Hausdörfer 的个人主页</a>。</span></span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  var root = document.documentElement, KEY = "yb-lang";
+  function setLang(l, remember) {
+    root.dataset.lang = l; root.lang = l === "zh" ? "zh-CN" : "en";
+    document.title = l === "zh" ? "毕云飞 · 个人主页" : "Yunfei Bi";
+    if (remember) { try { localStorage.setItem(KEY, l); } catch (e) {} }
+  }
+  var start = root.dataset.default || "en";
+  if (location.hash === "#zh") start = "zh"; else if (location.hash === "#en") start = "en";
+  else { try { var s = localStorage.getItem(KEY); if (s === "en" || s === "zh") start = s; } catch (e) {} }
+  setLang(start, false);
+  document.getElementById("lang-btn").addEventListener("click", function () { setLang(root.dataset.lang === "zh" ? "en" : "zh", true); });
+
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function play(v) { if (reduce) return; var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+  var io = "IntersectionObserver" in window ? new IntersectionObserver(function (es) {
+    es.forEach(function (e) { var v = e.target; if (e.isIntersecting) { if (!v.dataset.loaded) { v.dataset.loaded = "1"; v.src = v.dataset.src; } play(v); } else if (!v.paused) v.pause(); });
+  }, { rootMargin: "200px 0px" }) : null;
+  document.querySelectorAll("video[data-src]").forEach(function (v) { if (io) io.observe(v); else { v.src = v.dataset.src; play(v); } });
+})();
+</script>
+</body>
+</html>
