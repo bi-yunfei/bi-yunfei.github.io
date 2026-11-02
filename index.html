@@ -126,6 +126,9 @@ footer a { color: var(--ink-2); }
 .misc-list b { font-weight: 650; font-size: .97rem; line-height: 1.35; color: var(--ink); }
 .misc-list li > span { font-size: .9rem; color: var(--ink-2); line-height: 1.45; }
 .pub .sub { margin-top: 3px; font-size: .95rem; color: var(--ink-2); }
+.pts { margin-top: 8px; padding-left: 1.1em; display: grid; gap: 6px; color: var(--ink-2); font-size: .95rem; }
+.pts li::marker { color: var(--ink-3); }
+.pts b, .bio b { color: var(--ink); font-weight: 650; }
 </style>
 <link rel="alternate" hreflang="en" href="https://yunfei-bi8.github.io/">
 <link rel="alternate" hreflang="zh-CN" href="https://yunfei-bi8.github.io/zh/">
@@ -157,10 +160,14 @@ footer a { color: var(--ink-2); }
       <h1><span data-l="en">Hi, I'm Yunfei Bi</span><span data-l="zh">你好，我是毕云飞</span></h1>
       <p class="role"><span data-l="en">M.Sc. student · Technical University of Munich</span><span data-l="zh">慕尼黑工业大学 · 硕士在读</span></p>
       <div class="bio">
-        <p data-l="en">I am a master's student in Mechatronics, Robotics and Biomechanical Engineering at the <a href="https://www.tum.de/en/" target="_blank" rel="noopener">Technical University of Munich (TUM)</a>. My research is on robot learning, in particular on learning from cross-embodiment data such as human videos and on human-robot interaction, with diffusion policies and vision-language-action (VLA) models. I have worked through the full loop, from deriving an algorithm and validating it in simulation to deploying it on real robots.</p>
-        <p data-l="en">In my master's thesis at the <a href="https://www.ce.cit.tum.de/lsy/home/" target="_blank" rel="noopener">Learning Systems and Robotics Lab</a> of <a href="https://scholar.google.com/citations?user=QMfeRz0AAAAJ" target="_blank" rel="noopener">Prof. Angela P. Schoellig</a>, I made two contributions. The first is a framework that learns human-robot collaboration policies from markerless RGB videos of two people, so that the robot also performs roles that no robot ever demonstrated (zero-shot). The second is a deployment-time safety layer that checks the embodiment feasibility of every action the policy emits and stops the robot before it attempts a motion its gripper cannot perform. Before that, I wrote my semester thesis at the <a href="https://www.ce.cit.tum.de/cps/home/" target="_blank" rel="noopener">Cyber-Physical Systems Group</a> of <a href="https://scholar.google.com/citations?user=E3zazJAAAAAJ" target="_blank" rel="noopener">Prof. Matthias Althoff</a>, where I built CommonRoad-Game, a human-in-the-loop driving simulator released as a first-author arXiv preprint. I am currently a working student in the foundation-models team of Agile Robots SE, working on post-training and inference acceleration of VLA models.</p>
-        <p data-l="zh">本科毕业于同济大学汽车学院，现于<a href="https://www.tum.de/en/" target="_blank" rel="noopener">慕尼黑工业大学（TUM）</a>攻读机电、机器人与生物力学工程硕士。研究方向为机器人学习，重点关注跨具身（cross-embodiment）数据学习与人机交互，技术上以扩散策略（Diffusion Policy）和视觉-语言-动作（VLA）模型为主。熟悉 Python 与 C++ 开发，拥有从算法数学推导、仿真验证到真机落地部署的完整闭环经验。</p>
-        <p data-l="zh">硕士论文在 <a href="https://scholar.google.com/citations?user=QMfeRz0AAAAJ" target="_blank" rel="noopener">Angela P. Schoellig 教授</a>的<a href="https://www.ce.cit.tum.de/lsy/home/" target="_blank" rel="noopener">学习系统与机器人实验室（LSY）</a>完成，主要有两项贡献：一是从无标记的双人 RGB 视频中学习人机协作策略，机器人从未演示过的角色也能零样本（zero-shot）完成；二是部署期的本体可行性安全层，对策略输出的每个动作做可行性评估，夹爪无法完成的动作在接触前即被叫停。此前在 <a href="https://scholar.google.com/citations?user=E3zazJAAAAAJ" target="_blank" rel="noopener">Matthias Althoff 教授</a>的<a href="https://www.ce.cit.tum.de/cps/home/" target="_blank" rel="noopener">信息物理系统实验室（CPS）</a>完成学期论文，开发了人在环自动驾驶仿真框架 CommonRoad-Game，并以第一作者发表 arXiv 预印本。目前在 Agile Robots SE（思灵机器人）机器人基础模型小组实习，从事 VLA 模型的后训练与推理加速。</p>
+        <p data-l="en">I am a master's student in Mechatronics, Robotics and Biomechanical Engineering (MRBE) at the <a href="https://www.tum.de/en/" target="_blank" rel="noopener">Technical University of Munich (TUM)</a>. My research focuses on <b>robot learning</b>, in particular <b>learning from cross-embodiment data</b> such as human videos, on <b>human-robot interaction</b>, and on <b>simulation frameworks for robotics</b>, with diffusion policies and vision-language-action (VLA) models. I have worked through the full loop, from deriving an algorithm and validating it in simulation to deploying it on real robots.</p>
+        <p data-l="en">I wrote my master's thesis at the <a href="https://www.ce.cit.tum.de/lsy/home/" target="_blank" rel="noopener">Learning Systems and Robotics Lab</a> of <a href="https://scholar.google.com/citations?user=QMfeRz0AAAAJ" target="_blank" rel="noopener">Prof. Angela P. Schoellig</a>, on learning trustworthy human-robot collaboration policies from human-human demonstrations.</p>
+        <p data-l="en">Before that, I wrote my semester thesis at the <a href="https://www.ce.cit.tum.de/cps/home/" target="_blank" rel="noopener">Cyber-Physical Systems Group</a> of <a href="https://scholar.google.com/citations?user=E3zazJAAAAAJ" target="_blank" rel="noopener">Prof. Matthias Althoff</a>, where I built CommonRoad-Game, a human-in-the-loop simulation framework for autonomous driving.</p>
+        <p data-l="en">I am currently a working student in the foundation-models team of Agile Robots SE, working on post-training and inference acceleration of VLA models.</p>
+        <p data-l="zh">本科毕业于同济大学汽车学院，现于<a href="https://www.tum.de/en/" target="_blank" rel="noopener">慕尼黑工业大学（TUM）</a>攻读机电、机器人与生物力学工程（MRBE）硕士。研究方向为<b>机器人学习</b>，重点关注<b>跨具身（cross-embodiment）数据学习</b>、<b>人机交互</b>以及<b>机器人仿真框架搭建</b>，技术上以扩散策略（Diffusion Policy）和视觉-语言-动作（VLA）模型为主。熟悉 Python 与 C++ 开发，拥有从算法数学推导、仿真验证到真机落地部署的完整闭环经验。</p>
+        <p data-l="zh">硕士论文在 <a href="https://scholar.google.com/citations?user=QMfeRz0AAAAJ" target="_blank" rel="noopener">Angela P. Schoellig 教授</a>的<a href="https://www.ce.cit.tum.de/lsy/home/" target="_blank" rel="noopener">学习系统与机器人实验室（LSY）</a>完成，课题为通过人类-人类操作视频学习可信的人机交互扩散策略。</p>
+        <p data-l="zh">此前在 <a href="https://scholar.google.com/citations?user=E3zazJAAAAAJ" target="_blank" rel="noopener">Matthias Althoff 教授</a>的<a href="https://www.ce.cit.tum.de/cps/home/" target="_blank" rel="noopener">信息物理系统实验室（CPS）</a>完成学期论文，开发了人在环自动驾驶仿真框架 CommonRoad-Game。</p>
+        <p data-l="zh">目前在 Agile Robots SE（思灵机器人）机器人基础模型小组实习，从事 VLA 模型的后训练与推理加速。</p>
       </div>
       <div class="links">
         <a href="mailto:yunfei.bi@tum.de"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="3" width="13" height="10" rx="1.5"/><path d="m2 4 6 4.6L14 4"/></svg>yunfei.bi@tum.de</a>
@@ -181,8 +188,18 @@ footer a { color: var(--ink-2); }
         <p class="sub" data-l="zh">通过人类-人类操作视频学习可信的人机交互扩散策略</p>
         <p class="authors"><b><span data-l="en">Yunfei Bi</span><span data-l="zh">毕云飞</span></b></p>
         <p class="venue"><span data-l="en">Master's thesis, TUM, 2026 · paper to be submitted to IEEE RA-L</span><span data-l="zh">硕士论文 · 慕尼黑工业大学 · 2026 年，论文拟投稿 IEEE RA-L</span></p>
-        <p class="desc" data-l="en">A UR10e robot learns handovers and jar opening from markerless RGB videos of two people, including roles with no robot demonstration at all (zero-shot). An embodiment-feasibility safety layer, which measures feasibility in diffusion noise steps, stops motions the gripper cannot perform: 18/20 successful runs against 5/20 for a robot-only policy, and 19/20 infeasible motions stopped before contact.</p>
-        <p class="desc" data-l="zh">基于 ROS&nbsp;2 搭建 UR10e 遥操作系统，打通采集-训练-部署全流程；通过三维重建提取人手骨骼轨迹，与少量遥操作数据映射到统一动作空间协同训练扩散策略，并通过角色互换实现无机器人示范角色的零样本（zero-shot）学习；设计任务无关的动作块可行性度量，构建部署期安全层，无需人工标注即可对输出动作做可行性打分。真机实验中任务成功率 18/20（纯机器人示范基线为 5/20），不可行动作在接触前被拦截 19/20 次。</p>
+        <p class="desc" data-l="en">Collecting demonstrations of human-robot collaboration needs a robot, an operator and a partner at the same time. This thesis learns collaboration from markerless RGB videos of two people instead, plus a few teleoperated robot demonstrations, and makes the learned policy safe to run next to people.</p>
+        <ul class="pts" data-l="en">
+          <li><b>HRC from human-human videos:</b> the hand skeletons of both people are recovered with SAM&nbsp;3 and HaMeR and triangulated in 3D; the acting hand is retargeted to the gripper and the partner's hand conditions a diffusion policy. Reading every video once per hand (role exchange) teaches both roles of a task, including roles with no robot demonstration (zero-shot).</li>
+          <li><b>Deployment-time embodiment-feasibility safety layer:</b> the number of forward-diffusion noise steps needed to explain an action chunk as a noised feasible chunk serves as a feasibility score, learned from feasible chunks alone; a conformally calibrated threshold stops the robot before it attempts a motion its gripper cannot perform.</li>
+          <li><b>Results on a UR10e:</b> 18/20 and 17/20 successful runs with five robot demonstrations per task (5/20 and 4/20 for a robot-only policy), 13/20 and 14/20 in zero-shot roles, and 19/20 and 18/20 infeasible motions stopped before contact.</li>
+        </ul>
+        <p class="desc" data-l="zh">人机协作示范的采集需要机器人、遥操作员和协作者同时在场，成本高、风险大。本课题改为从无标记的双人 RGB 视频中学习人机协作，辅以少量机器人遥操作示范，并保证学到的策略能在人身边安全部署。</p>
+        <ul class="pts" data-l="zh">
+          <li><b>从双人视频学习人机协作：</b>用 SAM&nbsp;3 与 HaMeR 提取两人双手骨架并三角化到三维；执行手重定向为夹爪动作，搭档的手作为扩散策略的条件；通过角色互换让每段视频同时覆盖任务的两种角色，实现无机器人示范角色的零样本（zero-shot）学习。</li>
+          <li><b>部署期本体可行性安全层：</b>以“把动作块解释为加噪后的可行动作所需的扩散前向加噪步数”作为可行性评分，仅用可行动作训练；经保形（conformal）校准的阈值会在夹爪无法完成的动作接触物体之前叫停机器人。</li>
+          <li><b>UR10e 真机结果：</b>每个任务仅用 5 条机器人示范，成功率达 18/20 和 17/20（纯机器人示范基线为 5/20 和 4/20）；零样本角色成功率 13/20 和 14/20；不可行动作在接触前被拦截 19/20 和 18/20 次。</li>
+        </ul>
         <div class="btns"><a href="https://yunfei-bi8.github.io/Trustworthy-HRC-from-Human-human-videos/" target="_blank" rel="noopener"><span data-l="en">Project page</span><span data-l="zh">项目主页</span></a></div>
       </div>
     </article>
@@ -194,8 +211,18 @@ footer a { color: var(--ink-2); }
         <p class="sub" data-l="zh">一种人类在环的自动驾驶仿真框架</p>
         <p class="authors"><b><span data-l="en">Yunfei Bi</span><span data-l="zh">毕云飞</span></b>, Youran Wang</p>
         <p class="venue"><span data-l="en">arXiv preprint, 2026 · semester thesis at TUM</span><span data-l="zh">arXiv 预印本 · 2026 年 · 第一作者 · 慕尼黑工业大学学期论文</span></p>
-        <p class="desc" data-l="en">A lightweight human-in-the-loop driving simulator built into the <a href="https://commonroad.in.tum.de/" target="_blank" rel="noopener">CommonRoad</a> platform, for testing motion planners against human drivers. Its multi-threaded real-time architecture cuts the drift between simulation time and wall-clock time from 402&nbsp;ms to 1.5&nbsp;ms. IDM and sampling-based planners are integrated, and recorded drives become reproducible test scenarios.</p>
-        <p class="desc" data-l="zh">基于 <a href="https://commonroad.in.tum.de/" target="_blank" rel="noopener">CommonRoad</a> 平台，主导设计并实现基于 Python 的人在环自动驾驶仿真系统：构建多线程实时仿真架构，解决仿真时间与物理墙钟的有界同步问题（偏差从 402&nbsp;ms 降至 1.5&nbsp;ms）；设计人驾与智驾车辆的同步机制，保证多模块在统一时间基准下稳定运行；集成并对比评估 IDM 与 Sampling-based Reactive Planner 等规划算法，支持可复现的复杂交通场景生成，为规控算法验证提供稳定的测试基建。</p>
+        <p class="desc" data-l="en">A lightweight simulation framework, built into the <a href="https://commonroad.in.tum.de/" target="_blank" rel="noopener">CommonRoad</a> platform, in which human drivers and motion planners act in the same traffic scene, for testing planners in interactive scenarios.</p>
+        <ul class="pts" data-l="en">
+          <li><b>Real-time architecture:</b> a multi-threaded design keeps simulation time bounded to wall-clock time, cutting the drift from 402&nbsp;ms to 1.5&nbsp;ms.</li>
+          <li><b>Human and automated vehicles:</b> both run on one time base; the IDM and the sampling-based reactive planner are integrated and compared.</li>
+          <li><b>Reproducible scenarios:</b> recorded human drives become reproducible traffic scenarios for planner testing.</li>
+        </ul>
+        <p class="desc" data-l="zh">基于 <a href="https://commonroad.in.tum.de/" target="_blank" rel="noopener">CommonRoad</a> 平台的轻量级人在环仿真框架，让真人司机与运动规划算法在同一交通场景中交互，用于测试规控算法在交互场景下的表现。</p>
+        <ul class="pts" data-l="zh">
+          <li><b>实时仿真架构：</b>多线程设计解决仿真时间与物理墙钟的有界同步问题，偏差从 402&nbsp;ms 降至 1.5&nbsp;ms。</li>
+          <li><b>人驾与智驾同步：</b>人驾与智驾车辆在统一时间基准下稳定运行；集成并对比评估 IDM 与 Sampling-based Reactive Planner 等规划算法。</li>
+          <li><b>可复现场景：</b>真人驾驶记录可直接生成可复现的复杂交通场景，为规控算法验证提供稳定的测试基建。</li>
+        </ul>
         <div class="btns"><a href="https://arxiv.org/abs/2607.01382" target="_blank" rel="noopener">arXiv</a><a href="https://github.com/Yunfei-Bi8/CommonRoad-Game" target="_blank" rel="noopener"><span data-l="en">Code</span><span data-l="zh">代码</span></a></div>
       </div>
     </article>
@@ -265,8 +292,8 @@ footer a { color: var(--ink-2); }
       <div class="item">
         <p class="when"><span data-l="en">04/2024 – present</span><span data-l="zh">2024.04 – 至今</span></p>
         <div class="what">
-          <h3><span data-l="en">M.Sc. Mechatronics, Robotics and Biomechanical Engineering</span><span data-l="zh">慕尼黑工业大学 · 硕士</span></h3>
-          <p class="org"><span data-l="en">Technical University of Munich, Germany</span><span data-l="zh">机电、机器人与生物力学工程</span></p>
+          <h3><span data-l="en">M.Sc. Mechatronics, Robotics and Biomechanical Engineering (MRBE)</span><span data-l="zh">慕尼黑工业大学 · 硕士</span></h3>
+          <p class="org"><span data-l="en">Technical University of Munich, Germany</span><span data-l="zh">机电、机器人与生物力学工程（MRBE）</span></p>
           <p class="note"><span data-l="en">Grade 1.4 (94/100)</span><span data-l="zh">绩点 1.4/1.0（94/100）</span></p>
         </div>
       </div>
