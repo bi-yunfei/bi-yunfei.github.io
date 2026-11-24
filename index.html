@@ -220,36 +220,6 @@ footer a { color: var(--ink-2); }
 
     <article class="pub">
       <div class="media-col">
-        <div class="thumb"><video data-src="static/media/commonroad_game.mp4" poster="static/media/commonroad_game.jpg" muted loop playsinline preload="none" aria-label="CommonRoad-Game driving simulation with an autonomous and a human-driven vehicle"></video></div>
-        <div class="inst">
-          <span class="inst-k"><span data-l="en">Research conducted at</span><span data-l="zh">研究机构</span></span>
-          <div class="inst-logos"><a href="https://www.ce.cit.tum.de/cps/home/" target="_blank" rel="noopener" title="Cyber-Physical Systems Group, TUM"><img class="ol-cps" src="static/media/cps-logo.png" alt="TUM Cyber-Physical Systems Group" width="294" height="102"></a></div>
-          <a class="inst-name" href="https://www.ce.cit.tum.de/cps/home/" target="_blank" rel="noopener"><span data-l="en">Cyber-Physical Systems Group (CPS), TUM</span><span data-l="zh">慕尼黑工业大学 · 信息物理系统实验室（CPS）</span></a>
-        </div>
-      </div>
-      <div>
-        <h3><a href="https://arxiv.org/abs/2607.01382" target="_blank" rel="noopener">CommonRoad-Game: A Human-in-the-Loop Simulation Framework for Autonomous Driving</a></h3>
-        <p class="sub" data-l="zh">一种人类在环的自动驾驶仿真框架</p>
-        <p class="authors"><b>Yunfei Bi</b>, Youran Wang</p>
-        <p class="venue"><span data-l="en">arXiv preprint, 2026 · semester thesis at TUM</span><span data-l="zh">arXiv 预印本 · 2026 年 · 第一作者 · 慕尼黑工业大学学期论文</span></p>
-        <p class="desc" data-l="en">Motion planners should be tested with humans in the loop, yet existing simulators often replay recorded datasets, lack interfaces for real-time human interaction, are only loosely tied to an autonomous-driving ecosystem, or are too heavy for rapid prototyping. CommonRoad-Game is a lightweight human-in-the-loop simulation framework tightly integrated with <a href="https://commonroad.in.tum.de/" target="_blank" rel="noopener">CommonRoad</a>, for testing motion planners with human participants and for analyzing human driving in interactive scenarios.</p>
-        <ul class="pts" data-l="en">
-          <li><b>Time synchronization:</b> a multi-threaded architecture aligns simulation time with wall-clock time, so autonomous and human-driven vehicles interact deterministically and consistently in time; the drift drops from 402&nbsp;ms to 1.5&nbsp;ms.</li>
-          <li><b>Scenario generation:</b> driving logs recorded during human-in-the-loop experiments become diverse, reproducible test cases.</li>
-          <li><b>Results:</b> stable temporal synchronization, scalable multi-agent simulation, and seamless integration of CommonRoad-compatible motion planners such as IDM and a sampling-based reactive planner.</li>
-        </ul>
-        <p class="desc" data-l="zh">运动规划算法需要在人在环环境中测试，才能确保交互时行为安全高效；而现有仿真平台大多依赖录制数据集回放，缺少实时人机交互接口，与自动驾驶生态集成度低，或计算开销过大，不适合早期研究的快速原型验证。CommonRoad-Game 是与 <a href="https://commonroad.in.tum.de/" target="_blank" rel="noopener">CommonRoad</a> 平台深度集成的轻量级人在环仿真框架，用于在真人参与下系统测试运动规划器，并分析交互场景中的人类驾驶行为。</p>
-        <ul class="pts" data-l="zh">
-          <li><b>时间同步：</b>多线程架构配合同步机制，使仿真时间与物理墙钟对齐，智驾车辆与人驾车辆的交互确定且时序一致，偏差从 402&nbsp;ms 降至 1.5&nbsp;ms。</li>
-          <li><b>场景生成：</b>记录人在环实验中的驾驶日志，构建多样且可复现的测试用例。</li>
-          <li><b>实验结果：</b>时间同步稳定，支持可扩展的多智能体仿真，并能无缝接入 IDM、基于采样的反应式规划器等兼容 CommonRoad 的运动规划器。</li>
-        </ul>
-        <div class="btns"><a href="https://arxiv.org/abs/2607.01382" target="_blank" rel="noopener">arXiv</a><a href="https://github.com/Yunfei-Bi8/CommonRoad-Game" target="_blank" rel="noopener"><span data-l="en">Code</span><span data-l="zh">代码</span></a></div>
-      </div>
-    </article>
-
-    <article class="pub">
-      <div class="media-col">
         <div class="thumb"><video data-src="static/media/agv_formation.mp4" poster="static/media/agv_formation.jpg" muted loop playsinline preload="none" aria-label="Simulated AGV formation during a safety stop of one vehicle: without coupling (grey) the formation tears apart, with the cascade coupling (blue) the other vehicles wait"></video></div>
         <div class="inst">
           <span class="inst-k"><span data-l="en">Research conducted at</span><span data-l="zh">研究机构</span></span>
@@ -275,6 +245,36 @@ footer a { color: var(--ink-2); }
           <li><b>结果：</b>级联控制器在所有仿真中都没有失败（时延最长 4&nbsp;s、丢包 90&nbsp;%、12 辆车）；急停后的编队误差降低 47&nbsp;%，打滑后降低 21&ndash;24&nbsp;%，代价是跟踪精度有所下降。</li>
         </ul>
         <div class="btns"><a href="agv-formation/"><span data-l="en">Project page</span><span data-l="zh">项目主页</span></a></div>
+      </div>
+    </article>
+
+    <article class="pub">
+      <div class="media-col">
+        <div class="thumb"><video data-src="static/media/commonroad_game.mp4" poster="static/media/commonroad_game.jpg" muted loop playsinline preload="none" aria-label="CommonRoad-Game driving simulation with an autonomous and a human-driven vehicle"></video></div>
+        <div class="inst">
+          <span class="inst-k"><span data-l="en">Research conducted at</span><span data-l="zh">研究机构</span></span>
+          <div class="inst-logos"><a href="https://www.ce.cit.tum.de/cps/home/" target="_blank" rel="noopener" title="Cyber-Physical Systems Group, TUM"><img class="ol-cps" src="static/media/cps-logo.png" alt="TUM Cyber-Physical Systems Group" width="294" height="102"></a></div>
+          <a class="inst-name" href="https://www.ce.cit.tum.de/cps/home/" target="_blank" rel="noopener"><span data-l="en">Cyber-Physical Systems Group (CPS), TUM</span><span data-l="zh">慕尼黑工业大学 · 信息物理系统实验室（CPS）</span></a>
+        </div>
+      </div>
+      <div>
+        <h3><a href="https://arxiv.org/abs/2607.01382" target="_blank" rel="noopener">CommonRoad-Game: A Human-in-the-Loop Simulation Framework for Autonomous Driving</a></h3>
+        <p class="sub" data-l="zh">一种人类在环的自动驾驶仿真框架</p>
+        <p class="authors"><b>Yunfei Bi</b>, Youran Wang</p>
+        <p class="venue"><span data-l="en">arXiv preprint, 2026 · semester thesis at TUM</span><span data-l="zh">arXiv 预印本 · 2026 年 · 第一作者 · 慕尼黑工业大学学期论文</span></p>
+        <p class="desc" data-l="en">Motion planners should be tested with humans in the loop, yet existing simulators often replay recorded datasets, lack interfaces for real-time human interaction, are only loosely tied to an autonomous-driving ecosystem, or are too heavy for rapid prototyping. CommonRoad-Game is a lightweight human-in-the-loop simulation framework tightly integrated with <a href="https://commonroad.in.tum.de/" target="_blank" rel="noopener">CommonRoad</a>, for testing motion planners with human participants and for analyzing human driving in interactive scenarios.</p>
+        <ul class="pts" data-l="en">
+          <li><b>Time synchronization:</b> a multi-threaded architecture aligns simulation time with wall-clock time, so autonomous and human-driven vehicles interact deterministically and consistently in time; the drift drops from 402&nbsp;ms to 1.5&nbsp;ms.</li>
+          <li><b>Scenario generation:</b> driving logs recorded during human-in-the-loop experiments become diverse, reproducible test cases.</li>
+          <li><b>Results:</b> stable temporal synchronization, scalable multi-agent simulation, and seamless integration of CommonRoad-compatible motion planners such as IDM and a sampling-based reactive planner.</li>
+        </ul>
+        <p class="desc" data-l="zh">运动规划算法需要在人在环环境中测试，才能确保交互时行为安全高效；而现有仿真平台大多依赖录制数据集回放，缺少实时人机交互接口，与自动驾驶生态集成度低，或计算开销过大，不适合早期研究的快速原型验证。CommonRoad-Game 是与 <a href="https://commonroad.in.tum.de/" target="_blank" rel="noopener">CommonRoad</a> 平台深度集成的轻量级人在环仿真框架，用于在真人参与下系统测试运动规划器，并分析交互场景中的人类驾驶行为。</p>
+        <ul class="pts" data-l="zh">
+          <li><b>时间同步：</b>多线程架构配合同步机制，使仿真时间与物理墙钟对齐，智驾车辆与人驾车辆的交互确定且时序一致，偏差从 402&nbsp;ms 降至 1.5&nbsp;ms。</li>
+          <li><b>场景生成：</b>记录人在环实验中的驾驶日志，构建多样且可复现的测试用例。</li>
+          <li><b>实验结果：</b>时间同步稳定，支持可扩展的多智能体仿真，并能无缝接入 IDM、基于采样的反应式规划器等兼容 CommonRoad 的运动规划器。</li>
+        </ul>
+        <div class="btns"><a href="https://arxiv.org/abs/2607.01382" target="_blank" rel="noopener">arXiv</a><a href="https://github.com/Yunfei-Bi8/CommonRoad-Game" target="_blank" rel="noopener"><span data-l="en">Code</span><span data-l="zh">代码</span></a></div>
       </div>
     </article>
   </section>
