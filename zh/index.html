@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>毕云飞 · 个人主页</title>
-<meta name="description" content="毕云飞的个人主页：慕尼黑工业大学机器人方向硕士在读，研究扩散策略与 VLA 模型、人机协作和自动驾驶仿真。">
+<meta name="description" content="毕云飞的个人主页：慕尼黑工业大学机器人方向硕士在读，研究方向涵盖机器人学习（扩散策略与 VLA 模型的模仿学习、人机协作）、通信时延下的编队控制与自动驾驶仿真。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=JetBrains+Mono:wght@500;600&family=Noto+Sans+SC:wght@400;500;700&display=swap">
@@ -136,6 +136,22 @@ footer a { color: var(--ink-2); }
 .lg-tum { width: 64px; }
 .lg-lsy { width: 74px; }
 .lg-ar { width: 150px; }
+/* research entries: where the work was done (logos keep their colours on a white card in both themes) */
+.media-col { display: grid; gap: 12px; align-content: start; min-width: 0; }
+.org { display: grid; gap: 9px; padding: 12px 14px 13px; border: 1px solid var(--line); border-radius: 10px; background: #ffffff; }
+.org-k { font-family: var(--mono); font-size: .68rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #6c7586; }
+.org-logos { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 18px; }
+.org-logos a { display: block; line-height: 0; border-radius: 6px; }
+.org-logos img { display: block; height: auto; }
+.ol-lsy { width: 64px; }
+.ol-tum { width: 56px; }
+.ol-cps { width: 156px; border-radius: 6px; }
+.ol-siemens { width: 138px; margin-block: 6px; }
+.org-name { font-size: .88rem; font-weight: 650; line-height: 1.35; color: #111622; }
+.org-name:hover { color: #2e62e8; }
+.bio ul { padding-left: 1.1em; display: grid; gap: 6px; }
+.bio li::marker { color: var(--ink-3); }
+.bio li b { color: var(--ink); font-weight: 650; }
 </style>
 <link rel="alternate" hreflang="en" href="https://yunfei-bi8.github.io/">
 <link rel="alternate" hreflang="zh-CN" href="https://yunfei-bi8.github.io/zh/">
@@ -167,15 +183,19 @@ footer a { color: var(--ink-2); }
       <h1><span data-l="en">Hi, I'm Yunfei Bi</span><span data-l="zh">你好，我是毕云飞</span></h1>
       <p class="role"><span data-l="en">M.Sc. student · Technical University of Munich</span><span data-l="zh">慕尼黑工业大学 · 硕士在读</span></p>
       <div class="bio">
-        <p data-l="en">I am a master's student in Mechatronics, Robotics and Biomechanical Engineering (MRBE) at the <a href="https://www.tum.de/en/" target="_blank" rel="noopener">Technical University of Munich (TUM)</a>. My research interests are <b>robot learning</b>, <b>cross-embodiment learning</b>, <b>human-robot interaction</b> and <b>simulation frameworks in robotics</b>.</p>
-        <p data-l="en">I wrote my master's thesis at the <a href="https://www.ce.cit.tum.de/lsy/home/" target="_blank" rel="noopener">Learning Systems and Robotics Lab</a> of <a href="https://scholar.google.com/citations?user=QMfeRz0AAAAJ" target="_blank" rel="noopener">Prof. Angela P. Schoellig</a>, on learning trustworthy human-robot collaboration policies from human-human demonstrations.</p>
-        <p data-l="en">Before that, I wrote my semester thesis at the <a href="https://www.ce.cit.tum.de/cps/home/" target="_blank" rel="noopener">Cyber-Physical Systems Group</a> of <a href="https://scholar.google.com/citations?user=E3zazJAAAAAJ" target="_blank" rel="noopener">Prof. Matthias Althoff</a>, where I built CommonRoad-Game, a human-in-the-loop simulation framework for autonomous driving.</p>
-        <p data-l="en">I also worked as a research intern at the <a href="https://www.siemens.com/" target="_blank" rel="noopener">Siemens</a> Technology Center in Garching.</p>
+        <p data-l="en">I am a master's student in Mechatronics, Robotics and Biomechanical Engineering (MRBE) at the <a href="https://www.tum.de/en/" target="_blank" rel="noopener">Technical University of Munich (TUM)</a>. My work spans <b>robot learning</b>, <b>control theory</b> and <b>simulation for autonomous driving</b>:</p>
+        <ul data-l="en">
+          <li><b>Robot learning:</b> imitation learning with diffusion policies and VLA models, learning from cross-embodiment human videos, and safe human-robot collaboration; master's thesis at the <a href="https://www.ce.cit.tum.de/lsy/home/" target="_blank" rel="noopener">Learning Systems and Robotics Lab</a> of <a href="https://scholar.google.com/citations?user=QMfeRz0AAAAJ" target="_blank" rel="noopener">Prof. Angela P. Schoellig</a>.</li>
+          <li><b>Control theory:</b> Lyapunov-based formation control of mobile robots under communication delays, from the stability proof to deployment on real robots; research internship at the <a href="https://www.siemens.com/" target="_blank" rel="noopener">Siemens</a> Technology Center in Garching.</li>
+          <li><b>Simulation for autonomous driving:</b> CommonRoad-Game, a human-in-the-loop simulation framework for testing motion planners; semester thesis at the <a href="https://www.ce.cit.tum.de/cps/home/" target="_blank" rel="noopener">Cyber-Physical Systems Group</a> of <a href="https://scholar.google.com/citations?user=E3zazJAAAAAJ" target="_blank" rel="noopener">Prof. Matthias Althoff</a>.</li>
+        </ul>
         <p data-l="en">I am currently a working student in the foundation-models team of <a href="https://www.agile-robots.com/" target="_blank" rel="noopener">Agile Robots SE</a>, working on post-training and inference acceleration of VLA models.</p>
-        <p data-l="zh">本科毕业于同济大学汽车学院，现于<a href="https://www.tum.de/en/" target="_blank" rel="noopener">慕尼黑工业大学（TUM）</a>攻读机电、机器人与生物力学工程（MRBE）硕士，研究兴趣为<b>机器人学习</b>、<b>跨具身学习</b>、<b>人机交互</b>以及 <b>robotics 仿真框架搭建</b>。</p>
-        <p data-l="zh">硕士论文在 <a href="https://scholar.google.com/citations?user=QMfeRz0AAAAJ" target="_blank" rel="noopener">Angela P. Schoellig 教授</a>的<a href="https://www.ce.cit.tum.de/lsy/home/" target="_blank" rel="noopener">学习系统与机器人实验室（LSY）</a>完成，课题为通过人类-人类操作视频学习可信的人机交互扩散策略。</p>
-        <p data-l="zh">此前在 <a href="https://scholar.google.com/citations?user=E3zazJAAAAAJ" target="_blank" rel="noopener">Matthias Althoff 教授</a>的<a href="https://www.ce.cit.tum.de/cps/home/" target="_blank" rel="noopener">信息物理系统实验室（CPS）</a>完成学期论文，开发了人在环自动驾驶仿真框架 CommonRoad-Game。</p>
-        <p data-l="zh">此外，曾在<a href="https://www.siemens.com/" target="_blank" rel="noopener">西门子</a> Garching 研究中心担任研究型实习生。</p>
+        <p data-l="zh">本科毕业于同济大学汽车学院，现于<a href="https://www.tum.de/en/" target="_blank" rel="noopener">慕尼黑工业大学（TUM）</a>攻读机电、机器人与生物力学工程（MRBE）硕士。我的研究横跨<b>机器人学习</b>、<b>控制理论</b>与<b>自动驾驶仿真</b>三个方向：</p>
+        <ul data-l="zh">
+          <li><b>机器人学习：</b>基于扩散策略与 VLA 模型的模仿学习、从跨具身的人类视频中学习，以及安全的人机协作；在 <a href="https://scholar.google.com/citations?user=QMfeRz0AAAAJ" target="_blank" rel="noopener">Angela P. Schoellig 教授</a>的<a href="https://www.ce.cit.tum.de/lsy/home/" target="_blank" rel="noopener">学习系统与机器人实验室（LSY）</a>完成硕士论文。</li>
+          <li><b>控制理论：</b>考虑通信时延的移动机器人李雅普诺夫编队控制，从稳定性证明到真机部署；在<a href="https://www.siemens.com/" target="_blank" rel="noopener">西门子</a> Garching 研究中心担任研究型实习生。</li>
+          <li><b>自动驾驶仿真：</b>人在环自动驾驶仿真框架 CommonRoad-Game，用于测试运动规划器；在 <a href="https://scholar.google.com/citations?user=E3zazJAAAAAJ" target="_blank" rel="noopener">Matthias Althoff 教授</a>的<a href="https://www.ce.cit.tum.de/cps/home/" target="_blank" rel="noopener">信息物理系统实验室（CPS）</a>完成学期论文。</li>
+        </ul>
         <p data-l="zh">目前在 <a href="https://www.agile-robots.com/" target="_blank" rel="noopener">Agile Robots SE（思灵机器人）</a>机器人基础模型小组实习，从事 VLA 模型的后训练与推理加速。</p>
       </div>
       <div class="links">
@@ -196,7 +216,14 @@ footer a { color: var(--ink-2); }
     <h2 id="h-research"><span data-l="en">Research</span><span data-l="zh">研究成果</span></h2>
 
     <article class="pub">
-      <div class="thumb"><video data-src="../static/media/thesis_hrc.mp4" poster="../static/media/thesis_hrc.jpg" muted loop playsinline preload="none" aria-label="UR10e robot arm collaborating with a person"></video></div>
+      <div class="media-col">
+        <div class="thumb"><video data-src="../static/media/thesis_hrc.mp4" poster="../static/media/thesis_hrc.jpg" muted loop playsinline preload="none" aria-label="UR10e robot arm collaborating with a person"></video></div>
+        <div class="org">
+          <span class="org-k"><span data-l="en">Research conducted at</span><span data-l="zh">研究机构</span></span>
+          <div class="org-logos"><a href="https://www.ce.cit.tum.de/lsy/home/" target="_blank" rel="noopener" title="Learning Systems and Robotics Lab"><img class="ol-lsy" src="../static/media/lsy-logo.png" alt="Learning Systems and Robotics Lab" width="400" height="342"></a><a href="https://www.tum.de/en/" target="_blank" rel="noopener" title="Technical University of Munich"><img class="ol-tum" src="../static/media/tum-logo.svg" alt="Technical University of Munich" width="555" height="293"></a></div>
+          <a class="org-name" href="https://www.ce.cit.tum.de/lsy/home/" target="_blank" rel="noopener"><span data-l="en">Learning Systems and Robotics Lab (LSY), TUM</span><span data-l="zh">慕尼黑工业大学 · 学习系统与机器人实验室（LSY）</span></a>
+        </div>
+      </div>
       <div>
         <h3><a href="https://yunfei-bi8.github.io/Trustworthy-HRC-from-Human-human-videos/" target="_blank" rel="noopener">Learning Trustworthy Human-Robot Collaboration Policies from Human-Human Demonstrations</a></h3>
         <p class="sub" data-l="zh">通过人类-人类操作视频学习可信的人机交互扩散策略</p>
@@ -219,7 +246,14 @@ footer a { color: var(--ink-2); }
     </article>
 
     <article class="pub">
-      <div class="thumb"><video data-src="../static/media/commonroad_game.mp4" poster="../static/media/commonroad_game.jpg" muted loop playsinline preload="none" aria-label="CommonRoad-Game driving simulation with an autonomous and a human-driven vehicle"></video></div>
+      <div class="media-col">
+        <div class="thumb"><video data-src="../static/media/commonroad_game.mp4" poster="../static/media/commonroad_game.jpg" muted loop playsinline preload="none" aria-label="CommonRoad-Game driving simulation with an autonomous and a human-driven vehicle"></video></div>
+        <div class="org">
+          <span class="org-k"><span data-l="en">Research conducted at</span><span data-l="zh">研究机构</span></span>
+          <div class="org-logos"><a href="https://www.ce.cit.tum.de/cps/home/" target="_blank" rel="noopener" title="Cyber-Physical Systems Group, TUM"><img class="ol-cps" src="../static/media/cps-logo.png" alt="TUM Cyber-Physical Systems Group" width="294" height="102"></a></div>
+          <a class="org-name" href="https://www.ce.cit.tum.de/cps/home/" target="_blank" rel="noopener"><span data-l="en">Cyber-Physical Systems Group (CPS), TUM</span><span data-l="zh">慕尼黑工业大学 · 信息物理系统实验室（CPS）</span></a>
+        </div>
+      </div>
       <div>
         <h3><a href="https://arxiv.org/abs/2607.01382" target="_blank" rel="noopener">CommonRoad-Game: A Human-in-the-Loop Simulation Framework for Autonomous Driving</a></h3>
         <p class="sub" data-l="zh">一种人类在环的自动驾驶仿真框架</p>
@@ -242,12 +276,19 @@ footer a { color: var(--ink-2); }
     </article>
 
     <article class="pub">
-      <div class="thumb"><video data-src="../static/media/agv_formation.mp4" poster="../static/media/agv_formation.jpg" muted loop playsinline preload="none" aria-label="Simulated AGV formation during a safety stop of one vehicle: without coupling (grey) the formation tears apart, with the cascade coupling (blue) the other vehicles wait"></video></div>
+      <div class="media-col">
+        <div class="thumb"><video data-src="../static/media/agv_formation.mp4" poster="../static/media/agv_formation.jpg" muted loop playsinline preload="none" aria-label="Simulated AGV formation during a safety stop of one vehicle: without coupling (grey) the formation tears apart, with the cascade coupling (blue) the other vehicles wait"></video></div>
+        <div class="org">
+          <span class="org-k"><span data-l="en">Research conducted at</span><span data-l="zh">研究机构</span></span>
+          <div class="org-logos"><a href="https://www.siemens.com/" target="_blank" rel="noopener" title="Siemens AG"><img class="ol-siemens" src="../static/media/siemens-logo.svg" alt="Siemens" width="1000" height="159"></a></div>
+          <a class="org-name" href="https://www.siemens.com/" target="_blank" rel="noopener"><span data-l="en">Siemens AG, Technology Center Garching</span><span data-l="zh">西门子股份公司 · Garching 研究中心</span></a>
+        </div>
+      </div>
       <div>
         <h3><a href="../agv-formation/">Delay-Tolerant Formation Tracking for Multi-AGV Systems</a></h3>
         <p class="sub" data-l="zh">通信时延下的多 AGV 编队跟踪控制</p>
         <p class="authors"><b>Yunfei Bi</b></p>
-        <p class="venue"><span data-l="en">Technical report, 2026 · stability proofs and high-fidelity simulation study</span><span data-l="zh">技术报告 · 2026 年 · 稳定性证明与高保真仿真研究</span></p>
+        <p class="venue"><span data-l="en">Research internship, Siemens Technology Center Garching, 2025 · technical report, 2026</span><span data-l="zh">西门子 Garching 研究中心研究型实习 · 2025 年；技术报告 · 2026 年</span></p>
         <p class="desc" data-l="en">AGVs that carry a load together have to keep their formation when one of them slips or stops, while they talk over Wi-Fi with delays that differ per link, vary over time and jump. In the cascade design, delayed neighbour data only drive a filter that shifts each vehicle's own reference; the tracking law never sees the network, so stability holds for every bounded delay.</p>
         <ul class="pts" data-l="en">
           <li><b>Theory:</b> tracking and formation errors converge for any bounded delay and any directed, switching graph; a strict Lyapunov function with explicit constants, delay-independent exponential and input-to-state estimates, and a formula for how much the coupling reduces the formation error. The proofs were audited and checked numerically.</li>
