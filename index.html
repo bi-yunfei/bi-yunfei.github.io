@@ -201,12 +201,12 @@ footer a { color: var(--ink-2); }
       <div>
         <h3><a href="https://yunfei-bi8.github.io/Trustworthy-HRC-from-Human-human-videos/" target="_blank" rel="noopener">Learning Trustworthy Human-Robot Collaboration Policies from Human-Human Demonstrations</a></h3>
         <p class="authors"><b>Yunfei Bi</b></p>
-        <p class="venue">Master's thesis, TUM, 2026 · paper to be submitted to IEEE RA-L</p>
+        <p class="venue">Master's thesis, TUM, 2026 · paper coming soon</p>
         <p class="desc">Collecting demonstrations of human-robot collaboration needs a robot, an operator and a partner at the same time. This thesis learns collaboration from markerless RGB videos of two people instead, plus a few teleoperated robot demonstrations, and makes the learned policy safe to run next to people.</p>
         <ul class="pts">
           <li><b>HRC from human-human videos:</b> the hand skeletons of both people are recovered with SAM&nbsp;3 and HaMeR and triangulated in 3D; the acting hand is retargeted to the gripper and the partner's hand conditions a diffusion policy. Reading every video once per hand (role exchange) teaches both roles of a task, including roles with no robot demonstration (zero-shot).</li>
-          <li><b>Deployment-time embodiment-feasibility safety layer:</b> the number of forward-diffusion noise steps needed to explain an action chunk as a noised feasible chunk serves as a feasibility score, learned from feasible chunks alone; a conformally calibrated threshold stops the robot before it attempts a motion its gripper cannot perform.</li>
-          <li><b>Results on a UR10e:</b> 18/20 and 17/20 successful runs with five robot demonstrations per task (5/20 and 4/20 for a robot-only policy), 13/20 and 14/20 in zero-shot roles, and 19/20 and 18/20 infeasible motions stopped before contact.</li>
+          <li><b>Embodiment-feasibility safety layer:</b> the robot-versus-human discriminator of X-Diffusion, which cross-embodiment training already provides, is read at every control cycle: the score of an action chunk is the number of noise steps after which the discriminator can no longer tell it from robot motion. A threshold calibrated on successful runs (split conformal prediction) stops motions the gripper cannot perform and interrupts a successful run only with a bounded probability, without a robot model or any infeasible example.</li>
+          <li><b>Results:</b> on a UR10e, 18/20 and 17/20 successful runs with five robot demonstrations per task (5/20 and 4/20 for a robot-only policy), 13/20 and 14/20 in zero-shot roles; in 13,860 simulated closed-loop runs, the safety layer stops 98.3&nbsp;% and 100&nbsp;% of the runs of the two infeasible roles and at most 0.6&nbsp;% of the feasible ones.</li>
         </ul>
         <div class="btns"><a href="https://yunfei-bi8.github.io/Trustworthy-HRC-from-Human-human-videos/" target="_blank" rel="noopener">Project page</a></div>
       </div>

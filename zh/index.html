@@ -202,12 +202,12 @@ footer a { color: var(--ink-2); }
         <h3><a href="https://yunfei-bi8.github.io/Trustworthy-HRC-from-Human-human-videos/" target="_blank" rel="noopener">Learning Trustworthy Human-Robot Collaboration Policies from Human-Human Demonstrations</a></h3>
         <p class="sub">通过人类-人类操作视频学习可信的人机交互扩散策略</p>
         <p class="authors"><b>Yunfei Bi</b></p>
-        <p class="venue">硕士论文 · 慕尼黑工业大学 · 2026 年，论文拟投稿 IEEE RA-L</p>
+        <p class="venue">硕士论文 · 慕尼黑工业大学 · 2026 年，论文即将公开</p>
         <p class="desc">人机协作示范的采集需要机器人、遥操作员和协作者同时在场，成本高、风险大。本课题改为从无标记的双人 RGB 视频中学习人机协作，辅以少量机器人遥操作示范，并保证学到的策略能在人身边安全部署。</p>
         <ul class="pts">
           <li><b>从双人视频学习人机协作：</b>用 SAM&nbsp;3 与 HaMeR 提取两人双手骨架并三角化到三维；执行手重定向为夹爪动作，搭档的手作为扩散策略的条件；通过角色互换让每段视频同时覆盖任务的两种角色，实现无机器人示范角色的零样本（zero-shot）学习。</li>
-          <li><b>部署期本体可行性安全层：</b>以“把动作块解释为加噪后的可行动作所需的扩散前向加噪步数”作为可行性评分，仅用可行动作训练；经保形（conformal）校准的阈值会在夹爪无法完成的动作接触物体之前叫停机器人。</li>
-          <li><b>UR10e 真机结果：</b>每个任务仅用 5 条机器人示范，成功率达 18/20 和 17/20（纯机器人示范基线为 5/20 和 4/20）；零样本角色成功率 13/20 和 14/20；不可行动作在接触前被拦截 19/20 和 18/20 次。</li>
+          <li><b>本体可行性安全层：</b>在每个控制周期复用跨具身训练中已有的 X-Diffusion 人-机判别器：动作块需要加多少步噪声才与机器人动作无法区分，即为它的可行性评分。阈值在成功运行上用分割保形预测（split conformal prediction）校准，可在夹爪无法完成的动作执行前叫停机器人，并保证成功运行被打断的概率有上界；整个过程无需机器人模型，也无需任何不可行样本。</li>
+          <li><b>实验结果：</b>UR10e 真机上，每个任务仅用 5 条机器人示范，成功率达 18/20 和 17/20（纯机器人示范基线为 5/20 和 4/20），零样本角色成功率 13/20 和 14/20；在 13,860 次仿真闭环运行中，安全层叫停两个不可行角色 98.3% 和 100% 的运行，可行角色的运行最多只有 0.6% 被叫停。</li>
         </ul>
         <div class="btns"><a href="https://yunfei-bi8.github.io/Trustworthy-HRC-from-Human-human-videos/" target="_blank" rel="noopener">项目主页</a></div>
       </div>
