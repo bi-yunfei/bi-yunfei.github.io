@@ -189,29 +189,7 @@ footer a { color: var(--ink-2); }
   <section id="research" aria-labelledby="h-research">
     <h2 id="h-research">研究成果</h2>
 
-    <article class="pub">
-      <div class="media-col">
-        <div class="thumb"><video data-src="../static/media/thesis_hrc.mp4" poster="../static/media/thesis_hrc.jpg" muted loop playsinline preload="none" aria-label="UR10e robot arm collaborating with a person"></video></div>
-        <div class="inst">
-          <span class="inst-k">研究机构</span>
-          <div class="inst-logos"><a href="https://www.ce.cit.tum.de/lsy/home/" target="_blank" rel="noopener" title="Learning Systems and Robotics Lab"><img class="ol-lsy" src="../static/media/lsy-logo.png" alt="Learning Systems and Robotics Lab" width="400" height="342"></a><a href="https://www.tum.de/en/" target="_blank" rel="noopener" title="Technical University of Munich"><img class="ol-tum" src="../static/media/tum-logo.svg" alt="Technical University of Munich" width="555" height="293"></a></div>
-          <a class="inst-name" href="https://www.ce.cit.tum.de/lsy/home/" target="_blank" rel="noopener">慕尼黑工业大学 · 学习系统与机器人实验室（LSY）</a>
-        </div>
-      </div>
-      <div>
-        <h3><a href="https://yunfei-bi8.github.io/Trustworthy-HRC-from-Human-human-videos/" target="_blank" rel="noopener">Learning Trustworthy Human-Robot Collaboration Policies from Human-Human Demonstrations</a></h3>
-        <p class="sub">通过人类-人类操作视频学习可信的人机交互扩散策略</p>
-        <p class="authors"><b>Yunfei Bi</b></p>
-        <p class="venue">硕士论文 · 慕尼黑工业大学 · 2026 年，论文即将公开</p>
-        <p class="desc">人机协作示范的采集需要机器人、遥操作员和协作者同时在场，成本高、风险大。本课题改为从无标记的双人 RGB 视频中学习人机协作，辅以少量机器人遥操作示范，并保证学到的策略能在人身边安全部署。</p>
-        <ul class="pts">
-          <li><b>从双人视频学习人机协作：</b>用 SAM&nbsp;3 与 HaMeR 提取两人双手骨架并三角化到三维；执行手重定向为夹爪动作，搭档的手作为扩散策略的条件；通过角色互换让每段视频同时覆盖任务的两种角色，实现无机器人示范角色的零样本（zero-shot）学习。</li>
-          <li><b>本体可行性安全层：</b>在每个控制周期复用跨具身训练中已有的 X-Diffusion 人-机判别器：动作块需要加多少步噪声才与机器人动作无法区分，即为它的可行性评分。阈值在成功运行上用分割保形预测（split conformal prediction）校准，可在夹爪无法完成的动作执行前叫停机器人，并保证成功运行被打断的概率有上界；整个过程无需机器人模型，也无需任何不可行样本。</li>
-          <li><b>实验结果：</b>UR10e 真机上，每个任务仅用 5 条机器人示范，成功率达 18/20 和 17/20（纯机器人示范基线为 5/20 和 4/20），零样本角色成功率 13/20 和 14/20；在 13,860 次仿真闭环运行中，安全层叫停两个不可行角色 98.3% 和 100% 的运行，可行角色的运行最多只有 0.6% 被叫停。</li>
-        </ul>
-        <div class="btns"><a href="https://yunfei-bi8.github.io/Trustworthy-HRC-from-Human-human-videos/" target="_blank" rel="noopener">项目主页</a></div>
-      </div>
-    </article>
+    
 
     <article class="pub">
       <div class="media-col">
@@ -260,6 +238,25 @@ footer a { color: var(--ink-2); }
         <div class="btns"><a href="https://arxiv.org/abs/2607.01382" target="_blank" rel="noopener">arXiv</a><a href="https://github.com/Yunfei-Bi8/CommonRoad-Game" target="_blank" rel="noopener">代码</a></div>
       </div>
     </article>
+
+    <article class="pub">
+      <div class="media-col">
+        <div class="thumb"><video data-src="../static/media/thesis_hrc.mp4" poster="../static/media/thesis_hrc.jpg" muted loop playsinline preload="none" aria-label="UR10e robot arm collaborating with a person"></video></div>
+        <div class="inst">
+          <span class="inst-k">研究机构</span>
+          <div class="inst-logos"><a href="https://www.ce.cit.tum.de/lsy/home/" target="_blank" rel="noopener" title="Learning Systems and Robotics Lab"><img class="ol-lsy" src="../static/media/lsy-logo.png" alt="Learning Systems and Robotics Lab" width="400" height="342"></a><a href="https://www.tum.de/en/" target="_blank" rel="noopener" title="Technical University of Munich"><img class="ol-tum" src="../static/media/tum-logo.svg" alt="Technical University of Munich" width="555" height="293"></a></div>
+          <a class="inst-name" href="https://www.ce.cit.tum.de/lsy/home/" target="_blank" rel="noopener">慕尼黑工业大学 · 学习系统与机器人实验室（LSY）</a>
+        </div>
+      </div>
+      <div>
+        <h3><a href="https://yunfei-bi8.github.io/Trustworthy-HRC-from-Human-human-videos/" target="_blank" rel="noopener">Learning Trustworthy Human-Robot Collaboration Policies from Human-Human Demonstrations</a></h3>
+        <p class="sub">通过人类-人类操作视频学习可信的人机交互扩散策略</p>
+        <p class="authors"><b>Yunfei Bi</b></p>
+        <p class="venue">硕士论文 · 慕尼黑工业大学 · 2026 年</p>
+        <p class="desc">从双人视频和少量机器人示范中学习人机协作。</p>
+        <div class="btns"><a href="https://yunfei-bi8.github.io/Trustworthy-HRC-from-Human-human-videos/" target="_blank" rel="noopener">项目主页</a></div>
+      </div>
+    </article>
   </section>
 
   <section id="experience" aria-labelledby="h-exp">
@@ -294,7 +291,7 @@ footer a { color: var(--ink-2); }
           <h3>硕士论文 · 通过人类-人类操作视频学习可信的人机交互扩散策略</h3>
           <p class="org"><a href="https://www.ce.cit.tum.de/lsy/home/" target="_blank" rel="noopener">学习系统与机器人实验室（LSY）</a>，慕尼黑工业大学</p>
           <p class="ppl">导师：<a href="http://oliver.hausdoerfer.de/" target="_blank" rel="noopener">Oliver Hausdörfer, M.Sc.</a>、<a href="https://scholar.google.com/citations?user=LM0X-vQAAAAJ&amp;hl=en" target="_blank" rel="noopener">Niklas Schlüter, M.Sc.</a> ｜ 考官：<a href="https://scholar.google.com/citations?user=QMfeRz0AAAAJ" target="_blank" rel="noopener">Angela P. Schoellig 教授</a></p>
-          <p class="note">跨具身数据协同训练人机协作扩散策略，并提出本体可行性安全层，详见上方<a href="#research">“研究成果”</a>。</p>
+          <p class="note">从双人视频学习人机协作，详见上方<a href="#research">“研究成果”</a>。</p>
         </div>
       </div>
       <div class="item">
