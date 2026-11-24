@@ -1,0 +1,1057 @@
+<!doctype html>
+<html lang="zh-CN" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>通信时延下的多 AGV 编队跟踪控制 · 毕云飞</title>
+<meta name="description" content="面向通信时延的多 AGV 编队跟踪：级联（参考平移）耦合控制律、李雅普诺夫稳定性证明、数值验证，以及在高保真 AGV 模型上的 4,894 次仿真，附交互式回放。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="通信时延下的多 AGV 编队跟踪控制">
+<meta property="og:description" content="通信时延下多 AGV 编队的参考平移耦合：稳定性证明与高保真仿真研究。">
+<meta property="og:image" content="https://bi-yunfei.github.io/agv-formation/media/og.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=JetBrains+Mono:wght@500;600&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<style>
+/* Layout: an academic header over a 1040px column. The replay (two synchronised canvases and a time-series strip) comes
+   first, then the numbers, the controller, the theory and the simulation study. Colours of the four controllers are the
+   ones used in the report's figures. */
+:root {
+  --bg: #ffffff;
+  --band: #f4f6f9;
+  --ink: #111622;
+  --ink-2: #434c5b;
+  --ink-3: #6c7586;
+  --line: #e1e5ec;
+  --accent: #2e62e8;
+  --accent-wash: #e9effd;
+  --c-uncoupled: #8b8a83;
+  --c-cascade: #2a78d6;
+  --c-direct: #eb6834;
+  --c-sigleak: #1baf7a;
+  --stop: #c62f3a;
+  --ok: #12805a;
+  --cv-bg: #fbfcfe;
+  --cv-grid: #e8ecf2;
+  --cv-aisle: #eef1f6;
+  --font: "Archivo", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  --radius: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #0e1218; --band: #151b24; --ink: #e9edf3; --ink-2: #b6bfcd; --ink-3: #8b95a6; --line: #253041; --accent: #6b93ff; --accent-wash: #18233b; --c-uncoupled: #a3a299; --c-cascade: #3987e5; --c-direct: #d95926; --c-sigleak: #199e70; --stop: #e66767; --ok: #3fbf8a; --cv-bg: #11161e; --cv-grid: #1b2430; --cv-aisle: #18202b; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --bg: #0e1218; --band: #151b24; --ink: #e9edf3; --ink-2: #b6bfcd; --ink-3: #8b95a6; --line: #253041; --accent: #6b93ff; --accent-wash: #18233b; --c-uncoupled: #a3a299; --c-cascade: #3987e5; --c-direct: #d95926; --c-sigleak: #199e70; --stop: #e66767; --ok: #3fbf8a; --cv-bg: #11161e; --cv-grid: #1b2430; --cv-aisle: #18202b; color-scheme: dark; }
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 1.0625rem; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+h1, h2, h3, p, ul, ol { margin: 0; }
+h1, h2, h3 { text-wrap: balance; }
+.wrap { max-width: 1040px; margin-inline: auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+/* top bar */
+.top { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 10px 18px; padding-block: 10px; flex-wrap: wrap; }
+.brand { font-weight: 700; font-stretch: 92%; color: var(--ink); font-size: 1rem; }
+.brand:hover { text-decoration: none; color: var(--accent); }
+nav { display: flex; align-items: center; gap: 4px 16px; flex-wrap: wrap; font-size: .93rem; font-weight: 600; }
+nav a { color: var(--ink-2); }
+nav a:hover { color: var(--ink); text-decoration: none; }
+.lang { appearance: none; border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 999px; padding: 3px 12px; font: inherit; font-size: .86rem; font-weight: 650; cursor: pointer; }
+a.lang { display: inline-block; text-decoration: none; }
+.lang:hover { border-color: var(--ink-3); }
+@media (max-width: 640px) { nav a { display: none; } }
+
+/* header */
+.hero { text-align: center; padding-block: clamp(28px, 5vw, 54px) 6px; }
+.kicker { font-family: var(--mono); font-size: .78rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+.hero h1 { margin: 12px auto 0; max-width: 22ch; font-size: clamp(1.85rem, 1.1rem + 3vw, 3.05rem); font-stretch: 90%; font-weight: 760; line-height: 1.07; letter-spacing: -.012em; }
+.hero .subtitle { margin: 14px auto 0; max-width: 60ch; font-size: clamp(1.02rem, .95rem + .3vw, 1.15rem); color: var(--ink-2); }
+.author { margin-top: 20px; font-size: clamp(1.2rem, 1.05rem + .6vw, 1.45rem); font-weight: 700; font-stretch: 95%; }
+.author a { color: inherit; border-bottom: 2px solid var(--line); }
+.author a:hover { color: var(--accent); border-bottom-color: var(--accent); text-decoration: none; }
+.buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink); font-weight: 600; font-size: .95rem; background: var(--bg); }
+.btn:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+.btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.btn.muted { border-style: dashed; color: var(--ink-3); cursor: default; }
+.btn.muted:hover { border-color: var(--line); color: var(--ink-3); }
+.btn small { font-family: var(--mono); font-size: .66rem; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; }
+
+section { padding-block: clamp(46px, 7vw, 76px) 0; scroll-margin-top: 56px; }
+.sec-title { font-size: clamp(1.45rem, 1.1rem + 1.3vw, 2rem); font-stretch: 90%; font-weight: 740; letter-spacing: -.01em; }
+.sec-sub { margin-top: 6px; color: var(--ink-3); font-size: 1rem; max-width: 75ch; }
+.prose { margin-top: 14px; display: grid; gap: 12px; color: var(--ink-2); max-width: 75ch; }
+.prose b { color: var(--ink); font-weight: 650; }
+
+/* ---------------- replay */
+.player { margin-top: 26px; }
+.chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.chips button, .seg button, .speed button, .metric button { appearance: none; border: 1px solid var(--line); background: var(--bg); color: var(--ink-2); border-radius: 999px; padding: 6px 14px; font: inherit; font-size: .9rem; font-weight: 600; cursor: pointer; min-height: 36px; }
+.chips button:hover, .seg button:hover, .speed button:hover, .metric button:hover { border-color: var(--ink-3); color: var(--ink); }
+.chips button[aria-pressed="true"], .speed button[aria-pressed="true"], .metric button[aria-pressed="true"] { border-color: var(--ink); background: var(--ink); color: var(--bg); }
+.chips .tag { font-family: var(--mono); font-size: .7rem; font-weight: 500; margin-left: 6px; opacity: .7; }
+.scen-desc { margin: 14px auto 0; max-width: 78ch; text-align: center; color: var(--ink-2); font-size: .98rem; min-height: 3.2em; }
+.panels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 16px; }
+@media (max-width: 760px) { .panels { grid-template-columns: 1fr; } .cv { aspect-ratio: 16 / 11; } }
+.panel { margin: 0; min-width: 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--cv-bg); }
+.panel .head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 10px; border-bottom: 1px solid var(--line); background: var(--bg); flex-wrap: wrap; }
+.seg { display: inline-flex; flex-wrap: wrap; gap: 4px; }
+.seg button { padding: 4px 11px; min-height: 32px; font-size: .86rem; display: inline-flex; align-items: center; gap: 7px; }
+.seg button i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+.seg button[aria-pressed="true"] { border-color: var(--ink); color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.cv { position: relative; aspect-ratio: 4 / 3; }
+.cv canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: pan-y; }
+.evbadge { position: absolute; left: 10px; top: 10px; display: none; align-items: center; gap: 6px; font-family: var(--mono); font-size: .74rem; font-weight: 600; color: #fff; background: var(--stop); padding: 3px 9px 3px 7px; border-radius: 5px; }
+.evbadge.on { display: inline-flex; }
+.evbadge svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+.scale { position: absolute; right: 10px; bottom: 9px; font-family: var(--mono); font-size: .7rem; color: var(--ink-3); display: grid; justify-items: end; gap: 2px; pointer-events: none; }
+.scale i { display: block; height: 4px; border: 1.5px solid var(--ink-3); border-top: 0; }
+.readout { display: flex; flex-wrap: wrap; gap: 4px 18px; padding: 8px 12px; border-top: 1px solid var(--line); background: var(--bg); font-size: .9rem; color: var(--ink-2); }
+.readout b { font-family: var(--mono); font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
+.controls { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 14px; margin-top: 14px; }
+.play { appearance: none; width: 42px; height: 42px; border-radius: 50%; border: 0; background: var(--ink); color: var(--bg); display: grid; place-items: center; cursor: pointer; flex: none; }
+.play svg { width: 18px; height: 18px; fill: currentColor; }
+.scrub { flex: 1 1 220px; min-width: 160px; accent-color: var(--accent); }
+.tread { font-family: var(--mono); font-size: .86rem; color: var(--ink-2); min-width: 8.5ch; font-variant-numeric: tabular-nums; }
+.speed, .metric { display: inline-flex; gap: 4px; flex-wrap: wrap; }
+.speed button { padding: 3px 10px; min-height: 32px; font-family: var(--mono); font-size: .8rem; }
+.jump { appearance: none; border: 1px solid var(--stop); color: var(--stop); background: var(--bg); border-radius: 999px; padding: 4px 13px; min-height: 32px; font: inherit; font-size: .88rem; font-weight: 600; cursor: pointer; }
+.jump:hover { background: var(--stop); color: #fff; }
+.ts { margin-top: 14px; position: relative; }
+.ts svg, .chart svg { display: block; width: 100%; overflow: visible; }
+.ts svg { cursor: crosshair; touch-action: pan-y; }
+.peaks { margin-top: 8px; font-size: .94rem; color: var(--ink-2); }
+.peaks b { font-family: var(--mono); font-weight: 600; color: var(--ink); }
+.akey { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 10px; font-size: .88rem; color: var(--ink-3); }
+.akey > span { display: inline-flex; align-items: center; gap: 7px; }
+.akey svg { width: 26px; height: 14px; flex: none; }
+.tip { position: absolute; pointer-events: none; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 6px 9px; font-size: .82rem; line-height: 1.4; color: var(--ink-2); box-shadow: 0 4px 14px rgba(0,0,0,.08); white-space: nowrap; z-index: 5; display: none; }
+.tip b { color: var(--ink); font-family: var(--mono); font-weight: 600; }
+.tip i { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 6px; }
+.note-small { margin-top: 8px; font-size: .84rem; color: var(--ink-3); }
+
+/* ---------------- numbers */
+.cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 22px; }
+@media (max-width: 900px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 460px) { .cards { grid-template-columns: 1fr; } }
+.card { border-radius: var(--radius); padding: 18px 18px 16px; background: var(--band); border: 1px solid var(--line); min-width: 0; }
+.card .num { margin-top: 0; font-family: var(--mono); font-weight: 600; font-size: clamp(1.6rem, 1.25rem + 1vw, 2.1rem); letter-spacing: -.03em; line-height: 1.1; color: var(--ink); font-variant-numeric: tabular-nums; }
+.card .num.blue { color: var(--c-cascade); }
+.card p { margin-top: 8px; font-size: .92rem; line-height: 1.45; color: var(--ink-2); }
+
+/* ---------------- controller */
+.flow { display: grid; grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1.15fr) 28px minmax(0, 1fr) 28px minmax(0, 1fr) 28px minmax(0, .7fr); align-items: stretch; margin-top: 24px; }
+.step { background: var(--bg); border: 1px solid var(--line); border-radius: 9px; padding: 12px; display: grid; gap: 4px; align-content: start; min-width: 0; }
+.step b { font-size: .98rem; font-weight: 700; font-stretch: 94%; line-height: 1.25; }
+.step .d { font-size: .86rem; line-height: 1.4; color: var(--ink-2); }
+.step .lab { font-family: var(--mono); font-size: .68rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+.step.key { border-color: color-mix(in srgb, var(--c-cascade) 55%, var(--line)); background: color-mix(in srgb, var(--c-cascade) 7%, var(--bg)); }
+.step.net { border-style: dashed; }
+.arrow { position: relative; align-self: center; height: 2px; margin: 0 5px 0 3px; background: repeating-linear-gradient(90deg, var(--ink-3) 0 5px, transparent 5px 10px); background-size: 10px 2px; animation: flow-h .8s linear infinite; }
+.arrow::after { content: ""; position: absolute; right: -4px; top: -4px; border: 5px solid transparent; border-left: 6px solid var(--ink-3); border-right: 0; }
+@keyframes flow-h { to { background-position: 10px 0; } }
+@keyframes flow-v { to { background-position: 0 10px; } }
+@media (max-width: 860px) {
+  .flow { grid-template-columns: minmax(0, 1fr); }
+  .arrow { justify-self: start; width: 2px; height: 22px; margin: 3px 0 7px 26px; background: repeating-linear-gradient(180deg, var(--ink-3) 0 5px, transparent 5px 10px); background-size: 2px 10px; animation-name: flow-v; }
+  .arrow::after { right: auto; left: -4px; top: auto; bottom: -5px; border: 5px solid transparent; border-top: 6px solid var(--ink-3); border-bottom: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .arrow { animation: none; } }
+.eqs { margin-top: 22px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--band); padding: 6px 18px; display: grid; }
+.eq { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 4px 18px; align-items: center; padding-block: 12px; border-bottom: 1px solid var(--line); min-width: 0; }
+.eq:last-child { border-bottom: 0; }
+@media (max-width: 760px) { .eq { grid-template-columns: 1fr; } }
+.eq .what { font-size: .9rem; color: var(--ink-2); }
+.eq .what b { display: block; color: var(--ink); font-size: .95rem; }
+.tex { overflow-x: auto; overflow-y: hidden; padding-block: 4px; min-width: 0; font-size: .98rem; }
+.tex .katex-display { margin: 0; text-align: left; }
+.tex .katex-display > .katex { text-align: left; }
+.tex.raw { font-family: var(--mono); font-size: .82rem; color: var(--ink-2); white-space: pre-wrap; }
+.params { margin-top: 10px; font-size: .9rem; color: var(--ink-3); }
+.why { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 18px; }
+@media (max-width: 860px) { .why { grid-template-columns: 1fr; } }
+.why div { border-left: 3px solid var(--c-cascade); padding: 4px 0 4px 14px; }
+.why b { display: block; font-size: 1.02rem; font-stretch: 95%; }
+.why p { margin-top: 4px; font-size: .94rem; color: var(--ink-2); }
+.builds { margin-top: 18px; font-size: .94rem; color: var(--ink-2); max-width: 85ch; }
+
+/* ---------------- theory */
+.thm { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 22px; }
+@media (max-width: 760px) { .thm { grid-template-columns: 1fr; } }
+.thm > div { border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; min-width: 0; }
+.thm .tl { font-family: var(--mono); font-size: .7rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+.thm h3 { margin-top: 4px; font-size: 1.08rem; font-stretch: 94%; line-height: 1.3; }
+.thm p { margin-top: 6px; font-size: .94rem; color: var(--ink-2); }
+.thm .new { border-color: color-mix(in srgb, var(--c-cascade) 55%, var(--line)); background: color-mix(in srgb, var(--c-cascade) 6%, var(--bg)); }
+.audit { margin-top: 16px; display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border-radius: var(--radius); background: var(--band); color: var(--ink-2); font-size: .95rem; }
+.audit svg { width: 22px; height: 22px; flex: none; fill: none; stroke: var(--ok); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; margin-top: 1px; }
+.audit b { color: var(--ink); }
+
+/* ---------------- simulation study */
+.layers { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin-top: 22px; }
+@media (max-width: 900px) { .layers { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 460px) { .layers { grid-template-columns: 1fr; } }
+.layer { border: 1px solid var(--line); border-radius: 9px; padding: 12px 13px; background: var(--bg); min-width: 0; }
+.layer b { font-size: .98rem; font-stretch: 95%; }
+.layer ul { margin-top: 6px; padding-left: 1em; font-size: .86rem; line-height: 1.45; color: var(--ink-2); display: grid; gap: 3px; }
+.layer li::marker { color: var(--ink-3); }
+.fair { margin-top: 16px; color: var(--ink-2); font-size: .96rem; max-width: 85ch; }
+.fair b { color: var(--ink); }
+.exps { margin-top: 18px; width: 100%; border-collapse: collapse; font-size: .92rem; }
+.exps th, .exps td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.exps th { font-family: var(--mono); font-size: .74rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+.exps td:first-child { font-family: var(--mono); font-weight: 600; color: var(--ink); white-space: nowrap; }
+.exps td { color: var(--ink-2); }
+.tbl-wrap { overflow-x: auto; }
+.chart-block { margin-top: 34px; }
+.chart-block h3 { font-size: 1.2rem; font-stretch: 93%; font-weight: 720; }
+.chart-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 10px 20px; flex-wrap: wrap; }
+.metric button { padding: 4px 12px; min-height: 32px; font-size: .86rem; }
+.smalls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 26px; margin-top: 14px; }
+@media (max-width: 760px) { .smalls { grid-template-columns: 1fr; } }
+.small h4 { margin: 0 0 4px; font-size: .95rem; font-weight: 650; color: var(--ink); }
+.chart { position: relative; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 12px; font-size: .9rem; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: 7px; }
+.legend i { width: 11px; height: 11px; border-radius: 3px; display: inline-block; }
+.caption { margin-top: 10px; font-size: .92rem; color: var(--ink-2); max-width: 85ch; }
+details.table { margin-top: 10px; font-size: .9rem; }
+details.table summary { cursor: pointer; color: var(--ink-3); font-weight: 600; }
+details.table table { margin-top: 8px; border-collapse: collapse; font-size: .86rem; min-width: 100%; }
+details.table th, details.table td { padding: 4px 10px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
+details.table th:first-child, details.table td:first-child { text-align: left; }
+details.table th { color: var(--ink-3); font-weight: 600; }
+details.table td { font-family: var(--mono); color: var(--ink-2); }
+
+.gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 18px; margin-top: 20px; }
+@media (max-width: 760px) { .gallery { grid-template-columns: 1fr; } }
+.gallery figure { margin: 0; min-width: 0; }
+.gallery a.img { display: block; border: 1px solid var(--line); border-radius: 9px; overflow: hidden; background: #fff; padding: 8px; }
+.gallery img { display: block; width: 100%; height: auto; }
+.gallery figcaption { margin-top: 7px; font-size: .88rem; line-height: 1.45; color: var(--ink-2); }
+.gallery figcaption b { color: var(--ink); }
+
+.learn { margin-top: 20px; display: grid; gap: 12px; padding-left: 0; list-style: none; max-width: 85ch; }
+.learn li { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 10px; color: var(--ink-2); }
+.learn li svg { width: 22px; height: 22px; fill: none; stroke: var(--c-cascade); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; margin-top: 2px; }
+.learn b { color: var(--ink); }
+.limits { margin-top: 16px; padding: 16px 18px; border: 1px dashed var(--line); border-radius: var(--radius); }
+.limits h3 { font-size: 1.02rem; }
+.limits ul { margin-top: 8px; padding-left: 1.1em; display: grid; gap: 6px; color: var(--ink-2); font-size: .94rem; }
+.repro { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 20px; }
+@media (max-width: 860px) { .repro { grid-template-columns: 1fr; } }
+.repro div { border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+.repro b { font-size: 1rem; font-stretch: 95%; }
+.repro p { margin-top: 5px; font-size: .92rem; color: var(--ink-2); }
+.repro code, .prose code { font-family: var(--mono); font-size: .84em; background: var(--band); padding: 1px 5px; border-radius: 4px; }
+
+footer { margin-top: clamp(56px, 8vw, 90px); padding-block: 22px 34px; border-top: 1px solid var(--line); font-size: .9rem; color: var(--ink-3); }
+footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 20px; }
+footer a { color: var(--ink-2); }
+.noscript { padding: 14px; border: 1px dashed var(--line); border-radius: 9px; color: var(--ink-3); }
+</style>
+<link rel="alternate" hreflang="en" href="https://bi-yunfei.github.io/agv-formation/">
+<link rel="alternate" hreflang="zh-CN" href="https://bi-yunfei.github.io/zh/agv-formation/">
+<link rel="alternate" hreflang="x-default" href="https://bi-yunfei.github.io/agv-formation/">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../">← 毕云飞</a>
+    <nav aria-label="Sections">
+      <a href="#replay">动画</a>
+      <a href="#controller">控制律</a>
+      <a href="#theory">理论</a>
+      <a href="#study">仿真研究</a>
+      <a href="#lessons">结论</a>
+      <a class="lang" href="../../agv-formation/" hreflang="en" lang="en">English</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="hero">
+    <p class="kicker">技术报告 · 2026</p>
+    <h1>通信时延下的多 AGV 编队跟踪控制：参考轨迹平移耦合方法</h1>
+    <p class="subtitle">稳定性与通信时延无关的级联耦合控制律、经过数值核验的李雅普诺夫稳定性证明，以及在高保真 AGV 仿真器上的 4894 次仿真验证。</p>
+    <p class="author"><a href="../">毕云飞</a></p>
+    <div class="buttons">
+      <a class="btn" href="#replay"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l7-4.5z"/></svg>交互式动画</a>
+      <a class="btn" href="#study"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 13.5h11M4.5 11V7.5M8 11V4.5M11.5 11V8.5"/></svg>仿真结果</a>
+      <span class="btn muted" title="The report and the simulation code are not public yet"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.8h5.5L12.5 5v9.2H4z M9.5 1.8V5h3"/></svg>报告与代码<small>可索取</small></span>
+    </div>
+  </div>
+
+  <!-- ===================================================== replay -->
+  <section id="replay" aria-labelledby="h-replay" style="padding-top: clamp(28px, 4vw, 44px)">
+    <h2 class="sec-title" id="h-replay">同一次仿真，两种控制器</h2>
+    <p class="sec-sub">两个画面回放的是高保真 AGV 模型上的同一次仿真：随机种子、车辆参数、传感器噪声、Wi-Fi 时延和扰动完全相同，只有耦合控制律不同，可在每个画面上方切换。</p>
+    <div class="player" id="player">
+      <div class="chips" role="group" aria-label="Scenario" id="chips"></div>
+      <p class="scen-desc" id="scen-desc" aria-live="polite"></p>
+      <div class="panels" id="panels"></div>
+      <div class="controls">
+        <button class="play" id="play" type="button" aria-label="Play"><svg viewBox="0 0 16 16" aria-hidden="true"><path id="play-ico" d="M4 2.5v11l9.5-5.5z"/></svg></button>
+        <input class="scrub" id="scrub" type="range" min="0" max="60" step="0.04" value="0" aria-label="Time">
+        <span class="tread" id="tread">t = 0.0 s</span>
+        <span class="speed" id="speed" role="group" aria-label="Playback speed"></span>
+        <button class="jump" id="jump" type="button">跳到扰动时刻</button>
+      </div>
+      <div class="ts" id="ts"></div>
+      <p class="peaks" id="peaks"></p>
+      <div class="akey">
+        <span><svg viewBox="0 0 26 14" aria-hidden="true"><rect x="5" y="3" width="15" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="3 2"/></svg>参考位姿（车辆应处的位置）</span>
+        <span><svg viewBox="0 0 26 14" aria-hidden="true"><rect x="5" y="3" width="15" height="8" rx="2" fill="currentColor"/></svg>实际车辆</span>
+        <span><svg viewBox="0 0 26 14" aria-hidden="true"><path d="M2 7h22" stroke="currentColor" stroke-width="1.6"/></svg>编队形状（实线：实际，虚线：期望）</span>
+        <span><svg viewBox="0 0 26 14" aria-hidden="true"><circle cx="13" cy="7" r="5.5" fill="none" stroke="var(--stop)" stroke-width="2"/></svg>受扰车辆</span>
+      </div>
+      <p class="note-small" id="anim-note">镜头跟随参考编队，因此减速等待的车队会在画面中向后漂移。车体按缩小比例绘制；网格间距 1 m。</p>
+      <noscript><p class="noscript">The replay needs JavaScript.</p></noscript>
+    </div>
+  </section>
+
+  <!-- ===================================================== numbers -->
+  <section id="numbers" aria-labelledby="h-numbers">
+    <h2 class="sec-title" id="h-numbers">主要结果</h2>
+    <div class="cards">
+      <div class="card"><p class="num">4,894</p><p>次高保真模型上的仿真，包括与对照控制器的配对比较，对照控制器在独立的随机种子上调参。</p></div>
+      <div class="card"><p class="num blue">0</p><p>次级联控制器失败：时延最长 4 s、丢包率 90 %、通信中断、12 辆车、8 倍调参增益下均未失败。</p></div>
+      <div class="card"><p class="num blue">−47 %</p><p>单车急停 3 s 后的编队误差积分（IAE），级联耦合相对无耦合（R6）。</p></div>
+      <div class="card"><p class="num blue">−21…32 %</p><p>打滑后的编队误差积分，耦合控制律相对无耦合（R2 与 R6）。</p></div>
+    </div>
+    <p class="prose">耦合并非没有代价：其他车辆等待受扰车辆时会落后于各自的参考轨迹，跟踪误差因此增大（级联耦合的中位数增加 24 %）。正常运行时编队精度约为 3 cm RMS，由定位误差决定，任何耦合控制律都无法观测并消除它。</p>
+  </section>
+
+  <!-- ===================================================== problem + controller -->
+  <section id="controller" aria-labelledby="h-ctrl">
+    <h2 class="sec-title" id="h-ctrl">问题与控制律</h2>
+    <div class="prose">
+      <p>一组差速驱动 AGV 需要像一个刚体一样保持队形运动，例如协同搬运大件物体。每辆车跟踪各自的参考轨迹，所有参考轨迹合起来构成队形。只要每辆车都跟踪得好，队形就能保持；但一旦某辆车受到扰动（打滑或安全急停），其他车并不知道，队形就会被拉开。通过网络把车辆耦合起来，可以让其他车做出反应；然而网络是 Wi-Fi：各链路时延不同、随时间变化甚至跳变，还会丢包。<b>带时延的耦合可能使整个车队失稳。</b></p>
+      <p>下面的设计让带时延的数据完全不进入反馈回路：邻居数据只驱动每辆车上的一个小型滤波器，用来平移本车自己的参考轨迹；跟踪控制律保持不变，去跟踪平移后的参考轨迹。</p>
+    </div>
+
+    <div class="flow" aria-label="Cascade structure">
+      <div class="step net"><span class="lab">无线网络</span><b>邻居广播</b><span class="d">σ<sub>j</sub>(t − τ<sub>ij</sub>)：有时延、会丢包、可能乱序</span></div>
+      <div class="arrow" aria-hidden="true"></div>
+      <div class="step key"><span class="lab">本文</span><b>参考平移滤波器</b><span class="d">二阶；输入饱和于 ρ·v<sub>r</sub>；本车误差限幅 ē</span></div>
+      <div class="arrow" aria-hidden="true"></div>
+      <div class="step"><span class="lab">本地</span><b>平移后的参考</b><span class="d">p<sub>r</sub> − z，速度与加速度前馈精确</span></div>
+      <div class="arrow" aria-hidden="true"></div>
+      <div class="step"><span class="lab">不变</span><b>跟踪控制律</b><span class="d">增益调度的独轮车跟踪律；不接触任何网络数据</span></div>
+      <div class="arrow" aria-hidden="true"></div>
+      <div class="step"><span class="lab">AGV</span><b>(v, ω)</b><span class="d">线速度与角速度</span></div>
+    </div>
+
+    <div class="eqs">
+      <div class="eq"><div class="what"><b>本地误差与广播量</b>z：平移量，w：平移速度</div><div class="tex" data-tex="\varepsilon_i = p_{r,i} - z_i - p_i,\qquad \zeta_i = z_i + \tfrac{1}{\gamma}\,w_i,\qquad \sigma_i = \zeta_i + \varepsilon_i"></div></div>
+      <div class="eq"><div class="what"><b>滤波器输入</b>时延数据唯一进入的地方</div><div class="tex" data-tex="g_i = -\lambda\,\zeta_i - \Lambda \sum_j a_{ij}\Big[\zeta_i + \phi(\varepsilon_i) - \sigma_j\big(t-\tau_{ij}(t)\big)\Big],\qquad \phi(\varepsilon) = \varepsilon\,\min\!\Big\{1,\tfrac{\bar e}{|\varepsilon|}\Big\}"></div></div>
+      <div class="eq"><div class="what"><b>饱和与滤波</b>平移速度不超过 ρ·v<sub>r</sub></div><div class="tex" data-tex="u_i = g_i\,\min\!\Big\{1,\tfrac{\rho\, v_{r,i}}{|g_i|}\Big\},\qquad \dot w_i = \gamma\,(u_i - w_i),\qquad \dot z_i = w_i"></div></div>
+      <div class="eq"><div class="what"><b>跟踪控制律</b>μ、ν、ϑ 为车体坐标系下的误差；带帽的速度取自平移后的参考</div><div class="tex" data-tex="v_i = \hat v_i\cos\vartheta_i + k_i\,\mu_i,\qquad \omega_i = \hat\omega_i + k_i\,\vartheta_i + b\,\hat v_i\,\mathrm{sinc}(\vartheta_i)\,\nu_i,\qquad k_i = 2\psi\sqrt{\hat\omega_i^2 + b\,\hat v_i^2}"></div></div>
+    </div>
+    <p class="params">研究中使用的参数：λ = 1 s⁻¹，Λ = 1 s⁻¹（调参所得），γ = 5 s⁻¹，ρ = 0.6，ē = 5 cm，ψ = 0.7，b = 3 m⁻²。</p>
+
+    <div class="why">
+      <div><b>时延只进入滤波器</b><p>跟踪律只用本车位姿和平移后的参考。迟到或丢失的数据包只影响参考如何平移，不影响反馈回路，因此每辆车的李雅普诺夫函数完全不受网络影响。</p></div>
+      <div><b>平移有界</b><p>平移速度限制在参考速度的 ρ = 60 % 以内，平移后的参考始终是速度为原参考 40–160 % 的可行轨迹。车辆可以减速等待，而耦合带来的额外需求始终有界，不会随增益增大；研究中直接时延耦合正是在增益把驱动推入饱和时发散的。</p></div>
+      <div><b>本车误差限幅</b><p>本车误差进入滤波器时被限制在 ē 以内，因此无法跟随的车辆（卡住或打滑）不会把自己的参考继续往前推；扰动结束后，泄漏项 λ 让平移量回到零。</p></div>
+    </div>
+    <p class="builds"><b>借鉴与创新。</b>跟踪律采用 De Luca、Oriolo 与 Vendittelli（2001）的增益调度独轮车跟踪律；“时延数据只进入参考滤波器”的思路借鉴了机器人编队的同步滤波器，特别是 Peng、Ngo 与 Liu（Control Engineering Practice，2023），以及协同路径跟踪方法。据文献调研，本工作的新意在于：针对“各自跟踪独立参考轨迹的运动学独轮车”给出这一组合（二阶滤波器保证前馈精确、饱和保证可行、泄漏项保证精确收敛），给出与时延无关的显式估计，以及一个刻画“耦合到底带来多少收益”的公式。</p>
+  </section>
+
+  <!-- ===================================================== theory -->
+  <section id="theory" aria-labelledby="h-theory">
+    <h2 class="sec-title" id="h-theory">理论结果</h2>
+    <p class="sec-sub">适用于运动学独轮车模型、任意有界时延（各链路不同、时变、可跳变）以及任意有向、可切换的通信拓扑。</p>
+    <div class="thm">
+      <div><p class="tl">定理 · 收敛性</p><h3>任意有界时延下误差有界且收敛</h3><p>跟踪误差与编队误差有界并收敛到零；有界性对时延的大小没有任何限制（Razumikhin 方法与最大范数论证）。</p></div>
+      <div><p class="tl">命题 · 严格李雅普诺夫函数</p><h3>跟踪律的显式常数</h3><p>为增益调度跟踪律构造严格李雅普诺夫函数，并引入自由长度尺度，使所有常数量纲一致。</p></div>
+      <div><p class="tl">引理与定理 · 收敛速率</p><h3>指数收敛，增益与时延无关</h3><p>对带时延的滤波器网络给出 Halanay 型估计，由此得到指数收敛，以及增益与时延无关的局部输入-状态稳定（ISS）估计。</p></div>
+      <div class="new"><p class="tl">命题 · 新结果</p><h3>耦合带来的收益</h3><p>持续存在的本地误差按下式传递到跟踪误差：</p><div class="tex" data-tex="e^{\infty} = \lambda\,(\lambda I + \Lambda L)^{-1}\,\varepsilon^{\infty}"></div><p>在无向图上，误差的均值不变，编队误差至少按因子 λ/(λ + Λλ₂(L)) 缩小，且对任意时延成立（λ₂(L) 为通信图的代数连通度）。</p></div>
+    </div>
+    <div class="audit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8 4.5 5.6v6.1c0 4.4 3.1 8.1 7.5 9.5 4.4-1.4 7.5-5.1 7.5-9.5V5.6z M8.6 12.2l2.4 2.4 4.6-4.8"/></svg><p><b>经过独立审查和数值核验。</b>以审稿人的标准对证明做了两轮独立审查：定理本身未发现错误；补全了缺失的前提条件，修正了一处错误的注释和符号问题，并补充了直接耦合时延界的证明。报告中的每个数字都与保存的仿真结果重新核对过，每条参考文献都与出版方记录核实过。此外还用事件驱动、误差可控的仿真逐条核验：2×10⁷ 次李雅普诺夫不等式随机检验、1000 个精确积分的时延网络、280 次时延最长 4.2 s 且丢包 13 % 的闭环仿真，均未出现违反。</p></div>
+  </section>
+
+  <!-- ===================================================== study -->
+  <section id="study" aria-labelledby="h-study">
+    <h2 class="sec-title" id="h-study">仿真研究：在真实 AGV 上是否有效？</h2>
+    <p class="sec-sub">理论结果针对运动学独轮车模型。为了缩小 sim-to-real 差距，我们在一个刻意违反理论假设的高保真模型上测试控制器。每一层都可以切换为理想版本；在理想极限下，该仿真器与另一个独立的事件驱动仿真器的结果相差不到 0.34 mm。</p>
+    <div class="layers">
+      <div class="layer"><b>控制器</b><ul><li>每车按本地时钟以 50 Hz 运行</li><li>时钟偏差 ±5 ms，漂移 ±20 ppm</li><li>执行延迟 10 ms</li></ul></div>
+      <div class="layer"><b>驱动</b><ul><li>PI 轮速环，带抗饱和</li><li>扭矩上限 20 N·m，轮速上限 1.5 m/s</li><li>设定值斜坡 1 m/s²</li></ul></div>
+      <div class="layer"><b>车辆</b><ul><li>刚体动力学，150 kg + 载荷</li><li>轮径与轮距误差 ±1 %</li><li>纵向与侧向打滑</li></ul></div>
+      <div class="layer"><b>定位</b><ul><li>激光雷达定位 20 Hz，延迟 50 ms</li><li>噪声 10 mm，缓慢漂移的偏差</li><li>与轮式里程计融合</li></ul></div>
+      <div class="layer"><b>网络</b><ul><li>20 Hz 广播，30 ± 15 ms 时延并有尖峰</li><li>突发丢包（Gilbert–Elliott）、通信中断</li><li>链路切换</li></ul></div>
+    </div>
+    <p class="fair"><b>公平对比。</b>四种控制律使用同一个跟踪律：<b>无耦合</b>；<b>级联耦合</b>（本文）；<b>σ-leak 滤波器</b>（把 Peng 等人参考滤波器的结构原样移植到独轮车模型，并非他们的控制器）；以及<b>直接耦合</b>（把带时延的邻居误差直接加入跟踪律）。每个耦合增益都在十个从不用于测试的种子上调参。所有比较都是配对的（同一种子下所有控制器的初始误差、车辆参数、网络、噪声和打滑完全相同），结果给出均值或中位数及 95 % bootstrap 置信区间，并用带 Holm 校正的 Wilcoxon 符号秩检验做显著性检验。</p>
+    <div class="tbl-wrap">
+    <table class="exps">
+      <thead><tr><th>实验</th><th>内容</th></tr></thead>
+      <tbody>
+        <tr><td>R0</td><td>在独立种子上公平调参；直接耦合为何发散（驱动饱和）</td></tr>
+        <tr><td>R1</td><td>参考文献中的异构正弦时延下的对比，搬运工况</td></tr>
+        <tr><td>R2</td><td>高保真模型上有无同步的对比：正常运行与打滑</td></tr>
+        <tr><td>R3</td><td>网络扫描：时延（10 ms–4 s）、丢包（最高 90 %）、通信中断、广播频率</td></tr>
+        <tr><td>R4</td><td>逐一考察 sim-to-real 因素：定位、标定、打滑、载荷、延迟、控制频率、时钟、轮速上限</td></tr>
+        <tr><td>R5</td><td>对所有因素做域随机化蒙特卡洛（150 组）</td></tr>
+        <tr><td>R6</td><td>扰动事件：打滑、急停、重定位跳变、链路切换、链路永久失效</td></tr>
+        <tr><td>R7</td><td>拓扑与规模（最多 12 辆车）；按度归一化权重（R7b）</td></tr>
+        <tr><td>R8</td><td>级联参数敏感性</td></tr>
+        <tr><td>R9</td><td>步长收敛性、逐位一致的重复运行、仿真器交叉验证</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="chart-block" id="events-block">
+      <div class="chart-head">
+        <h3>扰动事件（R6）</h3>
+        <div class="metric" id="metric" role="group" aria-label="Metric"></div>
+      </div>
+      <div class="smalls" id="events"></div>
+      <div class="legend" id="events-legend"></div>
+      <p class="caption">仓库路线，20 个种子，均值及 95 % bootstrap 置信区间，统计窗口为扰动发生后 15 s。耦合降低了打滑和急停后的编队误差，代价是跟踪误差变大，因为其他车辆在等待。重定位跳变是定位层面的误差，任何耦合控制律都无法察觉。σ-leak 滤波器在这条路线上打滑后反而比无耦合更差，部分仿真到结束时仍未恢复。</p>
+      <details class="table"><summary>以表格显示</summary><div class="tbl-wrap" id="events-table"></div></details>
+    </div>
+
+    <div class="chart-block" id="latency-block">
+      <h3>时延多大会失效？（R3）</h3>
+      <div class="chart" id="latency"></div>
+      <div class="legend" id="latency-legend"></div>
+      <p class="caption">2 s 打滑后 15 s 内的编队误差积分随平均网络时延的变化（仓库路线，10 个种子；中位数与四分位距）。两种耦合控制律在所有时延下都保持稳定，但当数据比扰动本身还“旧”时，耦合的收益就消失了：时延达到 2 s 及以上时，级联耦合比无耦合差 4–13 %，直接耦合也只好 2–4 %。</p>
+      <details class="table"><summary>以表格显示</summary><div class="tbl-wrap" id="latency-table"></div></details>
+    </div>
+
+    <div class="chart-block">
+      <h3>报告中的图</h3>
+      <div class="gallery">
+        <figure><a class="img" href="../../agv-formation/figures/r2_trajectories.png" target="_blank" rel="noopener"><img src="../../agv-formation/figures/r2_trajectories.png" alt="Driven paths of three AGVs in the transport manoeuvre" loading="lazy" width="1161" height="504"></a><figcaption><b>R2.</b> 高保真模型、级联耦合、打滑：实际路径（彩色）、参考路径（灰色），以及若干时刻的实际编队（黑色）与参考编队（虚线）。</figcaption></figure>
+        <figure><a class="img" href="../../agv-formation/figures/r6_events.png" target="_blank" rel="noopener"><img src="../../agv-formation/figures/r6_events.png" alt="Formation error around six disturbance events" loading="lazy" width="1473" height="826"></a><figcaption><b>R6.</b> 30 s 时四种扰动事件前后的编队误差，以及某车所有链路失效后的跟踪误差（有无 0.5 s 看门狗），中位数与四分位距，20 个种子。</figcaption></figure>
+        <figure><a class="img" href="../../agv-formation/figures/r3_network.png" target="_blank" rel="noopener"><img src="../../agv-formation/figures/r3_network.png" alt="Formation IAE under six network sweeps" loading="lazy" width="1366" height="828"></a><figcaption><b>R3.</b> 网络扫描：时延、丢包、通信中断（有无看门狗）、广播频率，以及参考文献中的正弦时延。</figcaption></figure>
+        <figure><a class="img" href="../../agv-formation/figures/r4_simreal_steady.png" target="_blank" rel="noopener"><img src="../../agv-formation/figures/r4_simreal_steady.png" alt="Steady formation RMS against eleven sim-to-real factors" loading="lazy" width="1372" height="1087"></a><figcaption><b>R4.</b> 逐一改变 sim-to-real 因素时的稳态编队 RMS。定位偏差和时钟偏差占主导，控制律无法消除。</figcaption></figure>
+        <figure><a class="img" href="../../agv-formation/figures/r5_domain_rand.png" target="_blank" rel="noopener"><img src="../../agv-formation/figures/r5_domain_rand.png" alt="Distributions of IAE ratios over 150 randomised draws" loading="lazy" width="1366" height="439"></a><figcaption><b>R5.</b> 150 组域随机化：编队与跟踪误差积分相对无耦合的配对比值分布，以及编队误差峰值。</figcaption></figure>
+        <figure><a class="img" href="../../agv-formation/figures/r7_scaling.png" target="_blank" rel="noopener"><img src="../../agv-formation/figures/r7_scaling.png" alt="Formation IAE for 3 to 12 vehicles on five graphs" loading="lazy" width="1363" height="468"></a><figcaption><b>R7.</b> 3 到 12 辆车、五种拓扑（单位权重）。完全图下直接耦合在 N = 5 时 6 次中失败 1 次，N ≥ 8 时全部失败；按度归一化权重可解决（R7b）。</figcaption></figure>
+        <figure><a class="img" href="../../agv-formation/figures/r8_sensitivity.png" target="_blank" rel="noopener"><img src="../../agv-formation/figures/r8_sensitivity.png" alt="Sensitivity of the cascade to its parameters" loading="lazy" width="1364" height="357"></a><figcaption><b>R8.</b> 逐一改变级联参数：性能变化平缓；增大泄漏项 λ 可降低跟踪代价，ē 取 0.1–0.2 m 优于默认值。</figcaption></figure>
+        <figure><a class="img" href="../../agv-formation/figures/form.png" target="_blank" rel="noopener"><img src="../../agv-formation/figures/form.png" alt="Measured formation-error ratio against the predicted factor" loading="lazy" width="1365" height="472"></a><figcaption><b>理论核验。</b> 有无耦合时稳态编队误差之比的实测值与预测因子 λ/(λ + Λλ₂(L)) 的对比：完全图下两者相等。</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== lessons -->
+  <section id="lessons" aria-labelledby="h-lessons">
+    <h2 class="sec-title" id="h-lessons">结论与部署建议</h2>
+    <ul class="learn">
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8 4.5 5.6v6.1c0 4.4 3.1 8.1 7.5 9.5 4.4-1.4 7.5-5.1 7.5-9.5V5.6z"/></svg><p><b>失败情况。</b>级联耦合在所有仿真中都没有失败。直接耦合在较大的有效增益把驱动推入饱和时、以及定位噪声较大时会失败；σ-leak 滤波器在 13 % 的域随机化样本中失败。</p></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18 9.5 12l4 3.5L20 7 M15 7h5v5"/></svg><p><b>收益。</b>对于车辆能够观测到的扰动，耦合能减小编队误差：打滑（编队误差积分降低 21–32 %）、急停（级联降低 47 %），以及标定误差、打滑噪声和驱动饱和（编队 RMS 降低 21–38 %）；但它无法消除定位偏差和时钟偏差。</p></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16M17 4v16M7 9h10M7 15h10"/></svg><p><b>级联还是直接耦合。</b>时延为几十毫秒时，直接耦合在打滑后的编队改善与级联相当，且跟踪代价更低；级联在急停、驱动饱和、打滑和定位噪声较大时更好，坏情况的尾部更小，并且是唯一一个在所有测试增益下都没有失败的控制律。</p></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/></svg><p><b>时延。</b>两种耦合控制律在所有测试的时延下都没有失败，但当数据比扰动本身还旧时（对 2 s 打滑而言，时延超过 1–2 s），收益就会消失。</p></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h10M4 17h7 M16.5 15.5l2 2 3.5-4"/></svg><p><b>部署建议。</b>要实现厘米级编队，需要约 1 cm 以内的定位偏差和几毫秒以内的时钟同步；耦合权重应按节点度归一化；建议加入看门狗，剔除长时间无数据的邻居，避免过期数据一直起作用。</p></li>
+    </ul>
+    <div class="limits">
+      <h3>局限性</h3>
+      <ul>
+        <li>本研究仅为仿真。车辆参数为工业差速 AGV 的通用取值，而非某款具体车辆，跟踪增益 ψ 和 b 为假定值。</li>
+        <li>定理针对运动学独轮车模型；在动力学模型上，结论由仿真而非证明支撑。</li>
+        <li>创新性是增量式的：整体架构和分析工具都是已有的；贡献在于针对各自跟踪参考轨迹的运动学独轮车给出这一组合、显式常数，以及编队收益的结论。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================================================== reproducibility -->
+  <section id="repro" aria-labelledby="h-repro">
+    <h2 class="sec-title" id="h-repro">可复现性</h2>
+    <div class="repro">
+      <div><b>确定性任务</b><p>每次仿真都由一个 JSON 任务描述唯一确定。每个种子派生六路独立随机流，并使用公共随机数：随机数的抽取次数与控制器和参数取值无关。</p></div>
+      <div><b>逐位一致的重复运行</b><p>任务列表、指标、软件环境和仿真器源码哈希与结果一同保存；重新运行已存任务得到逐位一致的结果。积分步长缩小为 1/10 时，报告中的各项指标变化不超过 0.63 %。</p></div>
+      <div><b>一条命令</b><p><code>run_all.py</code> 依次运行单元测试并重新生成所有数据、图和表（4894 次仿真，18 核约 1.5 小时）。环境：Python 3.10、NumPy 2.2.6、SciPy 1.15.3、Matplotlib 3.10.7。</p></div>
+    </div>
+    <p class="prose">上方动画中的仿真就是研究中的原始任务（实验 R6、R2、R7b），只是重新运行并记录了完整轨迹；其指标与已保存的结果一致。</p>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 <a href="../">毕云飞</a></span>
+    <span>仿真数据与图片来自技术报告。</span>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js" defer></script>
+<script>
+(function () {
+  "use strict";
+  var root = document.documentElement, KEY = "yb-lang";
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ------------------------------------------------------------------ language */
+  var listeners = [];
+  function L() { return root.dataset.lang === "zh" ? "zh" : "en"; }
+
+  var T = {
+    en: { uncoupled: "No coupling", cascade: "Cascade (proposed)", direct: "Direct coupling", sigleak: "σ-leak filter",
+          s_uncoupled: "No coupling", s_cascade: "Cascade", s_direct: "Direct", s_sigleak: "σ-leak",
+          form: "formation error", track: "mean tracking error", stop: "STOP", slip: "SLIP 40 %",
+          ev_stop: "AGV 2: safety stop", ev_slip: "AGV 2: traction loss", ev_slip_n: "traction loss",
+          peaks: "Peak formation error within 15 s of the event: ", iae: "formation IAE", ts_y: "formation error (m)", ts_x: "time (s)",
+          m_iae: "Formation IAE", m_peak: "Peak formation error", m_track: "Tracking IAE",
+          u_iae: "m·s", u_peak: "m", u_track: "m·s", vs: "vs. no coupling",
+          e_traction: "Traction loss of AGV 2 (40 % for 2 s)", e_stop: "Safety stop of AGV 2 (3 s)", e_reloc: "Relocalisation jump of AGV 2 (10 cm)", e_switching: "Traction loss with switching links",
+          lat_x: "mean latency (s)", lat_y: "formation IAE (m·s)", lat_band: "No coupling (median, IQR)", ctrl: "Controller", event: "Event", median: "median", iqr: "IQR", latency: "latency",
+          play: "Play", pause: "Pause", speed: "speed",
+          sc: { stop: ["Safety stop", "R6"], traction: ["Traction loss", "R2"], n12: ["12 vehicles", "R7b"] },
+          desc: {
+            stop: "Warehouse route at 0.8 m/s. AGV 2 makes a safety stop for 3 s at t = 30 s. Without coupling the other two drive on and the triangle is torn apart; with coupling they slow down and wait, then the team catches up with its references.",
+            traction: "Transport manoeuvre: L-shaped formation along an S-shaped aisle at 0.4 m/s, turning by −0.6 rad and back. One AGV delivers only 40 % of its motion for 2 s (wheel slip).",
+            n12: "12 AGVs on a wide loop at 0.8 m/s, complete graph with degree-normalised weights (1/11 per neighbour); AGV 2 loses traction for 2 s at t = 30 s. With such small weights the coupling helps only a little here, but the formation stays stable."
+          },
+          run: "Run: experiment {exp}, {note}." },
+    zh: { uncoupled: "无耦合", cascade: "级联耦合（本文）", direct: "直接耦合", sigleak: "σ-leak 滤波器",
+          s_uncoupled: "无耦合", s_cascade: "级联", s_direct: "直接耦合", s_sigleak: "σ-leak",
+          form: "编队误差", track: "平均跟踪误差", stop: "急停", slip: "打滑 40 %",
+          ev_stop: "2 号车：安全急停", ev_slip: "2 号车：打滑", ev_slip_n: "打滑",
+          peaks: "扰动发生后 15 s 内的编队误差峰值：", iae: "编队误差积分", ts_y: "编队误差 (m)", ts_x: "时间 (s)",
+          m_iae: "编队误差积分", m_peak: "编队误差峰值", m_track: "跟踪误差积分",
+          u_iae: "m·s", u_peak: "m", u_track: "m·s", vs: "相对无耦合",
+          e_traction: "2 号车打滑（40 %，2 s）", e_stop: "2 号车安全急停（3 s）", e_reloc: "2 号车重定位跳变（10 cm）", e_switching: "打滑 + 链路切换",
+          lat_x: "平均时延 (s)", lat_y: "编队误差积分 (m·s)", lat_band: "无耦合（中位数与四分位距）", ctrl: "控制律", event: "事件", median: "中位数", iqr: "四分位距", latency: "时延",
+          play: "播放", pause: "暂停", speed: "速度",
+          sc: { stop: ["安全急停", "R6"], traction: ["打滑", "R2"], n12: ["12 车编队", "R7b"] },
+          desc: {
+            stop: "仓库路线，速度 0.8 m/s。2 号车在 t = 30 s 安全急停 3 s。无耦合时另外两车继续前进，三角队形被拉开；有耦合时它们减速等待，之后整个车队再追上各自的参考轨迹。",
+            traction: "搬运工况：L 形编队沿 S 形通道以 0.4 m/s 行驶，并整体旋转 −0.6 rad 后转回。其中一辆车在 2 s 内只能实现 40 % 的运动（车轮打滑）。",
+            n12: "12 辆车沿大环线以 0.8 m/s 行驶，完全图通信、按度归一化权重（每个邻居 1/11）；2 号车在 t = 30 s 打滑 2 s。权重这么小时耦合的改善有限，但编队始终稳定。"
+          },
+          run: "仿真来源：实验 {exp}，{note}。" }
+  };
+  function t(k) { return T[L()][k]; }
+  var CTRL_ORDER = ["uncoupled", "cascade", "direct", "sigleak"];
+  var NOTE_ZH = { stop: "20 个种子中的种子 {seed}（其级联/无耦合编队误差积分比接近中位数）", traction: "种子 7，即报告 R2 轨迹图中的那次仿真", n12: "6 个种子中的种子 0，按度归一化权重" };
+  var NOTE_EN = { stop: "seed {seed} of 20, whose cascade-to-no-coupling ratio of the formation IAE is close to the median", traction: "seed 7, the run shown in the trajectory figure of R2", n12: "seed 0 of 6, degree-normalised weights" };
+
+  /* ------------------------------------------------------------------ colours */
+  var C = {};
+  function readColors() {
+    var cs = getComputedStyle(root);
+    ["bg", "band", "ink", "ink-2", "ink-3", "line", "accent", "c-uncoupled", "c-cascade", "c-direct", "c-sigleak", "stop", "cv-bg", "cv-grid", "cv-aisle"].forEach(function (k) { C[k] = cs.getPropertyValue("--" + k).trim(); });
+  }
+  readColors();
+  function ccol(k) { return C["c-" + k]; }
+  function alpha(hex, a) {
+    var h = hex.replace("#", ""); if (h.length === 3) h = h.split("").map(function (c) { return c + c; }).join("");
+    return "rgba(" + parseInt(h.slice(0, 2), 16) + "," + parseInt(h.slice(2, 4), 16) + "," + parseInt(h.slice(4, 6), 16) + "," + a + ")";
+  }
+
+  /* ------------------------------------------------------------------ helpers */
+  var SVGNS = "http://www.w3.org/2000/svg";
+  function el(tag, attrs, parent, svg) {
+    var e = svg ? document.createElementNS(SVGNS, tag) : document.createElement(tag);
+    if (attrs) for (var k in attrs) { if (k === "text") e.textContent = attrs[k]; else e.setAttribute(k, attrs[k]); }
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function s(tag, attrs, parent) { return el(tag, attrs, parent, true); }
+  function fmt(v, nd) { return (Math.round(v * Math.pow(10, nd)) / Math.pow(10, nd)).toFixed(nd); }
+  function fmtCm(m) { return m >= 1 ? m.toFixed(2) + " m" : (m * 100).toFixed(1) + " cm"; }
+  function niceMax(v) { var p = Math.pow(10, Math.floor(Math.log10(v))); var m = v / p; return (m <= 1 ? 1 : m <= 2 ? 2 : m <= 2.5 ? 2.5 : m <= 5 ? 5 : 10) * p; }
+  function ticks(max, n) { var step = niceMax(max / n); var out = []; for (var v = 0; v <= max + 1e-9; v += step) out.push(+v.toFixed(6)); return out; }
+  function tickNd(max, n) { var step = niceMax(max / n); return step >= 1 && Math.abs(step - Math.round(step)) < 1e-9 ? 0 : step >= 0.1 && Math.abs(step * 10 - Math.round(step * 10)) < 1e-9 ? 1 : 2; }
+
+  /* ------------------------------------------------------------------ KaTeX */
+  function renderTex() {
+    document.querySelectorAll(".tex[data-tex]").forEach(function (e) {
+      var src = e.getAttribute("data-tex");
+      if (window.katex) { try { katex.render(src, e, { displayMode: true, throwOnError: false }); return; } catch (err) {} }
+      e.textContent = src; e.classList.add("raw");
+    });
+  }
+  window.addEventListener("load", renderTex);
+
+  /* ================================================================== replay */
+  var player = { data: null, sc: null, side: ["uncoupled", "cascade"], time: 0, playing: false, speed: 1, last: 0, visible: true, cvs: [] };
+
+  function prepare(sc) {
+    var N = sc.N, F = sc.frames;
+    sc.refXY = Int32Array.from(sc.ref.xy); sc.refTH = Int32Array.from(sc.ref.th);
+    Object.keys(sc.ctrl).forEach(function (k) {
+      var c = sc.ctrl[k];
+      c.XY = Int32Array.from(c.xy); c.TH = Int32Array.from(c.th);
+      c.FORM = Float32Array.from(c.form, function (v) { return v / 1000; });
+      c.TRACK = Float32Array.from(c.track, function (v) { return v / 1000; });
+    });
+    sc.route = new Float32Array(F * 2);
+    for (var f = 0; f < F; f++) {
+      var sx = 0, sy = 0;
+      for (var i = 0; i < N; i++) { sx += sc.refXY[(f * N + i) * 2]; sy += sc.refXY[(f * N + i) * 2 + 1]; }
+      sc.route[2 * f] = sx / N / 1000; sc.route[2 * f + 1] = sy / N / 1000;
+    }
+    var o = sc.offs, dmin = 1e9, dmax = 0, ext = 0;
+    for (i = 0; i < N; i++) {
+      ext = Math.max(ext, Math.hypot(o[i][0], o[i][1]));
+      for (var j = i + 1; j < N; j++) { var d = Math.hypot(o[i][0] - o[j][0], o[i][1] - o[j][1]); dmin = Math.min(dmin, d); dmax = Math.max(dmax, d); }
+    }
+    sc.links = [];
+    for (i = 0; i < N; i++) for (j = i + 1; j < N; j++) {
+      var dd = Math.hypot(o[i][0] - o[j][0], o[i][1] - o[j][1]);
+      if (N <= 4 || dd <= 1.25 * dmin) sc.links.push([i, j]);
+    }
+    sc.glyphL = Math.min(0.5, 0.66 * dmin); sc.glyphW = 0.66 * sc.glyphL;
+    sc.view = sc.id === "n12" ? 11.5 : sc.id === "traction" ? 6.0 : 9.0;      // metres across the panel
+    sc.aisle = 2 * ext + 1.2;
+    sc.T = sc.t0 + (F - 1) * sc.dt;
+    sc.ev = sc.events[0];
+    sc.ev.t1 = sc.ev.t1 == null ? sc.ev.t0 + 1 : sc.ev.t1;
+    sc.yMax = 0;
+    Object.keys(sc.ctrl).forEach(function (k) { for (var f2 = 0; f2 < F; f2++) sc.yMax = Math.max(sc.yMax, sc.ctrl[k].FORM[f2]); });
+  }
+
+  function fr(sc, time) { var u = (time - sc.t0) / sc.dt; var f = Math.max(0, Math.min(sc.frames - 2, Math.floor(u))); return [f, Math.max(0, Math.min(1, u - f))]; }
+  function poseAt(XY, TH, N, f, a, i) {
+    var b0 = (f * N + i) * 2, b1 = ((f + 1) * N + i) * 2;
+    return [(XY[b0] * (1 - a) + XY[b1] * a) / 1000, (XY[b0 + 1] * (1 - a) + XY[b1 + 1] * a) / 1000, (TH[f * N + i] * (1 - a) + TH[(f + 1) * N + i] * a) / 1000];
+  }
+  function seriesAt(arr, f, a) { return arr[f] * (1 - a) + arr[f + 1] * a; }
+
+  function glyph(ctx, x, y, th, L, W, sc_) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(-th);
+    var l = L * sc_, w = W * sc_, r = Math.min(w * 0.28, 6);
+    ctx.beginPath();
+    ctx.moveTo(-l / 2 + r, -w / 2); ctx.lineTo(l / 2 - r, -w / 2); ctx.quadraticCurveTo(l / 2, -w / 2, l / 2, -w / 2 + r);
+    ctx.lineTo(l / 2, w / 2 - r); ctx.quadraticCurveTo(l / 2, w / 2, l / 2 - r, w / 2); ctx.lineTo(-l / 2 + r, w / 2);
+    ctx.quadraticCurveTo(-l / 2, w / 2, -l / 2, w / 2 - r); ctx.lineTo(-l / 2, -w / 2 + r); ctx.quadraticCurveTo(-l / 2, -w / 2, -l / 2 + r, -w / 2);
+    ctx.closePath();
+    ctx.restore();
+  }
+  function nose(ctx, x, y, th, L, W, sc_) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(-th);
+    var l = L * sc_, w = W * sc_;
+    ctx.beginPath(); ctx.moveTo(l * 0.42, 0); ctx.lineTo(l * 0.08, -w * 0.28); ctx.lineTo(l * 0.08, w * 0.28); ctx.closePath();
+    ctx.restore();
+  }
+
+  function drawPanel(k) {
+    var cv = player.cvs[k], sc = player.sc, ctx = cv.ctx, W = cv.w, H = cv.h, dpr = cv.dpr;
+    var typ = player.side[k], c = sc.ctrl[typ], N = sc.N, col = ccol(typ);
+    var fa = fr(sc, player.time), f = fa[0], a = fa[1];
+    var sc_ = W / sc.view;
+    var cx, cy;
+    cx = sc.route[2 * f] * (1 - a) + sc.route[2 * f + 2] * a; cy = sc.route[2 * f + 1] * (1 - a) + sc.route[2 * f + 3] * a;
+    function X(x) { return W / 2 + (x - cx) * sc_; }
+    function Y(y) { return H / 2 - (y - cy) * sc_; }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.fillStyle = C["cv-bg"]; ctx.fillRect(0, 0, W, H);
+    // grid (1 m)
+    ctx.strokeStyle = C["cv-grid"]; ctx.lineWidth = 1; ctx.beginPath();
+    var x0 = Math.floor(cx - W / 2 / sc_), x1 = Math.ceil(cx + W / 2 / sc_), y0 = Math.floor(cy - H / 2 / sc_), y1 = Math.ceil(cy + H / 2 / sc_);
+    for (var gx = x0; gx <= x1; gx++) { var px = Math.round(X(gx)) + 0.5; ctx.moveTo(px, 0); ctx.lineTo(px, H); }
+    for (var gy = y0; gy <= y1; gy++) { var py = Math.round(Y(gy)) + 0.5; ctx.moveTo(0, py); ctx.lineTo(W, py); }
+    ctx.stroke();
+    // aisle along the reference route
+    ctx.strokeStyle = C["cv-aisle"]; ctx.lineWidth = sc.aisle * sc_; ctx.lineCap = "round"; ctx.lineJoin = "round";
+    ctx.beginPath();
+    for (var q = 0; q < sc.frames; q += 2) { var rx = X(sc.route[2 * q]), ry = Y(sc.route[2 * q + 1]); if (q === 0) ctx.moveTo(rx, ry); else ctx.lineTo(rx, ry); }
+    ctx.stroke();
+    ctx.strokeStyle = alpha(C["ink-3"], 0.35); ctx.lineWidth = 1; ctx.setLineDash([2, 5]); ctx.stroke(); ctx.setLineDash([]);
+    // trails (last 8 s)
+    var back = Math.round(8 / sc.dt);
+    ctx.lineWidth = 1.6; ctx.strokeStyle = alpha(col, 0.45);
+    for (var i = 0; i < N; i++) {
+      ctx.beginPath();
+      for (var g = Math.max(0, f - back); g <= f; g++) { var bx = X(c.XY[(g * N + i) * 2] / 1000), by = Y(c.XY[(g * N + i) * 2 + 1] / 1000); if (g === Math.max(0, f - back)) ctx.moveTo(bx, by); else ctx.lineTo(bx, by); }
+      var pc = poseAt(c.XY, c.TH, N, f, a, i); ctx.lineTo(X(pc[0]), Y(pc[1]));
+      ctx.stroke();
+    }
+    // poses
+    var R = [], P = [];
+    for (i = 0; i < N; i++) { R.push(poseAt(sc.refXY, sc.refTH, N, f, a, i)); P.push(poseAt(c.XY, c.TH, N, f, a, i)); }
+    // desired shape (dashed) and reference glyphs
+    ctx.setLineDash([4, 4]); ctx.lineWidth = 1.2; ctx.strokeStyle = C["ink-3"];
+    ctx.beginPath(); sc.links.forEach(function (l) { ctx.moveTo(X(R[l[0]][0]), Y(R[l[0]][1])); ctx.lineTo(X(R[l[1]][0]), Y(R[l[1]][1])); }); ctx.stroke();
+    for (i = 0; i < N; i++) { glyph(ctx, X(R[i][0]), Y(R[i][1]), R[i][2], sc.glyphL, sc.glyphW, sc_); ctx.stroke(); }
+    ctx.setLineDash([]);
+    // actual shape
+    ctx.lineWidth = 2; ctx.strokeStyle = col;
+    ctx.beginPath(); sc.links.forEach(function (l) { ctx.moveTo(X(P[l[0]][0]), Y(P[l[0]][1])); ctx.lineTo(X(P[l[1]][0]), Y(P[l[1]][1])); }); ctx.stroke();
+    // event ring
+    var ev = sc.ev, on = player.time >= ev.t0 && player.time < ev.t1;
+    if (on) {
+      var e = P[ev.veh]; ctx.strokeStyle = C.stop; ctx.lineWidth = 2.5;
+      ctx.beginPath(); ctx.arc(X(e[0]), Y(e[1]), sc.glyphL * sc_ * 0.95 + 4, 0, 2 * Math.PI); ctx.stroke();
+    }
+    // vehicles
+    for (i = 0; i < N; i++) {
+      glyph(ctx, X(P[i][0]), Y(P[i][1]), P[i][2], sc.glyphL, sc.glyphW, sc_);
+      ctx.fillStyle = col; ctx.fill(); ctx.lineWidth = 1.5; ctx.strokeStyle = C["cv-bg"]; ctx.stroke();
+      nose(ctx, X(P[i][0]), Y(P[i][1]), P[i][2], sc.glyphL, sc.glyphW, sc_); ctx.fillStyle = "rgba(255,255,255,.9)"; ctx.fill();
+    }
+    if (N <= 4) {
+      ctx.font = "600 11px " + getComputedStyle(document.body).getPropertyValue("--mono"); ctx.fillStyle = C["ink-2"]; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      for (i = 0; i < N; i++) {
+        var off = sc.glyphL * sc_ * 0.55 + 12;
+        ctx.fillText(String(i + 1), X(P[i][0]) + off * 0.7, Y(P[i][1]) - off * 0.7);
+      }
+    }
+    // readouts and badge
+    cv.form.textContent = fmtCm(seriesAt(c.FORM, f, a));
+    cv.track.textContent = fmtCm(seriesAt(c.TRACK, f, a));
+    cv.badge.classList.toggle("on", on);
+    cv.badgeText.textContent = ev.kind === "stop" ? t("ev_stop") : (sc.N > 4 ? "AGV " + (ev.veh + 1) + ": " + t("ev_slip_n") : t("ev_slip"));
+  }
+
+  function buildPanels() {
+    var host = document.getElementById("panels"); host.innerHTML = ""; player.cvs = [];
+    [0, 1].forEach(function (k) {
+      var fig = el("figure", { "class": "panel" }, host);
+      var head = el("div", { "class": "head" }, fig);
+      var seg = el("div", { "class": "seg", role: "group", "aria-label": "Controller, panel " + (k + 1) }, head);
+      ["uncoupled", "cascade", "direct"].forEach(function (typ) {
+        var b = el("button", { type: "button", "data-typ": typ, "aria-pressed": String(player.side[k] === typ) }, seg);
+        var i = el("i", null, b); i.style.background = ccol(typ);
+        el("span", { "class": "nm" }, b);
+        b.addEventListener("click", function () { player.side[k] = typ; syncSeg(); renderTS(); drawAll(); peaks(); });
+      });
+      var box = el("div", { "class": "cv" }, fig);
+      var canvas = el("canvas", { role: "img" }, box);
+      var badge = el("div", { "class": "evbadge" }, box);
+      badge.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2.2 14.3 13.5H1.7z M8 6.5v3.2 M8 11.6v.1"/></svg>';
+      var bt = el("span", null, badge);
+      var scale = el("div", { "class": "scale" }, box);
+      var sbar = el("i", null, scale); el("span", { text: "1 m" }, scale);
+      var ro = el("div", { "class": "readout" }, fig);
+      var r1 = el("span", null, ro); var l1 = el("span", { "class": "lbl" }, r1); r1.appendChild(document.createTextNode(" ")); var v1 = el("b", { text: "–" }, r1);
+      var r2 = el("span", null, ro); var l2 = el("span", { "class": "lbl" }, r2); r2.appendChild(document.createTextNode(" ")); var v2 = el("b", { text: "–" }, r2);
+      var o = { canvas: canvas, ctx: canvas.getContext("2d"), form: v1, track: v2, lform: l1, ltrack: l2, badge: badge, badgeText: bt, seg: seg, sbar: sbar, box: box, w: 0, h: 0, dpr: 1 };
+      player.cvs.push(o);
+      if ("ResizeObserver" in window) new ResizeObserver(function () { sizeCanvas(o); drawAll(); }).observe(box);
+      sizeCanvas(o);
+    });
+    syncSeg(); labelPanels();
+  }
+  function sizeCanvas(o) {
+    var r = o.box.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1);
+    o.w = Math.max(10, r.width); o.h = Math.max(10, r.height); o.dpr = dpr;
+    o.canvas.width = Math.round(o.w * dpr); o.canvas.height = Math.round(o.h * dpr);
+    if (player.sc) o.sbar.style.width = (o.w / player.sc.view) + "px";
+  }
+  function syncSeg() {
+    player.cvs.forEach(function (o, k) {
+      o.seg.querySelectorAll("button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-typ") === player.side[k])); });
+      o.canvas.setAttribute("aria-label", "Replay with " + T.en[player.side[k]]);
+    });
+  }
+  function labelPanels() {
+    player.cvs.forEach(function (o) {
+      o.seg.querySelectorAll("button").forEach(function (b) { b.querySelector(".nm").textContent = t("s_" + b.getAttribute("data-typ")); });
+      o.lform.textContent = t("form"); o.ltrack.textContent = t("track");
+    });
+  }
+  function drawAll() { if (!player.sc) return; for (var k = 0; k < player.cvs.length; k++) drawPanel(k); updateTime(); }
+
+  /* time-series strip */
+  var ts = { svg: null, head: null, w: 0, x: null, y: null, tip: null };
+  function renderTS() {
+    var host = document.getElementById("ts"), sc = player.sc; if (!sc) return;
+    host.innerHTML = "";
+    var W = host.clientWidth || 600, H = 170, m = { l: 44, r: 12, t: 10, b: 30 };
+    var svg = s("svg", { viewBox: "0 0 " + W + " " + H, height: H, role: "img", "aria-label": t("ts_y") }, host);
+    var yMax = niceMax(sc.yMax * 1.05);
+    var X = function (tt) { return m.l + (tt - sc.t0) / (sc.T - sc.t0) * (W - m.l - m.r); };
+    var Y = function (v) { return H - m.b - v / yMax * (H - m.t - m.b); };
+    // event band
+    s("rect", { x: X(sc.ev.t0), y: m.t, width: Math.max(2, X(sc.ev.t1) - X(sc.ev.t0)), height: H - m.t - m.b, fill: alpha(C.stop, 0.12) }, svg);
+    // grid + axes
+    ticks(yMax, 4).forEach(function (v) {
+      s("line", { x1: m.l, x2: W - m.r, y1: Y(v), y2: Y(v), stroke: C.line, "stroke-width": 1 }, svg);
+      s("text", { x: m.l - 6, y: Y(v) + 4, "text-anchor": "end", "font-size": 11, fill: C["ink-3"], "font-family": "var(--mono)", text: fmt(v, Math.max(1, tickNd(yMax, 4))) }, svg);
+    });
+    for (var tt = 0; tt <= sc.T + 1e-9; tt += 10) s("text", { x: X(tt), y: H - m.b + 16, "text-anchor": "middle", "font-size": 11, fill: C["ink-3"], "font-family": "var(--mono)", text: String(tt) }, svg);
+    s("text", { x: W - m.r, y: H - 3, "text-anchor": "end", "font-size": 11, fill: C["ink-3"], text: t("ts_x") }, svg);
+    s("text", { x: m.l, y: m.t - 0, "font-size": 11, fill: C["ink-3"], text: t("ts_y"), dy: -1 }, svg);
+    var shown = player.side[0] === player.side[1] ? [player.side[0]] : player.side.slice();
+    shown.forEach(function (typ) {
+      var c = sc.ctrl[typ], d = "";
+      for (var f = 0; f < sc.frames; f++) d += (f ? "L" : "M") + X(sc.t0 + f * sc.dt).toFixed(1) + " " + Y(c.FORM[f]).toFixed(1);
+      s("path", { d: d, fill: "none", stroke: ccol(typ), "stroke-width": 2, "stroke-linejoin": "round" }, svg);
+    });
+    var lx = W - m.r;
+    shown.slice().reverse().forEach(function (typ) {
+      var tx = s("text", { x: lx, y: m.t + 4, "text-anchor": "end", "font-size": 11.5, fill: C["ink-2"], text: t("s_" + typ) }, svg);
+      var w = tx.getComputedTextLength ? tx.getComputedTextLength() : 60;
+      s("line", { x1: lx - w - 24, x2: lx - w - 8, y1: m.t, y2: m.t, stroke: ccol(typ), "stroke-width": 2.5 }, svg);
+      lx -= w + 40;
+    });
+    var head = s("line", { y1: m.t, y2: H - m.b, stroke: C.ink, "stroke-width": 1.5 }, svg);
+    var dots = shown.map(function (typ) { return s("circle", { r: 4.5, fill: ccol(typ), stroke: C.bg, "stroke-width": 2 }, svg); });
+    var tip = el("div", { "class": "tip" }, host);
+    ts = { svg: svg, head: head, dots: dots, shown: shown, X: X, Y: Y, m: m, W: W, H: H, tip: tip };
+    function seek(ev) {
+      var r = svg.getBoundingClientRect(), x = (ev.clientX - r.left) * W / r.width;
+      var tt = sc.t0 + (x - m.l) / (W - m.l - m.r) * (sc.T - sc.t0);
+      return Math.max(sc.t0, Math.min(sc.T, tt));
+    }
+    var dragging = false;
+    svg.addEventListener("pointerdown", function (ev) { dragging = true; svg.setPointerCapture(ev.pointerId); player.time = seek(ev); drawAll(); });
+    svg.addEventListener("pointermove", function (ev) {
+      var tt = seek(ev);
+      if (dragging) { player.time = tt; drawAll(); }
+      var fa = fr(sc, tt), html = "<b>t = " + tt.toFixed(1) + " s</b>";
+      shown.forEach(function (typ) { html += "<br><i style='background:" + ccol(typ) + "'></i>" + t("s_" + typ) + ": <b>" + fmtCm(seriesAt(sc.ctrl[typ].FORM, fa[0], fa[1])) + "</b>"; });
+      tip.innerHTML = html; tip.style.display = "block";
+      var r = svg.getBoundingClientRect(), px = ev.clientX - r.left;
+      tip.style.left = Math.min(Math.max(0, px + 12), r.width - tip.offsetWidth) + "px"; tip.style.top = "4px";
+    });
+    svg.addEventListener("pointerup", function () { dragging = false; });
+    svg.addEventListener("pointerleave", function () { tip.style.display = "none"; });
+    updateTime();
+  }
+  function updateTime() {
+    var sc = player.sc; if (!sc) return;
+    if (ts.head) {
+      var x = ts.X(player.time); ts.head.setAttribute("x1", x); ts.head.setAttribute("x2", x);
+      var fa = fr(sc, player.time);
+      ts.shown.forEach(function (typ, i) { ts.dots[i].setAttribute("cx", x); ts.dots[i].setAttribute("cy", ts.Y(seriesAt(sc.ctrl[typ].FORM, fa[0], fa[1]))); });
+    }
+    document.getElementById("tread").textContent = "t = " + player.time.toFixed(1) + " s";
+    var sl = document.getElementById("scrub"); if (document.activeElement !== sl) sl.value = player.time;
+  }
+  function peaks() {
+    var sc = player.sc, p = document.getElementById("peaks"); if (!sc) return;
+    var f0 = Math.ceil((sc.ev.t0 - sc.t0) / sc.dt), f1 = Math.min(sc.frames - 1, Math.floor((sc.ev.t0 + 15 - sc.t0) / sc.dt));
+    var parts = ["uncoupled", "cascade", "direct"].map(function (typ) {
+      var mx = 0; for (var f = f0; f <= f1; f++) mx = Math.max(mx, sc.ctrl[typ].FORM[f]);
+      return t("s_" + typ) + " <b>" + fmt(mx, 2) + " m</b>";
+    });
+    var note = (L() === "zh" ? NOTE_ZH : NOTE_EN)[sc.id].replace("{seed}", sc.seed);
+    p.innerHTML = t("peaks") + parts.join(" · ") + "<br><span style='color:var(--ink-3);font-size:.88em'>" + t("run").replace("{exp}", sc.exp).replace("{note}", note) + "</span>";
+  }
+
+  function setScenario(id) {
+    var sc = player.data.scenarios.filter(function (x) { return x.id === id; })[0];
+    if (!sc.prepared) { prepare(sc); sc.prepared = true; }
+    player.sc = sc;
+    document.getElementById("scrub").max = sc.T; document.getElementById("scrub").min = sc.t0;
+    document.querySelectorAll("#chips button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-id") === id)); });
+    document.getElementById("scen-desc").textContent = t("desc")[id];
+    player.cvs.forEach(sizeCanvas);
+    player.time = Math.max(sc.t0, sc.ev.t0 - 8);
+    renderTS(); peaks(); drawAll();
+  }
+  function buildChips() {
+    var host = document.getElementById("chips"); host.innerHTML = "";
+    ["stop", "traction", "n12"].forEach(function (id) {
+      var b = el("button", { type: "button", "data-id": id, "aria-pressed": "false" }, host);
+      el("span", { "class": "nm" }, b); el("span", { "class": "tag" }, b);
+      b.addEventListener("click", function () { setScenario(id); });
+    });
+    labelChips();
+  }
+  function labelChips() {
+    document.querySelectorAll("#chips button").forEach(function (b) { var v = t("sc")[b.getAttribute("data-id")]; b.querySelector(".nm").textContent = v[0]; b.querySelector(".tag").textContent = v[1]; });
+  }
+  function buildSpeed() {
+    var host = document.getElementById("speed"); host.innerHTML = "";
+    [0.5, 1, 2, 4].forEach(function (v) {
+      var b = el("button", { type: "button", "aria-pressed": String(player.speed === v), text: v + "×" }, host);
+      b.addEventListener("click", function () { player.speed = v; host.querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); }); });
+    });
+  }
+  function playLabel() {
+    var p = player.playing;
+    document.getElementById("play-ico").setAttribute("d", p ? "M3.5 2.5h3.2v11H3.5z M9.3 2.5h3.2v11H9.3z" : "M4 2.5v11l9.5-5.5z");
+    document.getElementById("play").setAttribute("aria-label", p ? t("pause") : t("play"));
+  }
+  var looping = false;
+  function setPlaying(p) {
+    player.playing = p; player.last = 0; playLabel();
+    if (p && !looping) { looping = true; requestAnimationFrame(tick); }
+  }
+  function tick(now) {
+    if (!player.playing) { looping = false; return; }
+    if (player.last && player.visible) {
+      var dt = Math.min(0.1, (now - player.last) / 1000) * player.speed;
+      player.time += dt;
+      if (player.time > player.sc.T) player.time = player.sc.t0;
+      drawAll();
+    }
+    player.last = now;
+    requestAnimationFrame(tick);
+  }
+
+  function initReplay(data) {
+    player.data = data;
+    buildChips(); buildSpeed(); buildPanels();
+    setScenario("stop");
+    document.getElementById("play").addEventListener("click", function () { setPlaying(!player.playing); });
+    var sl = document.getElementById("scrub");
+    sl.addEventListener("input", function () { player.time = +sl.value; drawAll(); });
+    document.getElementById("jump").addEventListener("click", function () { player.time = Math.max(player.sc.t0, player.sc.ev.t0 - 2); drawAll(); if (!player.playing && !reduce) setPlaying(true); });
+    var box = document.getElementById("player");
+    if ("IntersectionObserver" in window) {
+      var first = true;
+      new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          player.visible = e.isIntersecting;
+          if (e.isIntersecting && first) { first = false; if (!reduce) setPlaying(true); else { player.time = player.sc.ev.t1 + 1; drawAll(); } }
+        });
+      }, { threshold: 0.15 }).observe(box);
+    } else if (!reduce) setPlaying(true);
+    window.addEventListener("resize", function () { renderTS(); });
+  }
+
+  /* ================================================================== charts */
+  var R = null, metric = "iae";
+  function legend(host, keys, extra) {
+    host.innerHTML = "";
+    keys.forEach(function (k) { var sp = el("span", null, host); var i = el("i", null, sp); i.style.background = ccol(k); sp.appendChild(document.createTextNode(t(k))); });
+    if (extra) extra(host);
+  }
+  function buildMetric() {
+    var host = document.getElementById("metric"); host.innerHTML = "";
+    ["iae", "peak", "track"].forEach(function (m) {
+      var b = el("button", { type: "button", "data-m": m, "aria-pressed": String(metric === m), text: t("m_" + m) }, host);
+      b.addEventListener("click", function () { metric = m; buildMetric(); renderEvents(); });
+    });
+  }
+  function renderEvents() {
+    var host = document.getElementById("events"); host.innerHTML = "";
+    var order = ["uncoupled", "cascade", "direct", "sigleak"];
+    ["traction", "stop", "reloc", "switching"].forEach(function (ev) {
+      var box = el("div", { "class": "small" }, host);
+      var h4 = el("h4", { text: t("e_" + ev) }, box); el("span", { text: "  ·  " + t("m_" + metric) + " (" + t("u_" + metric) + ")", style: "font-weight:500;color:var(--ink-3);font-size:.88em" }, h4);
+      var wrap = el("div", { "class": "chart" }, box);
+      var W = wrap.clientWidth || box.clientWidth || 440, rowH = 30, m = { l: 92, r: 10, t: 4, b: 22 }, H = m.t + m.b + rowH * order.length;
+      var svg = s("svg", { viewBox: "0 0 " + W + " " + H, height: H, role: "img", "aria-label": t("e_" + ev) + ", " + t("m_" + metric) }, wrap);
+      var d = R.r6[ev], hi = 0;
+      order.forEach(function (k) { hi = Math.max(hi, d[k][metric][2] / 1000); });
+      var xMax = niceMax(hi * 1.32);
+      var X = function (v) { return m.l + v / xMax * (W - m.l - m.r); };
+      ticks(xMax, 4).forEach(function (v) {
+        s("line", { x1: X(v), x2: X(v), y1: m.t, y2: H - m.b, stroke: C.line, "stroke-width": 1 }, svg);
+        s("text", { x: X(v), y: H - m.b + 15, "text-anchor": "middle", "font-size": 10.5, fill: C["ink-3"], "font-family": "var(--mono)", text: fmt(v, tickNd(xMax, 4)) }, svg);
+      });
+      var base = d.uncoupled[metric][0];
+      var tip = el("div", { "class": "tip" }, wrap);
+      order.forEach(function (k, i) {
+        var v = d[k][metric], y = m.t + i * rowH + 6, bh = rowH - 12;
+        s("text", { x: m.l - 8, y: y + bh / 2 + 4, "text-anchor": "end", "font-size": 12, fill: C["ink-2"], text: t("s_" + k) }, svg);
+        var x1 = X(v[0] / 1000), r = Math.min(4, (x1 - m.l) / 2);
+        var path = "M" + m.l + " " + y + "H" + (x1 - r) + "Q" + x1 + " " + y + " " + x1 + " " + (y + r) + "V" + (y + bh - r) + "Q" + x1 + " " + (y + bh) + " " + (x1 - r) + " " + (y + bh) + "H" + m.l + "Z";
+        s("path", { d: path, fill: ccol(k) }, svg);
+        var cy = y + bh / 2;
+        s("line", { x1: X(v[1] / 1000), x2: X(v[2] / 1000), y1: cy, y2: cy, stroke: C.ink, "stroke-width": 1.2 }, svg);
+        [v[1], v[2]].forEach(function (b) { s("line", { x1: X(b / 1000), x2: X(b / 1000), y1: cy - 4, y2: cy + 4, stroke: C.ink, "stroke-width": 1.2 }, svg); });
+        var lab = fmt(v[0] / 1000, 2);
+        var rel = k === "uncoupled" ? "" : " (" + (v[0] < base ? "−" : "+") + Math.abs(Math.round((v[0] / base - 1) * 100)) + " %)";
+        s("text", { x: X(v[2] / 1000) + 6, y: cy + 4, "font-size": 11, fill: C["ink-2"], "font-family": "var(--mono)", text: lab + rel }, svg);
+        var hit = s("rect", { x: 0, y: y - 4, width: W, height: rowH, fill: "transparent" }, svg);
+        hit.addEventListener("pointermove", function (e) {
+          tip.innerHTML = "<i style='background:" + ccol(k) + "'></i>" + t(k) + "<br>" + t("m_" + metric) + ": <b>" + fmt(v[0] / 1000, 2) + " " + t("u_" + metric) + "</b> [" + fmt(v[1] / 1000, 2) + ", " + fmt(v[2] / 1000, 2) + "]" + (rel ? "<br>" + rel.trim().replace(/[()]/g, "") + " " + t("vs") : "");
+          tip.style.display = "block";
+          var rr = wrap.getBoundingClientRect();
+          tip.style.left = Math.min(Math.max(0, e.clientX - rr.left + 12), rr.width - tip.offsetWidth) + "px";
+          tip.style.top = (y + rowH) + "px";
+        });
+        hit.addEventListener("pointerleave", function () { tip.style.display = "none"; });
+      });
+    });
+    legend(document.getElementById("events-legend"), order);
+    // table
+    var tb = document.getElementById("events-table"); tb.innerHTML = "";
+    var table = el("table", null, tb), tr = el("tr", null, el("thead", null, table));
+    [t("event"), t("ctrl"), t("m_iae") + " (m·s)", t("m_peak") + " (m)", t("m_track") + " (m·s)"].forEach(function (h) { el("th", { text: h }, tr); });
+    var body = el("tbody", null, table);
+    ["traction", "stop", "reloc", "switching"].forEach(function (ev) {
+      order.forEach(function (k, i) {
+        var r = el("tr", null, body), d = R.r6[ev][k];
+        el("td", { text: i === 0 ? t("e_" + ev) : "" }, r); el("td", { text: t(k) }, r);
+        ["iae", "peak", "track"].forEach(function (mm) { el("td", { text: fmt(d[mm][0] / 1000, 2) + " [" + fmt(d[mm][1] / 1000, 2) + ", " + fmt(d[mm][2] / 1000, 2) + "]" }, r); });
+      });
+    });
+  }
+  function renderLatency() {
+    var host = document.getElementById("latency"); host.innerHTML = "";
+    var d = R.r3_latency, keys = ["cascade", "direct"];
+    var W = host.clientWidth || 700, H = 300, m = { l: 50, r: 100, t: 26, b: 40 };
+    var svg = s("svg", { viewBox: "0 0 " + W + " " + H, height: H, role: "img", "aria-label": t("lat_y") + " / " + t("lat_x") }, host);
+    var lv = d.cascade.map(function (r) { return r[0]; });
+    var lx0 = Math.log10(lv[0]), lx1 = Math.log10(lv[lv.length - 1]);
+    var yMax = 0; keys.forEach(function (k) { d[k].forEach(function (r) { yMax = Math.max(yMax, r[3] / 1000); }); }); yMax = Math.max(yMax, d.uncoupled[2] / 1000);
+    yMax = Math.ceil(yMax * 1.1 * 5) / 5;
+    var X = function (v) { return m.l + (Math.log10(v) - lx0) / (lx1 - lx0) * (W - m.l - m.r); };
+    var Y = function (v) { return H - m.b - v / yMax * (H - m.t - m.b); };
+    for (var g = 0; g <= yMax + 1e-9; g += 0.2) {
+      s("line", { x1: m.l, x2: W - m.r, y1: Y(g), y2: Y(g), stroke: C.line, "stroke-width": 1 }, svg);
+      s("text", { x: m.l - 7, y: Y(g) + 4, "text-anchor": "end", "font-size": 11, fill: C["ink-3"], "font-family": "var(--mono)", text: fmt(g, 1) }, svg);
+    }
+    lv.forEach(function (v) { s("text", { x: X(v), y: H - m.b + 17, "text-anchor": "middle", "font-size": 11, fill: C["ink-3"], "font-family": "var(--mono)", text: String(v) }, svg); });
+    s("text", { x: (m.l + W - m.r) / 2, y: H - 4, "text-anchor": "middle", "font-size": 11.5, fill: C["ink-3"], text: t("lat_x") }, svg);
+    s("text", { x: m.l - 40, y: m.t - 12, "font-size": 11.5, fill: C["ink-3"], text: t("lat_y") }, svg);
+    // no-coupling band
+    var u = d.uncoupled;
+    s("rect", { x: m.l, width: W - m.l - m.r, y: Y(u[2] / 1000), height: Y(u[0] / 1000) - Y(u[2] / 1000), fill: alpha(C["c-uncoupled"], 0.18) }, svg);
+    s("line", { x1: m.l, x2: W - m.r, y1: Y(u[1] / 1000), y2: Y(u[1] / 1000), stroke: C["c-uncoupled"], "stroke-width": 2, "stroke-dasharray": "6 4" }, svg);
+    var ends = [["uncoupled", Y(u[1] / 1000)]];
+    keys.forEach(function (k) {
+      var rows = d[k], band = "", line = "";
+      rows.forEach(function (r, i) { band += (i ? "L" : "M") + X(r[0]) + " " + Y(r[3] / 1000); line += (i ? "L" : "M") + X(r[0]) + " " + Y(r[2] / 1000); });
+      for (var i = rows.length - 1; i >= 0; i--) band += "L" + X(rows[i][0]) + " " + Y(rows[i][1] / 1000);
+      s("path", { d: band + "Z", fill: alpha(ccol(k), 0.15) }, svg);
+      s("path", { d: line, fill: "none", stroke: ccol(k), "stroke-width": 2 }, svg);
+      rows.forEach(function (r) { s("circle", { cx: X(r[0]), cy: Y(r[2] / 1000), r: 4.5, fill: ccol(k), stroke: C.bg, "stroke-width": 2 }, svg); });
+      ends.push([k, Y(rows[rows.length - 1][2] / 1000)]);
+    });
+    ends.sort(function (a, b) { return a[1] - b[1]; });
+    for (var e = 1; e < ends.length; e++) if (ends[e][1] - ends[e - 1][1] < 15) ends[e][1] = ends[e - 1][1] + 15;
+    ends.forEach(function (en) { s("text", { x: W - m.r + 6, y: en[1] + 4, "font-size": 11.5, fill: C["ink-2"], text: t("s_" + en[0]) }, svg); });
+    // crosshair
+    var cross = s("line", { y1: m.t, y2: H - m.b, stroke: C["ink-3"], "stroke-width": 1, "stroke-dasharray": "3 3", opacity: 0 }, svg);
+    var tip = el("div", { "class": "tip" }, host);
+    var hit = s("rect", { x: m.l, y: m.t, width: W - m.l - m.r, height: H - m.t - m.b, fill: "transparent" }, svg);
+    hit.addEventListener("pointermove", function (e) {
+      var r = svg.getBoundingClientRect(), x = (e.clientX - r.left) * W / r.width, best = 0, bd = 1e9;
+      lv.forEach(function (v, i) { var dd = Math.abs(X(v) - x); if (dd < bd) { bd = dd; best = i; } });
+      cross.setAttribute("x1", X(lv[best])); cross.setAttribute("x2", X(lv[best])); cross.setAttribute("opacity", 1);
+      var html = "<b>" + t("latency") + " " + lv[best] + " s</b>";
+      keys.forEach(function (k) { var rr = d[k][best]; html += "<br><i style='background:" + ccol(k) + "'></i>" + t("s_" + k) + ": <b>" + fmt(rr[2] / 1000, 2) + "</b> m·s"; });
+      html += "<br><i style='background:" + C["c-uncoupled"] + "'></i>" + t("s_uncoupled") + ": <b>" + fmt(u[1] / 1000, 2) + "</b> m·s";
+      tip.innerHTML = html; tip.style.display = "block";
+      tip.style.left = Math.min(Math.max(0, X(lv[best]) * r.width / W + 12), r.width - tip.offsetWidth) + "px"; tip.style.top = "10px";
+    });
+    hit.addEventListener("pointerleave", function () { tip.style.display = "none"; cross.setAttribute("opacity", 0); });
+    legend(document.getElementById("latency-legend"), keys, function (h) { var sp = el("span", null, h); var i = el("i", null, sp); i.style.background = alpha(C["c-uncoupled"], 0.5); sp.appendChild(document.createTextNode(t("lat_band"))); });
+    var tb = document.getElementById("latency-table"); tb.innerHTML = "";
+    var table = el("table", null, tb), tr = el("tr", null, el("thead", null, table));
+    [t("lat_x"), t("s_cascade") + " (" + t("median") + ", " + t("iqr") + ")", t("s_direct") + " (" + t("median") + ", " + t("iqr") + ")"].forEach(function (h) { el("th", { text: h }, tr); });
+    var body = el("tbody", null, table);
+    lv.forEach(function (v, i) {
+      var r = el("tr", null, body); el("td", { text: String(v) }, r);
+      keys.forEach(function (k) { var q = d[k][i]; el("td", { text: fmt(q[2] / 1000, 2) + " [" + fmt(q[1] / 1000, 2) + ", " + fmt(q[3] / 1000, 2) + "]" }, r); });
+    });
+    var r0 = el("tr", null, body); el("td", { text: t("s_uncoupled") }, r0); el("td", { text: fmt(u[1] / 1000, 2) + " [" + fmt(u[0] / 1000, 2) + ", " + fmt(u[2] / 1000, 2) + "]" }, r0); el("td", { text: "" }, r0);
+  }
+  function renderCharts() { if (!R) return; buildMetric(); renderEvents(); renderLatency(); }
+
+  /* ------------------------------------------------------------------ boot */
+  listeners.push(function () {
+    readColors();
+    if (player.data) { labelChips(); labelPanels(); document.getElementById("scen-desc").textContent = t("desc")[player.sc.id]; renderTS(); peaks(); drawAll(); playLabel(); }
+    renderCharts();
+  });
+  var rz = 0;
+  window.addEventListener("resize", function () { clearTimeout(rz); rz = setTimeout(renderCharts, 150); });
+  if (window.matchMedia) window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function () { readColors(); if (player.data) { renderTS(); drawAll(); } renderCharts(); });
+
+  fetch("../../agv-formation/data/results.json").then(function (r) { return r.json(); }).then(function (d) { R = d; renderCharts(); }).catch(function () {});
+  fetch("../../agv-formation/data/anim.json").then(function (r) { return r.json(); }).then(initReplay).catch(function (e) {
+    document.getElementById("scen-desc").textContent = "The replay data could not be loaded (" + e + ").";
+  });
+})();
+</script>
+</body>
+</html>

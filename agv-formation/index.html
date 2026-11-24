@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Delay-Tolerant Formation Tracking for Multi-AGV Systems via Reference-Shift Coupling</title>
+<title>Delay-Tolerant Formation Tracking for Multi-AGV Systems via Reference-Shift Coupling · Yunfei Bi</title>
 <meta name="description" content="A cascade coupling law for AGV formations whose stability does not depend on the communication delay: Lyapunov proofs, a numerical verification and 4,894 runs on a high-fidelity AGV simulator, with an interactive replay.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Delay-Tolerant Formation Tracking for Multi-AGV Systems via Reference-Shift Coupling">
@@ -55,7 +55,6 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 h1, h2, h3, p, ul, ol { margin: 0; }
 h1, h2, h3 { text-wrap: balance; }
-html[data-lang="en"] [data-l="zh"], html[data-lang="zh"] [data-l="en"] { display: none !important; }
 .wrap { max-width: 1040px; margin-inline: auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
 
 /* top bar */
@@ -67,6 +66,7 @@ nav { display: flex; align-items: center; gap: 4px 16px; flex-wrap: wrap; font-s
 nav a { color: var(--ink-2); }
 nav a:hover { color: var(--ink); text-decoration: none; }
 .lang { appearance: none; border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 999px; padding: 3px 12px; font: inherit; font-size: .86rem; font-weight: 650; cursor: pointer; }
+a.lang { display: inline-block; text-decoration: none; }
 .lang:hover { border-color: var(--ink-3); }
 @media (max-width: 640px) { nav a { display: none; } }
 
@@ -259,39 +259,42 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
 footer a { color: var(--ink-2); }
 .noscript { padding: 14px; border: 1px dashed var(--line); border-radius: 9px; color: var(--ink-3); }
 </style>
+<link rel="alternate" hreflang="en" href="https://bi-yunfei.github.io/agv-formation/">
+<link rel="alternate" hreflang="zh-CN" href="https://bi-yunfei.github.io/zh/agv-formation/">
+<link rel="alternate" hreflang="x-default" href="https://bi-yunfei.github.io/agv-formation/">
 </head>
 <body>
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="../"><span data-l="en">← Yunfei Bi</span><span data-l="zh">← 毕云飞</span></a>
+    <a class="brand" href="../">← Yunfei Bi</a>
     <nav aria-label="Sections">
-      <a href="#replay"><span data-l="en">Replay</span><span data-l="zh">动画</span></a>
-      <a href="#controller"><span data-l="en">Controller</span><span data-l="zh">控制律</span></a>
-      <a href="#theory"><span data-l="en">Theory</span><span data-l="zh">理论</span></a>
-      <a href="#study"><span data-l="en">Simulation study</span><span data-l="zh">仿真研究</span></a>
-      <a href="#lessons"><span data-l="en">Takeaways</span><span data-l="zh">结论</span></a>
-      <button class="lang" type="button" id="lang-btn" aria-label="Switch language"><span data-l="en">中文</span><span data-l="zh">English</span></button>
+      <a href="#replay">Replay</a>
+      <a href="#controller">Controller</a>
+      <a href="#theory">Theory</a>
+      <a href="#study">Simulation study</a>
+      <a href="#lessons">Takeaways</a>
+      <a class="lang" href="../zh/agv-formation/" hreflang="zh-CN" lang="zh-CN">中文</a>
     </nav>
   </div>
 </header>
 
 <main class="wrap">
   <div class="hero">
-    <p class="kicker"><span data-l="en">Technical report · 2026</span><span data-l="zh">技术报告 · 2026</span></p>
-    <h1><span data-l="en">Delay-Tolerant Formation Tracking for Multi-AGV Systems via Reference-Shift Coupling</span><span data-l="zh">通信时延下的多 AGV 编队跟踪控制：参考轨迹平移耦合方法</span></h1>
-    <p class="subtitle"><span data-l="en">A cascade coupling law whose stability does not depend on the communication delay, Lyapunov stability proofs that were checked numerically, and 4,894 runs on a high-fidelity AGV simulator.</span><span data-l="zh">稳定性与通信时延无关的级联耦合控制律、经过数值核验的李雅普诺夫稳定性证明，以及在高保真 AGV 仿真器上的 4894 次仿真验证。</span></p>
-    <p class="author"><a href="../"><span data-l="en">Yunfei Bi</span><span data-l="zh">毕云飞</span></a></p>
+    <p class="kicker">Technical report · 2026</p>
+    <h1>Delay-Tolerant Formation Tracking for Multi-AGV Systems via Reference-Shift Coupling</h1>
+    <p class="subtitle">A cascade coupling law whose stability does not depend on the communication delay, Lyapunov stability proofs that were checked numerically, and 4,894 runs on a high-fidelity AGV simulator.</p>
+    <p class="author"><a href="../">Yunfei Bi</a></p>
     <div class="buttons">
-      <a class="btn" href="#replay"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l7-4.5z"/></svg><span data-l="en">Interactive replay</span><span data-l="zh">交互式动画</span></a>
-      <a class="btn" href="#study"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 13.5h11M4.5 11V7.5M8 11V4.5M11.5 11V8.5"/></svg><span data-l="en">Results</span><span data-l="zh">仿真结果</span></a>
-      <span class="btn muted" title="The report and the simulation code are not public yet"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.8h5.5L12.5 5v9.2H4z M9.5 1.8V5h3"/></svg><span data-l="en">Report &amp; code</span><span data-l="zh">报告与代码</span><small><span data-l="en">on request</span><span data-l="zh">可索取</span></small></span>
+      <a class="btn" href="#replay"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l7-4.5z"/></svg>Interactive replay</a>
+      <a class="btn" href="#study"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 13.5h11M4.5 11V7.5M8 11V4.5M11.5 11V8.5"/></svg>Results</a>
+      <span class="btn muted" title="The report and the simulation code are not public yet"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.8h5.5L12.5 5v9.2H4z M9.5 1.8V5h3"/></svg>Report &amp; code<small>on request</small></span>
     </div>
   </div>
 
   <!-- ===================================================== replay -->
   <section id="replay" aria-labelledby="h-replay" style="padding-top: clamp(28px, 4vw, 44px)">
-    <h2 class="sec-title" id="h-replay"><span data-l="en">Same run, two controllers</span><span data-l="zh">同一次仿真，两种控制器</span></h2>
-    <p class="sec-sub"><span data-l="en">Both panels replay the same simulation run on the high-fidelity AGV model: same seed, vehicles, sensor noise, Wi-Fi delays and disturbance. Only the coupling law differs; pick it above each panel.</span><span data-l="zh">两个画面回放的是高保真 AGV 模型上的同一次仿真：随机种子、车辆参数、传感器噪声、Wi-Fi 时延和扰动完全相同，只有耦合控制律不同，可在每个画面上方切换。</span></p>
+    <h2 class="sec-title" id="h-replay">Same run, two controllers</h2>
+    <p class="sec-sub">Both panels replay the same simulation run on the high-fidelity AGV model: same seed, vehicles, sensor noise, Wi-Fi delays and disturbance. Only the coupling law differs; pick it above each panel.</p>
     <div class="player" id="player">
       <div class="chips" role="group" aria-label="Scenario" id="chips"></div>
       <p class="scen-desc" id="scen-desc" aria-live="polite"></p>
@@ -301,182 +304,182 @@ footer a { color: var(--ink-2); }
         <input class="scrub" id="scrub" type="range" min="0" max="60" step="0.04" value="0" aria-label="Time">
         <span class="tread" id="tread">t = 0.0 s</span>
         <span class="speed" id="speed" role="group" aria-label="Playback speed"></span>
-        <button class="jump" id="jump" type="button"><span data-l="en">Jump to the event</span><span data-l="zh">跳到扰动时刻</span></button>
+        <button class="jump" id="jump" type="button">Jump to the event</button>
       </div>
       <div class="ts" id="ts"></div>
       <p class="peaks" id="peaks"></p>
       <div class="akey">
-        <span><svg viewBox="0 0 26 14" aria-hidden="true"><rect x="5" y="3" width="15" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="3 2"/></svg><span data-l="en">reference pose (where the AGV should be)</span><span data-l="zh">参考位姿（车辆应处的位置）</span></span>
-        <span><svg viewBox="0 0 26 14" aria-hidden="true"><rect x="5" y="3" width="15" height="8" rx="2" fill="currentColor"/></svg><span data-l="en">actual AGV</span><span data-l="zh">实际车辆</span></span>
-        <span><svg viewBox="0 0 26 14" aria-hidden="true"><path d="M2 7h22" stroke="currentColor" stroke-width="1.6"/></svg><span data-l="en">formation shape (solid: actual, dashed: desired)</span><span data-l="zh">编队形状（实线：实际，虚线：期望）</span></span>
-        <span><svg viewBox="0 0 26 14" aria-hidden="true"><circle cx="13" cy="7" r="5.5" fill="none" stroke="var(--stop)" stroke-width="2"/></svg><span data-l="en">disturbed AGV</span><span data-l="zh">受扰车辆</span></span>
+        <span><svg viewBox="0 0 26 14" aria-hidden="true"><rect x="5" y="3" width="15" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="3 2"/></svg>reference pose (where the AGV should be)</span>
+        <span><svg viewBox="0 0 26 14" aria-hidden="true"><rect x="5" y="3" width="15" height="8" rx="2" fill="currentColor"/></svg>actual AGV</span>
+        <span><svg viewBox="0 0 26 14" aria-hidden="true"><path d="M2 7h22" stroke="currentColor" stroke-width="1.6"/></svg>formation shape (solid: actual, dashed: desired)</span>
+        <span><svg viewBox="0 0 26 14" aria-hidden="true"><circle cx="13" cy="7" r="5.5" fill="none" stroke="var(--stop)" stroke-width="2"/></svg>disturbed AGV</span>
       </div>
-      <p class="note-small" id="anim-note"><span data-l="en">The camera follows the reference formation, so a team that waits drifts backwards in the picture. Vehicles are drawn smaller than scale; grid: 1 m.</span><span data-l="zh">镜头跟随参考编队，因此减速等待的车队会在画面中向后漂移。车体按缩小比例绘制；网格间距 1 m。</span></p>
+      <p class="note-small" id="anim-note">The camera follows the reference formation, so a team that waits drifts backwards in the picture. Vehicles are drawn smaller than scale; grid: 1 m.</p>
       <noscript><p class="noscript">The replay needs JavaScript.</p></noscript>
     </div>
   </section>
 
   <!-- ===================================================== numbers -->
   <section id="numbers" aria-labelledby="h-numbers">
-    <h2 class="sec-title" id="h-numbers"><span data-l="en">Results at a glance</span><span data-l="zh">主要结果</span></h2>
+    <h2 class="sec-title" id="h-numbers">Results at a glance</h2>
     <div class="cards">
-      <div class="card"><p class="num">4,894</p><p><span data-l="en">simulation runs on the high-fidelity model, including paired comparisons with baselines tuned on separate seeds.</span><span data-l="zh">次高保真模型上的仿真，包括与对照控制器的配对比较，对照控制器在独立的随机种子上调参。</span></p></div>
-      <div class="card"><p class="num blue">0</p><p><span data-l="en">failures of the cascade, for latencies up to 4 s, 90 % packet loss, outages, 12 vehicles and 8× the tuned gain.</span><span data-l="zh">次级联控制器失败：时延最长 4 s、丢包率 90 %、通信中断、12 辆车、8 倍调参增益下均未失败。</span></p></div>
-      <div class="card"><p class="num blue">−47 %</p><p><span data-l="en">formation error (IAE) after a 3-s safety stop of one AGV, cascade vs. no coupling (R6).</span><span data-l="zh">单车急停 3 s 后的编队误差积分（IAE），级联耦合相对无耦合（R6）。</span></p></div>
-      <div class="card"><p class="num blue">−21…32 %</p><p><span data-l="en">formation error (IAE) after a traction loss, coupled laws vs. no coupling (R2 and R6).</span><span data-l="zh">打滑后的编队误差积分，耦合控制律相对无耦合（R2 与 R6）。</span></p></div>
+      <div class="card"><p class="num">4,894</p><p>simulation runs on the high-fidelity model, including paired comparisons with baselines tuned on separate seeds.</p></div>
+      <div class="card"><p class="num blue">0</p><p>failures of the cascade, for latencies up to 4 s, 90 % packet loss, outages, 12 vehicles and 8× the tuned gain.</p></div>
+      <div class="card"><p class="num blue">−47 %</p><p>formation error (IAE) after a 3-s safety stop of one AGV, cascade vs. no coupling (R6).</p></div>
+      <div class="card"><p class="num blue">−21…32 %</p><p>formation error (IAE) after a traction loss, coupled laws vs. no coupling (R2 and R6).</p></div>
     </div>
-    <p class="prose"><span data-l="en">The coupling is not free: while the others wait for a disturbed vehicle they fall behind their own references, so the tracking error grows (by 24 % in the median for the cascade). In nominal operation the formation accuracy, about 3 cm RMS, is set by the localisation error, which no coupling law can observe.</span><span data-l="zh">耦合并非没有代价：其他车辆等待受扰车辆时会落后于各自的参考轨迹，跟踪误差因此增大（级联耦合的中位数增加 24 %）。正常运行时编队精度约为 3 cm RMS，由定位误差决定，任何耦合控制律都无法观测并消除它。</span></p>
+    <p class="prose">The coupling is not free: while the others wait for a disturbed vehicle they fall behind their own references, so the tracking error grows (by 24 % in the median for the cascade). In nominal operation the formation accuracy, about 3 cm RMS, is set by the localisation error, which no coupling law can observe.</p>
   </section>
 
   <!-- ===================================================== problem + controller -->
   <section id="controller" aria-labelledby="h-ctrl">
-    <h2 class="sec-title" id="h-ctrl"><span data-l="en">Problem and controller</span><span data-l="zh">问题与控制律</span></h2>
+    <h2 class="sec-title" id="h-ctrl">Problem and controller</h2>
     <div class="prose">
-      <p><span data-l="en">A team of differential-drive AGVs has to move as one rigid formation, for example to carry a large object together. Each vehicle tracks its own reference trajectory; together the references form the formation. As long as every vehicle tracks well the formation holds, but when one vehicle is disturbed (it slips or makes a safety stop) the others do not notice and the formation tears apart. Coupling the vehicles over the network lets the others react. The network, however, is Wi-Fi: delays differ from link to link, change over time and jump, and packets are lost. <b>Delayed coupling can destabilise the team.</b></span><span data-l="zh">一组差速驱动 AGV 需要像一个刚体一样保持队形运动，例如协同搬运大件物体。每辆车跟踪各自的参考轨迹，所有参考轨迹合起来构成队形。只要每辆车都跟踪得好，队形就能保持；但一旦某辆车受到扰动（打滑或安全急停），其他车并不知道，队形就会被拉开。通过网络把车辆耦合起来，可以让其他车做出反应；然而网络是 Wi-Fi：各链路时延不同、随时间变化甚至跳变，还会丢包。<b>带时延的耦合可能使整个车队失稳。</b></span></p>
-      <p><span data-l="en">The design below keeps delayed data out of the feedback loop altogether. Neighbour data drive a small filter on each vehicle that shifts the vehicle's own reference; an unchanged tracking law follows the shifted reference.</span><span data-l="zh">下面的设计让带时延的数据完全不进入反馈回路：邻居数据只驱动每辆车上的一个小型滤波器，用来平移本车自己的参考轨迹；跟踪控制律保持不变，去跟踪平移后的参考轨迹。</span></p>
+      <p>A team of differential-drive AGVs has to move as one rigid formation, for example to carry a large object together. Each vehicle tracks its own reference trajectory; together the references form the formation. As long as every vehicle tracks well the formation holds, but when one vehicle is disturbed (it slips or makes a safety stop) the others do not notice and the formation tears apart. Coupling the vehicles over the network lets the others react. The network, however, is Wi-Fi: delays differ from link to link, change over time and jump, and packets are lost. <b>Delayed coupling can destabilise the team.</b></p>
+      <p>The design below keeps delayed data out of the feedback loop altogether. Neighbour data drive a small filter on each vehicle that shifts the vehicle's own reference; an unchanged tracking law follows the shifted reference.</p>
     </div>
 
     <div class="flow" aria-label="Cascade structure">
-      <div class="step net"><span class="lab"><span data-l="en">Wi-Fi</span><span data-l="zh">无线网络</span></span><b><span data-l="en">Neighbour broadcasts</span><span data-l="zh">邻居广播</span></b><span class="d"><span data-l="en">σ<sub>j</sub>(t − τ<sub>ij</sub>): delayed, lost, out of order</span><span data-l="zh">σ<sub>j</sub>(t − τ<sub>ij</sub>)：有时延、会丢包、可能乱序</span></span></div>
+      <div class="step net"><span class="lab">Wi-Fi</span><b>Neighbour broadcasts</b><span class="d">σ<sub>j</sub>(t − τ<sub>ij</sub>): delayed, lost, out of order</span></div>
       <div class="arrow" aria-hidden="true"></div>
-      <div class="step key"><span class="lab"><span data-l="en">new</span><span data-l="zh">本文</span></span><b><span data-l="en">Reference-shift filter</span><span data-l="zh">参考平移滤波器</span></b><span class="d"><span data-l="en">second order; input saturated at ρ·v<sub>r</sub>; own error capped at ē</span><span data-l="zh">二阶；输入饱和于 ρ·v<sub>r</sub>；本车误差限幅 ē</span></span></div>
+      <div class="step key"><span class="lab">new</span><b>Reference-shift filter</b><span class="d">second order; input saturated at ρ·v<sub>r</sub>; own error capped at ē</span></div>
       <div class="arrow" aria-hidden="true"></div>
-      <div class="step"><span class="lab"><span data-l="en">local</span><span data-l="zh">本地</span></span><b><span data-l="en">Shifted reference</span><span data-l="zh">平移后的参考</span></b><span class="d"><span data-l="en">p<sub>r</sub> − z, with exact velocity and acceleration feed-forward</span><span data-l="zh">p<sub>r</sub> − z，速度与加速度前馈精确</span></span></div>
+      <div class="step"><span class="lab">local</span><b>Shifted reference</b><span class="d">p<sub>r</sub> − z, with exact velocity and acceleration feed-forward</span></div>
       <div class="arrow" aria-hidden="true"></div>
-      <div class="step"><span class="lab"><span data-l="en">unchanged</span><span data-l="zh">不变</span></span><b><span data-l="en">Tracking law</span><span data-l="zh">跟踪控制律</span></b><span class="d"><span data-l="en">gain-scheduled unicycle law; sees no network data</span><span data-l="zh">增益调度的独轮车跟踪律；不接触任何网络数据</span></span></div>
+      <div class="step"><span class="lab">unchanged</span><b>Tracking law</b><span class="d">gain-scheduled unicycle law; sees no network data</span></div>
       <div class="arrow" aria-hidden="true"></div>
-      <div class="step"><span class="lab">AGV</span><b>(v, ω)</b><span class="d"><span data-l="en">forward speed and turn rate</span><span data-l="zh">线速度与角速度</span></span></div>
+      <div class="step"><span class="lab">AGV</span><b>(v, ω)</b><span class="d">forward speed and turn rate</span></div>
     </div>
 
     <div class="eqs">
-      <div class="eq"><div class="what"><b><span data-l="en">Local error, broadcast</span><span data-l="zh">本地误差与广播量</span></b><span data-l="en">z: shift, w: shift velocity</span><span data-l="zh">z：平移量，w：平移速度</span></div><div class="tex" data-tex="\varepsilon_i = p_{r,i} - z_i - p_i,\qquad \zeta_i = z_i + \tfrac{1}{\gamma}\,w_i,\qquad \sigma_i = \zeta_i + \varepsilon_i"></div></div>
-      <div class="eq"><div class="what"><b><span data-l="en">Filter input</span><span data-l="zh">滤波器输入</span></b><span data-l="en">the only place where delayed data enter</span><span data-l="zh">时延数据唯一进入的地方</span></div><div class="tex" data-tex="g_i = -\lambda\,\zeta_i - \Lambda \sum_j a_{ij}\Big[\zeta_i + \phi(\varepsilon_i) - \sigma_j\big(t-\tau_{ij}(t)\big)\Big],\qquad \phi(\varepsilon) = \varepsilon\,\min\!\Big\{1,\tfrac{\bar e}{|\varepsilon|}\Big\}"></div></div>
-      <div class="eq"><div class="what"><b><span data-l="en">Saturation, filter</span><span data-l="zh">饱和与滤波</span></b><span data-l="en">shift velocity below ρ·v<sub>r</sub></span><span data-l="zh">平移速度不超过 ρ·v<sub>r</sub></span></div><div class="tex" data-tex="u_i = g_i\,\min\!\Big\{1,\tfrac{\rho\, v_{r,i}}{|g_i|}\Big\},\qquad \dot w_i = \gamma\,(u_i - w_i),\qquad \dot z_i = w_i"></div></div>
-      <div class="eq"><div class="what"><b><span data-l="en">Tracking law</span><span data-l="zh">跟踪控制律</span></b><span data-l="en">errors μ, ν, ϑ in the vehicle frame; hatted speeds from the shifted reference</span><span data-l="zh">μ、ν、ϑ 为车体坐标系下的误差；带帽的速度取自平移后的参考</span></div><div class="tex" data-tex="v_i = \hat v_i\cos\vartheta_i + k_i\,\mu_i,\qquad \omega_i = \hat\omega_i + k_i\,\vartheta_i + b\,\hat v_i\,\mathrm{sinc}(\vartheta_i)\,\nu_i,\qquad k_i = 2\psi\sqrt{\hat\omega_i^2 + b\,\hat v_i^2}"></div></div>
+      <div class="eq"><div class="what"><b>Local error, broadcast</b>z: shift, w: shift velocity</div><div class="tex" data-tex="\varepsilon_i = p_{r,i} - z_i - p_i,\qquad \zeta_i = z_i + \tfrac{1}{\gamma}\,w_i,\qquad \sigma_i = \zeta_i + \varepsilon_i"></div></div>
+      <div class="eq"><div class="what"><b>Filter input</b>the only place where delayed data enter</div><div class="tex" data-tex="g_i = -\lambda\,\zeta_i - \Lambda \sum_j a_{ij}\Big[\zeta_i + \phi(\varepsilon_i) - \sigma_j\big(t-\tau_{ij}(t)\big)\Big],\qquad \phi(\varepsilon) = \varepsilon\,\min\!\Big\{1,\tfrac{\bar e}{|\varepsilon|}\Big\}"></div></div>
+      <div class="eq"><div class="what"><b>Saturation, filter</b>shift velocity below ρ·v<sub>r</sub></div><div class="tex" data-tex="u_i = g_i\,\min\!\Big\{1,\tfrac{\rho\, v_{r,i}}{|g_i|}\Big\},\qquad \dot w_i = \gamma\,(u_i - w_i),\qquad \dot z_i = w_i"></div></div>
+      <div class="eq"><div class="what"><b>Tracking law</b>errors μ, ν, ϑ in the vehicle frame; hatted speeds from the shifted reference</div><div class="tex" data-tex="v_i = \hat v_i\cos\vartheta_i + k_i\,\mu_i,\qquad \omega_i = \hat\omega_i + k_i\,\vartheta_i + b\,\hat v_i\,\mathrm{sinc}(\vartheta_i)\,\nu_i,\qquad k_i = 2\psi\sqrt{\hat\omega_i^2 + b\,\hat v_i^2}"></div></div>
     </div>
-    <p class="params"><span data-l="en">Gains used in the study: λ = 1 s⁻¹, Λ = 1 s⁻¹ (tuned), γ = 5 s⁻¹, ρ = 0.6, ē = 5 cm, ψ = 0.7, b = 3 m⁻².</span><span data-l="zh">研究中使用的参数：λ = 1 s⁻¹，Λ = 1 s⁻¹（调参所得），γ = 5 s⁻¹，ρ = 0.6，ē = 5 cm，ψ = 0.7，b = 3 m⁻²。</span></p>
+    <p class="params">Gains used in the study: λ = 1 s⁻¹, Λ = 1 s⁻¹ (tuned), γ = 5 s⁻¹, ρ = 0.6, ē = 5 cm, ψ = 0.7, b = 3 m⁻².</p>
 
     <div class="why">
-      <div><b><span data-l="en">Delays only enter the filter</span><span data-l="zh">时延只进入滤波器</span></b><p><span data-l="en">The tracking law sees only the vehicle's own pose and its shifted reference. A late or missing packet changes how the reference is shifted, never the feedback loop, so each vehicle's Lyapunov function never sees the network.</span><span data-l="zh">跟踪律只用本车位姿和平移后的参考。迟到或丢失的数据包只影响参考如何平移，不影响反馈回路，因此每辆车的李雅普诺夫函数完全不受网络影响。</span></p></div>
-      <div><b><span data-l="en">Bounded shift</span><span data-l="zh">平移有界</span></b><p><span data-l="en">The shift velocity is limited to ρ = 60 % of the reference speed, so the shifted reference stays a feasible trajectory with 40–160 % of the reference speed. A vehicle can slow down to wait, and the extra demand of the coupling stays bounded instead of growing with the gain; a direct delayed coupling diverged in the study when its gain pushed the drives into saturation.</span><span data-l="zh">平移速度限制在参考速度的 ρ = 60 % 以内，平移后的参考始终是速度为原参考 40–160 % 的可行轨迹。车辆可以减速等待，而耦合带来的额外需求始终有界，不会随增益增大；研究中直接时延耦合正是在增益把驱动推入饱和时发散的。</span></p></div>
-      <div><b><span data-l="en">Capped own error</span><span data-l="zh">本车误差限幅</span></b><p><span data-l="en">The vehicle's own error enters its filter only up to ē, so a vehicle that cannot follow (it is stuck or slipping) does not push its own reference ahead; a leak λ returns the shift to zero once the disturbance is over.</span><span data-l="zh">本车误差进入滤波器时被限制在 ē 以内，因此无法跟随的车辆（卡住或打滑）不会把自己的参考继续往前推；扰动结束后，泄漏项 λ 让平移量回到零。</span></p></div>
+      <div><b>Delays only enter the filter</b><p>The tracking law sees only the vehicle's own pose and its shifted reference. A late or missing packet changes how the reference is shifted, never the feedback loop, so each vehicle's Lyapunov function never sees the network.</p></div>
+      <div><b>Bounded shift</b><p>The shift velocity is limited to ρ = 60 % of the reference speed, so the shifted reference stays a feasible trajectory with 40–160 % of the reference speed. A vehicle can slow down to wait, and the extra demand of the coupling stays bounded instead of growing with the gain; a direct delayed coupling diverged in the study when its gain pushed the drives into saturation.</p></div>
+      <div><b>Capped own error</b><p>The vehicle's own error enters its filter only up to ē, so a vehicle that cannot follow (it is stuck or slipping) does not push its own reference ahead; a leak λ returns the shift to zero once the disturbance is over.</p></div>
     </div>
-    <p class="builds"><span data-l="en"><b>Builds on.</b> The tracking law is the gain-scheduled unicycle law of De Luca, Oriolo and Vendittelli (2001). Feeding delayed data only into a reference filter follows synchronisation filters for robot teams, in particular Peng, Ngo and Liu (Control Eng. Practice, 2023), and coordinated path following. New here, as far as our literature survey goes: the combination for kinematic unicycles with individual references (second-order filter for exact feed-forward, saturation for feasibility, leak for exact convergence), explicit delay-independent estimates, and a formula for what the coupling buys.</span><span data-l="zh"><b>借鉴与创新。</b>跟踪律采用 De Luca、Oriolo 与 Vendittelli（2001）的增益调度独轮车跟踪律；“时延数据只进入参考滤波器”的思路借鉴了机器人编队的同步滤波器，特别是 Peng、Ngo 与 Liu（Control Engineering Practice，2023），以及协同路径跟踪方法。据文献调研，本工作的新意在于：针对“各自跟踪独立参考轨迹的运动学独轮车”给出这一组合（二阶滤波器保证前馈精确、饱和保证可行、泄漏项保证精确收敛），给出与时延无关的显式估计，以及一个刻画“耦合到底带来多少收益”的公式。</span></p>
+    <p class="builds"><b>Builds on.</b> The tracking law is the gain-scheduled unicycle law of De Luca, Oriolo and Vendittelli (2001). Feeding delayed data only into a reference filter follows synchronisation filters for robot teams, in particular Peng, Ngo and Liu (Control Eng. Practice, 2023), and coordinated path following. New here, as far as our literature survey goes: the combination for kinematic unicycles with individual references (second-order filter for exact feed-forward, saturation for feasibility, leak for exact convergence), explicit delay-independent estimates, and a formula for what the coupling buys.</p>
   </section>
 
   <!-- ===================================================== theory -->
   <section id="theory" aria-labelledby="h-theory">
-    <h2 class="sec-title" id="h-theory"><span data-l="en">What is proven</span><span data-l="zh">理论结果</span></h2>
-    <p class="sec-sub"><span data-l="en">For kinematic unicycles, every bounded delay (heterogeneous, time-varying, discontinuous) and every directed, possibly switching communication graph.</span><span data-l="zh">适用于运动学独轮车模型、任意有界时延（各链路不同、时变、可跳变）以及任意有向、可切换的通信拓扑。</span></p>
+    <h2 class="sec-title" id="h-theory">What is proven</h2>
+    <p class="sec-sub">For kinematic unicycles, every bounded delay (heterogeneous, time-varying, discontinuous) and every directed, possibly switching communication graph.</p>
     <div class="thm">
-      <div><p class="tl"><span data-l="en">Theorem · convergence</span><span data-l="zh">定理 · 收敛性</span></p><h3><span data-l="en">Bounded and convergent for any bounded delay</span><span data-l="zh">任意有界时延下误差有界且收敛</span></h3><p><span data-l="en">Tracking and formation errors stay bounded and converge to zero. Boundedness holds without any bound on the delays (Razumikhin and max-norm arguments).</span><span data-l="zh">跟踪误差与编队误差有界并收敛到零；有界性对时延的大小没有任何限制（Razumikhin 方法与最大范数论证）。</span></p></div>
-      <div><p class="tl"><span data-l="en">Proposition · strict Lyapunov function</span><span data-l="zh">命题 · 严格李雅普诺夫函数</span></p><h3><span data-l="en">Explicit constants for the tracking law</span><span data-l="zh">跟踪律的显式常数</span></h3><p><span data-l="en">A strict Lyapunov function for the gain-scheduled law, written with a free length scale so that all constants are dimensionally consistent.</span><span data-l="zh">为增益调度跟踪律构造严格李雅普诺夫函数，并引入自由长度尺度，使所有常数量纲一致。</span></p></div>
-      <div><p class="tl"><span data-l="en">Lemma + theorems · rates</span><span data-l="zh">引理与定理 · 收敛速率</span></p><h3><span data-l="en">Exponential convergence, delay-independent gains</span><span data-l="zh">指数收敛，增益与时延无关</span></h3><p><span data-l="en">A Halanay-type estimate for the delayed filter network gives exponential convergence and a local input-to-state estimate whose gains do not depend on the delay.</span><span data-l="zh">对带时延的滤波器网络给出 Halanay 型估计，由此得到指数收敛，以及增益与时延无关的局部输入-状态稳定（ISS）估计。</span></p></div>
-      <div class="new"><p class="tl"><span data-l="en">Proposition · new</span><span data-l="zh">命题 · 新结果</span></p><h3><span data-l="en">Benefit of the coupling</span><span data-l="zh">耦合带来的收益</span></h3><p><span data-l="en">Persistent local errors reach the tracking errors through</span><span data-l="zh">持续存在的本地误差按下式传递到跟踪误差：</span></p><div class="tex" data-tex="e^{\infty} = \lambda\,(\lambda I + \Lambda L)^{-1}\,\varepsilon^{\infty}"></div><p><span data-l="en">On undirected graphs their mean is untouched, and the formation error shrinks by at least the factor λ/(λ + Λλ₂(L)), for any delay (λ₂(L): algebraic connectivity of the graph).</span><span data-l="zh">在无向图上，误差的均值不变，编队误差至少按因子 λ/(λ + Λλ₂(L)) 缩小，且对任意时延成立（λ₂(L) 为通信图的代数连通度）。</span></p></div>
+      <div><p class="tl">Theorem · convergence</p><h3>Bounded and convergent for any bounded delay</h3><p>Tracking and formation errors stay bounded and converge to zero. Boundedness holds without any bound on the delays (Razumikhin and max-norm arguments).</p></div>
+      <div><p class="tl">Proposition · strict Lyapunov function</p><h3>Explicit constants for the tracking law</h3><p>A strict Lyapunov function for the gain-scheduled law, written with a free length scale so that all constants are dimensionally consistent.</p></div>
+      <div><p class="tl">Lemma + theorems · rates</p><h3>Exponential convergence, delay-independent gains</h3><p>A Halanay-type estimate for the delayed filter network gives exponential convergence and a local input-to-state estimate whose gains do not depend on the delay.</p></div>
+      <div class="new"><p class="tl">Proposition · new</p><h3>Benefit of the coupling</h3><p>Persistent local errors reach the tracking errors through</p><div class="tex" data-tex="e^{\infty} = \lambda\,(\lambda I + \Lambda L)^{-1}\,\varepsilon^{\infty}"></div><p>On undirected graphs their mean is untouched, and the formation error shrinks by at least the factor λ/(λ + Λλ₂(L)), for any delay (λ₂(L): algebraic connectivity of the graph).</p></div>
     </div>
-    <div class="audit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8 4.5 5.6v6.1c0 4.4 3.1 8.1 7.5 9.5 4.4-1.4 7.5-5.1 7.5-9.5V5.6z M8.6 12.2l2.4 2.4 4.6-4.8"/></svg><p><span data-l="en"><b>Independently reviewed and checked numerically.</b> Two referee-style passes over the proofs found no error in the theorems; missing hypotheses, one incorrect remark and notation issues were fixed, and the proof of the direct-coupling delay bound was added. Every number in the report was re-checked against the stored results, and every reference against publisher records. Every statement was also checked with an event-driven, error-controlled simulation: 2×10⁷ random evaluations of the Lyapunov inequalities, 1,000 exactly integrated delayed networks and 280 closed-loop runs with delays up to 4.2 s and 13 % packet loss produced no violation.</span><span data-l="zh"><b>经过独立审查和数值核验。</b>以审稿人的标准对证明做了两轮独立审查：定理本身未发现错误；补全了缺失的前提条件，修正了一处错误的注释和符号问题，并补充了直接耦合时延界的证明。报告中的每个数字都与保存的仿真结果重新核对过，每条参考文献都与出版方记录核实过。此外还用事件驱动、误差可控的仿真逐条核验：2×10⁷ 次李雅普诺夫不等式随机检验、1000 个精确积分的时延网络、280 次时延最长 4.2 s 且丢包 13 % 的闭环仿真，均未出现违反。</span></p></div>
+    <div class="audit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8 4.5 5.6v6.1c0 4.4 3.1 8.1 7.5 9.5 4.4-1.4 7.5-5.1 7.5-9.5V5.6z M8.6 12.2l2.4 2.4 4.6-4.8"/></svg><p><b>Independently reviewed and checked numerically.</b> Two referee-style passes over the proofs found no error in the theorems; missing hypotheses, one incorrect remark and notation issues were fixed, and the proof of the direct-coupling delay bound was added. Every number in the report was re-checked against the stored results, and every reference against publisher records. Every statement was also checked with an event-driven, error-controlled simulation: 2×10⁷ random evaluations of the Lyapunov inequalities, 1,000 exactly integrated delayed networks and 280 closed-loop runs with delays up to 4.2 s and 13 % packet loss produced no violation.</p></div>
   </section>
 
   <!-- ===================================================== study -->
   <section id="study" aria-labelledby="h-study">
-    <h2 class="sec-title" id="h-study"><span data-l="en">Simulation study: does it work on a real AGV?</span><span data-l="zh">仿真研究：在真实 AGV 上是否有效？</span></h2>
-    <p class="sec-sub"><span data-l="en">The theorems hold for kinematic unicycles. To narrow the sim-to-real gap, the controller was tested on a high-fidelity model that violates their assumptions on purpose. Every layer can be switched to its ideal version; in the ideal limit the simulator reproduces an independent event-driven simulator to 0.34 mm.</span><span data-l="zh">理论结果针对运动学独轮车模型。为了缩小 sim-to-real 差距，我们在一个刻意违反理论假设的高保真模型上测试控制器。每一层都可以切换为理想版本；在理想极限下，该仿真器与另一个独立的事件驱动仿真器的结果相差不到 0.34 mm。</span></p>
+    <h2 class="sec-title" id="h-study">Simulation study: does it work on a real AGV?</h2>
+    <p class="sec-sub">The theorems hold for kinematic unicycles. To narrow the sim-to-real gap, the controller was tested on a high-fidelity model that violates their assumptions on purpose. Every layer can be switched to its ideal version; in the ideal limit the simulator reproduces an independent event-driven simulator to 0.34 mm.</p>
     <div class="layers">
-      <div class="layer"><b><span data-l="en">Controller</span><span data-l="zh">控制器</span></b><ul><li><span data-l="en">50 Hz on each vehicle's own clock</span><span data-l="zh">每车按本地时钟以 50 Hz 运行</span></li><li><span data-l="en">clock offset ±5 ms, drift ±20 ppm</span><span data-l="zh">时钟偏差 ±5 ms，漂移 ±20 ppm</span></li><li><span data-l="en">10 ms actuation delay</span><span data-l="zh">执行延迟 10 ms</span></li></ul></div>
-      <div class="layer"><b><span data-l="en">Drives</span><span data-l="zh">驱动</span></b><ul><li><span data-l="en">PI wheel-speed loops, anti-windup</span><span data-l="zh">PI 轮速环，带抗饱和</span></li><li><span data-l="en">torque limit 20 N·m, speed limit 1.5 m/s</span><span data-l="zh">扭矩上限 20 N·m，轮速上限 1.5 m/s</span></li><li><span data-l="en">set-point ramp 1 m/s²</span><span data-l="zh">设定值斜坡 1 m/s²</span></li></ul></div>
-      <div class="layer"><b><span data-l="en">Vehicle</span><span data-l="zh">车辆</span></b><ul><li><span data-l="en">rigid-body dynamics, 150 kg + payload</span><span data-l="zh">刚体动力学，150 kg + 载荷</span></li><li><span data-l="en">wheel radius and track errors ±1 %</span><span data-l="zh">轮径与轮距误差 ±1 %</span></li><li><span data-l="en">longitudinal and lateral slip</span><span data-l="zh">纵向与侧向打滑</span></li></ul></div>
-      <div class="layer"><b><span data-l="en">Localisation</span><span data-l="zh">定位</span></b><ul><li><span data-l="en">LiDAR fixes at 20 Hz, 50 ms latency</span><span data-l="zh">激光雷达定位 20 Hz，延迟 50 ms</span></li><li><span data-l="en">noise 10 mm, slowly drifting bias</span><span data-l="zh">噪声 10 mm，缓慢漂移的偏差</span></li><li><span data-l="en">fused with wheel odometry</span><span data-l="zh">与轮式里程计融合</span></li></ul></div>
-      <div class="layer"><b><span data-l="en">Network</span><span data-l="zh">网络</span></b><ul><li><span data-l="en">20 Hz broadcasts, 30 ± 15 ms + spikes</span><span data-l="zh">20 Hz 广播，30 ± 15 ms 时延并有尖峰</span></li><li><span data-l="en">burst loss (Gilbert–Elliott), outages</span><span data-l="zh">突发丢包（Gilbert–Elliott）、通信中断</span></li><li><span data-l="en">link switching</span><span data-l="zh">链路切换</span></li></ul></div>
+      <div class="layer"><b>Controller</b><ul><li>50 Hz on each vehicle's own clock</li><li>clock offset ±5 ms, drift ±20 ppm</li><li>10 ms actuation delay</li></ul></div>
+      <div class="layer"><b>Drives</b><ul><li>PI wheel-speed loops, anti-windup</li><li>torque limit 20 N·m, speed limit 1.5 m/s</li><li>set-point ramp 1 m/s²</li></ul></div>
+      <div class="layer"><b>Vehicle</b><ul><li>rigid-body dynamics, 150 kg + payload</li><li>wheel radius and track errors ±1 %</li><li>longitudinal and lateral slip</li></ul></div>
+      <div class="layer"><b>Localisation</b><ul><li>LiDAR fixes at 20 Hz, 50 ms latency</li><li>noise 10 mm, slowly drifting bias</li><li>fused with wheel odometry</li></ul></div>
+      <div class="layer"><b>Network</b><ul><li>20 Hz broadcasts, 30 ± 15 ms + spikes</li><li>burst loss (Gilbert–Elliott), outages</li><li>link switching</li></ul></div>
     </div>
-    <p class="fair"><span data-l="en"><b>Fair comparison.</b> Four laws share the same tracking law: <b>no coupling</b>; the <b>cascade</b>; the <b>σ-leak filter</b> (the reference-filter structure of Peng et al. transferred literally to unicycles; not their controller); and <b>direct coupling</b>, where delayed neighbour errors enter the tracking law. Each coupling gain was tuned on ten seeds never used for testing. Every comparison is paired (a seed fixes initial errors, vehicle parameters, network, noise and slip for all controllers), reported as mean or median with 95 % bootstrap intervals, and tested with Wilcoxon signed-rank tests with Holm correction.</span><span data-l="zh"><b>公平对比。</b>四种控制律使用同一个跟踪律：<b>无耦合</b>；<b>级联耦合</b>（本文）；<b>σ-leak 滤波器</b>（把 Peng 等人参考滤波器的结构原样移植到独轮车模型，并非他们的控制器）；以及<b>直接耦合</b>（把带时延的邻居误差直接加入跟踪律）。每个耦合增益都在十个从不用于测试的种子上调参。所有比较都是配对的（同一种子下所有控制器的初始误差、车辆参数、网络、噪声和打滑完全相同），结果给出均值或中位数及 95 % bootstrap 置信区间，并用带 Holm 校正的 Wilcoxon 符号秩检验做显著性检验。</span></p>
+    <p class="fair"><b>Fair comparison.</b> Four laws share the same tracking law: <b>no coupling</b>; the <b>cascade</b>; the <b>σ-leak filter</b> (the reference-filter structure of Peng et al. transferred literally to unicycles; not their controller); and <b>direct coupling</b>, where delayed neighbour errors enter the tracking law. Each coupling gain was tuned on ten seeds never used for testing. Every comparison is paired (a seed fixes initial errors, vehicle parameters, network, noise and slip for all controllers), reported as mean or median with 95 % bootstrap intervals, and tested with Wilcoxon signed-rank tests with Holm correction.</p>
     <div class="tbl-wrap">
     <table class="exps">
-      <thead><tr><th><span data-l="en">Exp.</span><span data-l="zh">实验</span></th><th><span data-l="en">Question</span><span data-l="zh">内容</span></th></tr></thead>
+      <thead><tr><th>Exp.</th><th>Question</th></tr></thead>
       <tbody>
-        <tr><td>R0</td><td><span data-l="en">Fair tuning of every coupling gain on separate seeds; why the direct coupling diverges (drive saturation)</span><span data-l="zh">在独立种子上公平调参；直接耦合为何发散（驱动饱和）</span></td></tr>
-        <tr><td>R1</td><td><span data-l="en">Comparison under the heterogeneous sinusoidal delays of the reference study, transport manoeuvre</span><span data-l="zh">参考文献中的异构正弦时延下的对比，搬运工况</span></td></tr>
-        <tr><td>R2</td><td><span data-l="en">With and without synchronisation on the high-fidelity model, nominal and with a traction loss</span><span data-l="zh">高保真模型上有无同步的对比：正常运行与打滑</span></td></tr>
-        <tr><td>R3</td><td><span data-l="en">Network sweeps: latency (10 ms–4 s), packet loss (up to 90 %), outages, broadcast rate</span><span data-l="zh">网络扫描：时延（10 ms–4 s）、丢包（最高 90 %）、通信中断、广播频率</span></td></tr>
-        <tr><td>R4</td><td><span data-l="en">Sim-to-real factors one at a time: localisation, calibration, slip, payload, delays, control rate, clocks, wheel limits</span><span data-l="zh">逐一考察 sim-to-real 因素：定位、标定、打滑、载荷、延迟、控制频率、时钟、轮速上限</span></td></tr>
-        <tr><td>R5</td><td><span data-l="en">Domain-randomised Monte Carlo over all factors (150 draws)</span><span data-l="zh">对所有因素做域随机化蒙特卡洛（150 组）</span></td></tr>
-        <tr><td>R6</td><td><span data-l="en">Events: traction loss, safety stop, relocalisation jump, switching links, permanent link failure</span><span data-l="zh">扰动事件：打滑、急停、重定位跳变、链路切换、链路永久失效</span></td></tr>
-        <tr><td>R7</td><td><span data-l="en">Topology and scalability up to 12 vehicles; degree-normalised weights (R7b)</span><span data-l="zh">拓扑与规模（最多 12 辆车）；按度归一化权重（R7b）</span></td></tr>
-        <tr><td>R8</td><td><span data-l="en">Sensitivity to the cascade parameters</span><span data-l="zh">级联参数敏感性</span></td></tr>
-        <tr><td>R9</td><td><span data-l="en">Step-size convergence, bit-identical re-runs, cross-validation of the simulator</span><span data-l="zh">步长收敛性、逐位一致的重复运行、仿真器交叉验证</span></td></tr>
+        <tr><td>R0</td><td>Fair tuning of every coupling gain on separate seeds; why the direct coupling diverges (drive saturation)</td></tr>
+        <tr><td>R1</td><td>Comparison under the heterogeneous sinusoidal delays of the reference study, transport manoeuvre</td></tr>
+        <tr><td>R2</td><td>With and without synchronisation on the high-fidelity model, nominal and with a traction loss</td></tr>
+        <tr><td>R3</td><td>Network sweeps: latency (10 ms–4 s), packet loss (up to 90 %), outages, broadcast rate</td></tr>
+        <tr><td>R4</td><td>Sim-to-real factors one at a time: localisation, calibration, slip, payload, delays, control rate, clocks, wheel limits</td></tr>
+        <tr><td>R5</td><td>Domain-randomised Monte Carlo over all factors (150 draws)</td></tr>
+        <tr><td>R6</td><td>Events: traction loss, safety stop, relocalisation jump, switching links, permanent link failure</td></tr>
+        <tr><td>R7</td><td>Topology and scalability up to 12 vehicles; degree-normalised weights (R7b)</td></tr>
+        <tr><td>R8</td><td>Sensitivity to the cascade parameters</td></tr>
+        <tr><td>R9</td><td>Step-size convergence, bit-identical re-runs, cross-validation of the simulator</td></tr>
       </tbody>
     </table>
     </div>
 
     <div class="chart-block" id="events-block">
       <div class="chart-head">
-        <h3><span data-l="en">Disturbance events (R6)</span><span data-l="zh">扰动事件（R6）</span></h3>
+        <h3>Disturbance events (R6)</h3>
         <div class="metric" id="metric" role="group" aria-label="Metric"></div>
       </div>
       <div class="smalls" id="events"></div>
       <div class="legend" id="events-legend"></div>
-      <p class="caption"><span data-l="en">Warehouse route, 20 seeds, mean with 95 % bootstrap interval, over 15 s from the onset. Coupling lowers the formation error after traction losses and safety stops; the price is a larger tracking error, because the other vehicles wait. A relocalisation jump is a localisation artefact that no coupling law can see. The σ-leak filter is worse than no coupling after traction losses on this route, and in some runs it does not recover before the end of the run.</span><span data-l="zh">仓库路线，20 个种子，均值及 95 % bootstrap 置信区间，统计窗口为扰动发生后 15 s。耦合降低了打滑和急停后的编队误差，代价是跟踪误差变大，因为其他车辆在等待。重定位跳变是定位层面的误差，任何耦合控制律都无法察觉。σ-leak 滤波器在这条路线上打滑后反而比无耦合更差，部分仿真到结束时仍未恢复。</span></p>
-      <details class="table"><summary><span data-l="en">Show as table</span><span data-l="zh">以表格显示</span></summary><div class="tbl-wrap" id="events-table"></div></details>
+      <p class="caption">Warehouse route, 20 seeds, mean with 95 % bootstrap interval, over 15 s from the onset. Coupling lowers the formation error after traction losses and safety stops; the price is a larger tracking error, because the other vehicles wait. A relocalisation jump is a localisation artefact that no coupling law can see. The σ-leak filter is worse than no coupling after traction losses on this route, and in some runs it does not recover before the end of the run.</p>
+      <details class="table"><summary>Show as table</summary><div class="tbl-wrap" id="events-table"></div></details>
     </div>
 
     <div class="chart-block" id="latency-block">
-      <h3><span data-l="en">How much delay is too much? (R3)</span><span data-l="zh">时延多大会失效？（R3）</span></h3>
+      <h3>How much delay is too much? (R3)</h3>
       <div class="chart" id="latency"></div>
       <div class="legend" id="latency-legend"></div>
-      <p class="caption"><span data-l="en">Formation IAE over 15 s after a 2-s traction loss against the mean network latency (warehouse route, 10 seeds; median and interquartile range). Both coupled laws stayed stable at every latency, but their benefit fades once the data are older than the disturbance: from 2 s on the cascade is 4–13 % worse than no coupling, and the direct coupling only 2–4 % better.</span><span data-l="zh">2 s 打滑后 15 s 内的编队误差积分随平均网络时延的变化（仓库路线，10 个种子；中位数与四分位距）。两种耦合控制律在所有时延下都保持稳定，但当数据比扰动本身还“旧”时，耦合的收益就消失了：时延达到 2 s 及以上时，级联耦合比无耦合差 4–13 %，直接耦合也只好 2–4 %。</span></p>
-      <details class="table"><summary><span data-l="en">Show as table</span><span data-l="zh">以表格显示</span></summary><div class="tbl-wrap" id="latency-table"></div></details>
+      <p class="caption">Formation IAE over 15 s after a 2-s traction loss against the mean network latency (warehouse route, 10 seeds; median and interquartile range). Both coupled laws stayed stable at every latency, but their benefit fades once the data are older than the disturbance: from 2 s on the cascade is 4–13 % worse than no coupling, and the direct coupling only 2–4 % better.</p>
+      <details class="table"><summary>Show as table</summary><div class="tbl-wrap" id="latency-table"></div></details>
     </div>
 
     <div class="chart-block">
-      <h3><span data-l="en">Figures from the report</span><span data-l="zh">报告中的图</span></h3>
+      <h3>Figures from the report</h3>
       <div class="gallery">
-        <figure><a class="img" href="figures/r2_trajectories.png" target="_blank" rel="noopener"><img src="figures/r2_trajectories.png" alt="Driven paths of three AGVs in the transport manoeuvre" loading="lazy" width="1161" height="504"></a><figcaption><b>R2.</b> <span data-l="en">High-fidelity model, cascade, traction loss: driven paths (colour), reference paths (grey), actual (black) and reference (dashed) formation at selected times.</span><span data-l="zh">高保真模型、级联耦合、打滑：实际路径（彩色）、参考路径（灰色），以及若干时刻的实际编队（黑色）与参考编队（虚线）。</span></figcaption></figure>
-        <figure><a class="img" href="figures/r6_events.png" target="_blank" rel="noopener"><img src="figures/r6_events.png" alt="Formation error around six disturbance events" loading="lazy" width="1473" height="826"></a><figcaption><b>R6.</b> <span data-l="en">Formation error around four events at 30 s, and tracking error after all links of one AGV fail, without and with a 0.5-s watchdog (median and interquartile range, 20 seeds).</span><span data-l="zh">30 s 时四种扰动事件前后的编队误差，以及某车所有链路失效后的跟踪误差（有无 0.5 s 看门狗），中位数与四分位距，20 个种子。</span></figcaption></figure>
-        <figure><a class="img" href="figures/r3_network.png" target="_blank" rel="noopener"><img src="figures/r3_network.png" alt="Formation IAE under six network sweeps" loading="lazy" width="1366" height="828"></a><figcaption><b>R3.</b> <span data-l="en">Network sweeps: latency, loss, outages without and with watchdog, broadcast rate and the sinusoidal delays of the reference study.</span><span data-l="zh">网络扫描：时延、丢包、通信中断（有无看门狗）、广播频率，以及参考文献中的正弦时延。</span></figcaption></figure>
-        <figure><a class="img" href="figures/r4_simreal_steady.png" target="_blank" rel="noopener"><img src="figures/r4_simreal_steady.png" alt="Steady formation RMS against eleven sim-to-real factors" loading="lazy" width="1372" height="1087"></a><figcaption><b>R4.</b> <span data-l="en">Sim-to-real factors one at a time: steady formation RMS. Localisation bias and clock offset dominate; the controllers cannot remove them.</span><span data-l="zh">逐一改变 sim-to-real 因素时的稳态编队 RMS。定位偏差和时钟偏差占主导，控制律无法消除。</span></figcaption></figure>
-        <figure><a class="img" href="figures/r5_domain_rand.png" target="_blank" rel="noopener"><img src="figures/r5_domain_rand.png" alt="Distributions of IAE ratios over 150 randomised draws" loading="lazy" width="1366" height="439"></a><figcaption><b>R5.</b> <span data-l="en">Domain randomisation over 150 draws: paired formation and tracking IAE ratios to no coupling, and peak formation error.</span><span data-l="zh">150 组域随机化：编队与跟踪误差积分相对无耦合的配对比值分布，以及编队误差峰值。</span></figcaption></figure>
-        <figure><a class="img" href="figures/r7_scaling.png" target="_blank" rel="noopener"><img src="figures/r7_scaling.png" alt="Formation IAE for 3 to 12 vehicles on five graphs" loading="lazy" width="1363" height="468"></a><figcaption><b>R7.</b> <span data-l="en">3 to 12 vehicles on five graphs (unit weights). On the complete graph the direct coupling fails in 1 of 6 runs for N = 5 and in all runs from N = 8; degree-normalised weights fix this (R7b).</span><span data-l="zh">3 到 12 辆车、五种拓扑（单位权重）。完全图下直接耦合在 N = 5 时 6 次中失败 1 次，N ≥ 8 时全部失败；按度归一化权重可解决（R7b）。</span></figcaption></figure>
-        <figure><a class="img" href="figures/r8_sensitivity.png" target="_blank" rel="noopener"><img src="figures/r8_sensitivity.png" alt="Sensitivity of the cascade to its parameters" loading="lazy" width="1364" height="357"></a><figcaption><b>R8.</b> <span data-l="en">Cascade parameters varied one at a time: performance changes gradually; a larger leak λ lowers the tracking cost, a cap ē of 0.1–0.2 m works better than the default.</span><span data-l="zh">逐一改变级联参数：性能变化平缓；增大泄漏项 λ 可降低跟踪代价，ē 取 0.1–0.2 m 优于默认值。</span></figcaption></figure>
-        <figure><a class="img" href="figures/form.png" target="_blank" rel="noopener"><img src="figures/form.png" alt="Measured formation-error ratio against the predicted factor" loading="lazy" width="1365" height="472"></a><figcaption><b><span data-l="en">Theory check.</span><span data-l="zh">理论核验。</span></b> <span data-l="en">Measured ratio of the steady formation error with and without coupling against the predicted factor λ/(λ + Λλ₂(L)): equality on the complete graph.</span><span data-l="zh">有无耦合时稳态编队误差之比的实测值与预测因子 λ/(λ + Λλ₂(L)) 的对比：完全图下两者相等。</span></figcaption></figure>
+        <figure><a class="img" href="figures/r2_trajectories.png" target="_blank" rel="noopener"><img src="figures/r2_trajectories.png" alt="Driven paths of three AGVs in the transport manoeuvre" loading="lazy" width="1161" height="504"></a><figcaption><b>R2.</b> High-fidelity model, cascade, traction loss: driven paths (colour), reference paths (grey), actual (black) and reference (dashed) formation at selected times.</figcaption></figure>
+        <figure><a class="img" href="figures/r6_events.png" target="_blank" rel="noopener"><img src="figures/r6_events.png" alt="Formation error around six disturbance events" loading="lazy" width="1473" height="826"></a><figcaption><b>R6.</b> Formation error around four events at 30 s, and tracking error after all links of one AGV fail, without and with a 0.5-s watchdog (median and interquartile range, 20 seeds).</figcaption></figure>
+        <figure><a class="img" href="figures/r3_network.png" target="_blank" rel="noopener"><img src="figures/r3_network.png" alt="Formation IAE under six network sweeps" loading="lazy" width="1366" height="828"></a><figcaption><b>R3.</b> Network sweeps: latency, loss, outages without and with watchdog, broadcast rate and the sinusoidal delays of the reference study.</figcaption></figure>
+        <figure><a class="img" href="figures/r4_simreal_steady.png" target="_blank" rel="noopener"><img src="figures/r4_simreal_steady.png" alt="Steady formation RMS against eleven sim-to-real factors" loading="lazy" width="1372" height="1087"></a><figcaption><b>R4.</b> Sim-to-real factors one at a time: steady formation RMS. Localisation bias and clock offset dominate; the controllers cannot remove them.</figcaption></figure>
+        <figure><a class="img" href="figures/r5_domain_rand.png" target="_blank" rel="noopener"><img src="figures/r5_domain_rand.png" alt="Distributions of IAE ratios over 150 randomised draws" loading="lazy" width="1366" height="439"></a><figcaption><b>R5.</b> Domain randomisation over 150 draws: paired formation and tracking IAE ratios to no coupling, and peak formation error.</figcaption></figure>
+        <figure><a class="img" href="figures/r7_scaling.png" target="_blank" rel="noopener"><img src="figures/r7_scaling.png" alt="Formation IAE for 3 to 12 vehicles on five graphs" loading="lazy" width="1363" height="468"></a><figcaption><b>R7.</b> 3 to 12 vehicles on five graphs (unit weights). On the complete graph the direct coupling fails in 1 of 6 runs for N = 5 and in all runs from N = 8; degree-normalised weights fix this (R7b).</figcaption></figure>
+        <figure><a class="img" href="figures/r8_sensitivity.png" target="_blank" rel="noopener"><img src="figures/r8_sensitivity.png" alt="Sensitivity of the cascade to its parameters" loading="lazy" width="1364" height="357"></a><figcaption><b>R8.</b> Cascade parameters varied one at a time: performance changes gradually; a larger leak λ lowers the tracking cost, a cap ē of 0.1–0.2 m works better than the default.</figcaption></figure>
+        <figure><a class="img" href="figures/form.png" target="_blank" rel="noopener"><img src="figures/form.png" alt="Measured formation-error ratio against the predicted factor" loading="lazy" width="1365" height="472"></a><figcaption><b>Theory check.</b> Measured ratio of the steady formation error with and without coupling against the predicted factor λ/(λ + Λλ₂(L)): equality on the complete graph.</figcaption></figure>
       </div>
     </div>
   </section>
 
   <!-- ===================================================== lessons -->
   <section id="lessons" aria-labelledby="h-lessons">
-    <h2 class="sec-title" id="h-lessons"><span data-l="en">Takeaways</span><span data-l="zh">结论与部署建议</span></h2>
+    <h2 class="sec-title" id="h-lessons">Takeaways</h2>
     <ul class="learn">
-      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8 4.5 5.6v6.1c0 4.4 3.1 8.1 7.5 9.5 4.4-1.4 7.5-5.1 7.5-9.5V5.6z"/></svg><p><span data-l="en"><b>Failures.</b> The cascade did not fail in any run. The direct coupling failed when large effective gains pushed the drives into saturation and at high localisation noise; the σ-leak filter failed in 13 % of the randomised draws.</span><span data-l="zh"><b>失败情况。</b>级联耦合在所有仿真中都没有失败。直接耦合在较大的有效增益把驱动推入饱和时、以及定位噪声较大时会失败；σ-leak 滤波器在 13 % 的域随机化样本中失败。</span></p></li>
-      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18 9.5 12l4 3.5L20 7 M15 7h5v5"/></svg><p><span data-l="en"><b>Benefit.</b> Coupling reduces the formation error caused by disturbances the vehicles can observe: traction loss (21–32 % lower formation IAE), safety stops (47 % for the cascade), and calibration errors, slip and drive saturation (21–38 % lower formation RMS). It cannot remove localisation bias or clock offsets.</span><span data-l="zh"><b>收益。</b>对于车辆能够观测到的扰动，耦合能减小编队误差：打滑（编队误差积分降低 21–32 %）、急停（级联降低 47 %），以及标定误差、打滑噪声和驱动饱和（编队 RMS 降低 21–38 %）；但它无法消除定位偏差和时钟偏差。</span></p></li>
-      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16M17 4v16M7 9h10M7 15h10"/></svg><p><span data-l="en"><b>Cascade or direct coupling.</b> With delays of tens of milliseconds the direct coupling improves the formation after a traction loss about as much as the cascade, at a lower tracking cost. The cascade is better for safety stops, drive saturation, slip and noisy localisation, has the smaller tail of bad cases, and is the only law that did not fail for any gain tested.</span><span data-l="zh"><b>级联还是直接耦合。</b>时延为几十毫秒时，直接耦合在打滑后的编队改善与级联相当，且跟踪代价更低；级联在急停、驱动饱和、打滑和定位噪声较大时更好，坏情况的尾部更小，并且是唯一一个在所有测试增益下都没有失败的控制律。</span></p></li>
-      <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/></svg><p><span data-l="en"><b>Delays.</b> Neither coupled law failed for any delay tested, but the benefit vanishes when the data are older than the disturbance (beyond 1–2 s latency for a 2-s traction loss).</span><span data-l="zh"><b>时延。</b>两种耦合控制律在所有测试的时延下都没有失败，但当数据比扰动本身还旧时（对 2 s 打滑而言，时延超过 1–2 s），收益就会消失。</span></p></li>
-      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h10M4 17h7 M16.5 15.5l2 2 3.5-4"/></svg><p><span data-l="en"><b>For deployment.</b> Centimetre-level formations need a localisation bias of at most about 1 cm and clocks synchronised to a few milliseconds; coupling weights should be normalised by the node degree; a watchdog that drops silent neighbours is advisable, so that stale samples cannot act indefinitely.</span><span data-l="zh"><b>部署建议。</b>要实现厘米级编队，需要约 1 cm 以内的定位偏差和几毫秒以内的时钟同步；耦合权重应按节点度归一化；建议加入看门狗，剔除长时间无数据的邻居，避免过期数据一直起作用。</span></p></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8 4.5 5.6v6.1c0 4.4 3.1 8.1 7.5 9.5 4.4-1.4 7.5-5.1 7.5-9.5V5.6z"/></svg><p><b>Failures.</b> The cascade did not fail in any run. The direct coupling failed when large effective gains pushed the drives into saturation and at high localisation noise; the σ-leak filter failed in 13 % of the randomised draws.</p></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18 9.5 12l4 3.5L20 7 M15 7h5v5"/></svg><p><b>Benefit.</b> Coupling reduces the formation error caused by disturbances the vehicles can observe: traction loss (21–32 % lower formation IAE), safety stops (47 % for the cascade), and calibration errors, slip and drive saturation (21–38 % lower formation RMS). It cannot remove localisation bias or clock offsets.</p></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16M17 4v16M7 9h10M7 15h10"/></svg><p><b>Cascade or direct coupling.</b> With delays of tens of milliseconds the direct coupling improves the formation after a traction loss about as much as the cascade, at a lower tracking cost. The cascade is better for safety stops, drive saturation, slip and noisy localisation, has the smaller tail of bad cases, and is the only law that did not fail for any gain tested.</p></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/></svg><p><b>Delays.</b> Neither coupled law failed for any delay tested, but the benefit vanishes when the data are older than the disturbance (beyond 1–2 s latency for a 2-s traction loss).</p></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h10M4 17h7 M16.5 15.5l2 2 3.5-4"/></svg><p><b>For deployment.</b> Centimetre-level formations need a localisation bias of at most about 1 cm and clocks synchronised to a few milliseconds; coupling weights should be normalised by the node degree; a watchdog that drops silent neighbours is advisable, so that stale samples cannot act indefinitely.</p></li>
     </ul>
     <div class="limits">
-      <h3><span data-l="en">Limitations</span><span data-l="zh">局限性</span></h3>
+      <h3>Limitations</h3>
       <ul>
-        <li><span data-l="en">This study is simulation only. The vehicle parameters are generic values for an industrial differential-drive AGV, not those of a specific vehicle, and the tracking gains ψ and b are assumed.</span><span data-l="zh">本研究仅为仿真。车辆参数为工业差速 AGV 的通用取值，而非某款具体车辆，跟踪增益 ψ 和 b 为假定值。</span></li>
-        <li><span data-l="en">The theorems are stated for kinematic unicycles; on the dynamic model their conclusions are supported by simulation, not by proof.</span><span data-l="zh">定理针对运动学独轮车模型；在动力学模型上，结论由仿真而非证明支撑。</span></li>
-        <li><span data-l="en">The novelty is incremental: the architecture and the analysis tools are known; the contribution lies in their combination for kinematic unicycles with individual references, the explicit constants and the formation result.</span><span data-l="zh">创新性是增量式的：整体架构和分析工具都是已有的；贡献在于针对各自跟踪参考轨迹的运动学独轮车给出这一组合、显式常数，以及编队收益的结论。</span></li>
+        <li>This study is simulation only. The vehicle parameters are generic values for an industrial differential-drive AGV, not those of a specific vehicle, and the tracking gains ψ and b are assumed.</li>
+        <li>The theorems are stated for kinematic unicycles; on the dynamic model their conclusions are supported by simulation, not by proof.</li>
+        <li>The novelty is incremental: the architecture and the analysis tools are known; the contribution lies in their combination for kinematic unicycles with individual references, the explicit constants and the formation result.</li>
       </ul>
     </div>
   </section>
 
   <!-- ===================================================== reproducibility -->
   <section id="repro" aria-labelledby="h-repro">
-    <h2 class="sec-title" id="h-repro"><span data-l="en">Reproducibility</span><span data-l="zh">可复现性</span></h2>
+    <h2 class="sec-title" id="h-repro">Reproducibility</h2>
     <div class="repro">
-      <div><b><span data-l="en">Deterministic jobs</span><span data-l="zh">确定性任务</span></b><p><span data-l="en">Every run is a function of a JSON job description. Six independent random streams per seed, and common random numbers: the number of draws never depends on the controller or on parameter values.</span><span data-l="zh">每次仿真都由一个 JSON 任务描述唯一确定。每个种子派生六路独立随机流，并使用公共随机数：随机数的抽取次数与控制器和参数取值无关。</span></p></div>
-      <div><b><span data-l="en">Bit-identical re-runs</span><span data-l="zh">逐位一致的重复运行</span></b><p><span data-l="en">Job lists, metrics, the software environment and a hash of the simulator are stored with the results; re-running stored jobs gives bit-identical numbers. Reducing the integration step tenfold changes no reported metric by more than 0.63 %.</span><span data-l="zh">任务列表、指标、软件环境和仿真器源码哈希与结果一同保存；重新运行已存任务得到逐位一致的结果。积分步长缩小为 1/10 时，报告中的各项指标变化不超过 0.63 %。</span></p></div>
-      <div><b><span data-l="en">One command</span><span data-l="zh">一条命令</span></b><p><span data-l="en"><code>run_all.py</code> runs the unit tests and regenerates every number, figure and table (4,894 runs, about 1.5 h on 18 cores). Python 3.10, NumPy 2.2.6, SciPy 1.15.3, Matplotlib 3.10.7.</span><span data-l="zh"><code>run_all.py</code> 依次运行单元测试并重新生成所有数据、图和表（4894 次仿真，18 核约 1.5 小时）。环境：Python 3.10、NumPy 2.2.6、SciPy 1.15.3、Matplotlib 3.10.7。</span></p></div>
+      <div><b>Deterministic jobs</b><p>Every run is a function of a JSON job description. Six independent random streams per seed, and common random numbers: the number of draws never depends on the controller or on parameter values.</p></div>
+      <div><b>Bit-identical re-runs</b><p>Job lists, metrics, the software environment and a hash of the simulator are stored with the results; re-running stored jobs gives bit-identical numbers. Reducing the integration step tenfold changes no reported metric by more than 0.63 %.</p></div>
+      <div><b>One command</b><p><code>run_all.py</code> runs the unit tests and regenerates every number, figure and table (4,894 runs, about 1.5 h on 18 cores). Python 3.10, NumPy 2.2.6, SciPy 1.15.3, Matplotlib 3.10.7.</p></div>
     </div>
-    <p class="prose"><span data-l="en">The animated runs above are ordinary jobs of the study (experiments R6, R2 and R7b), re-run with full trajectory recording; their metrics match the stored results.</span><span data-l="zh">上方动画中的仿真就是研究中的原始任务（实验 R6、R2、R7b），只是重新运行并记录了完整轨迹；其指标与已保存的结果一致。</span></p>
+    <p class="prose">The animated runs above are ordinary jobs of the study (experiments R6, R2 and R7b), re-run with full trajectory recording; their metrics match the stored results.</p>
   </section>
 </main>
 
 <footer>
   <div class="wrap">
-    <span>© 2026 <a href="../"><span data-l="en">Yunfei Bi</span><span data-l="zh">毕云飞</span></a></span>
-    <span><span data-l="en">Simulation data and figures from the technical report.</span><span data-l="zh">仿真数据与图片来自技术报告。</span></span>
+    <span>© 2026 <a href="../">Yunfei Bi</a></span>
+    <span>Simulation data and figures from the technical report.</span>
   </div>
 </footer>
 
@@ -490,17 +493,6 @@ footer a { color: var(--ink-2); }
   /* ------------------------------------------------------------------ language */
   var listeners = [];
   function L() { return root.dataset.lang === "zh" ? "zh" : "en"; }
-  function setLang(l, remember) {
-    root.dataset.lang = l; root.lang = l === "zh" ? "zh-CN" : "en";
-    document.title = l === "zh" ? "通信时延下的多 AGV 编队跟踪控制 · 毕云飞" : "Delay-Tolerant Formation Tracking via Reference-Shift Coupling · Yunfei Bi";
-    if (remember) { try { localStorage.setItem(KEY, l); } catch (e) {} }
-    listeners.forEach(function (f) { f(); });
-  }
-  var start = "en";
-  if (location.hash === "#zh") start = "zh"; else if (location.hash === "#en") start = "en";
-  else { try { var s0 = localStorage.getItem(KEY); if (s0 === "en" || s0 === "zh") start = s0; } catch (e) {} }
-  setLang(start, false);
-  document.getElementById("lang-btn").addEventListener("click", function () { setLang(L() === "zh" ? "en" : "zh", true); });
 
   var T = {
     en: { uncoupled: "No coupling", cascade: "Cascade (proposed)", direct: "Direct coupling", sigleak: "σ-leak filter",
