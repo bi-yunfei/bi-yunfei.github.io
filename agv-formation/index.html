@@ -16,7 +16,7 @@
 <style>
 /* Layout: an academic header over a 1040px column. The replay (two synchronised canvases and a time-series strip) comes
    first, then the numbers, the controller, the theory and the simulation study. Colours of the four controllers are the
-   ones used in the report's figures. */
+   ones used in the paper's figures. */
 :root {
   --bg: #ffffff;
   --band: #f4f6f9;
@@ -84,6 +84,7 @@ a.lang { display: inline-block; text-decoration: none; }
 .btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .btn.muted { border-style: dashed; color: var(--ink-3); cursor: default; }
 .btn.muted:hover { border-color: var(--line); color: var(--ink-3); }
+.bib { margin-top: 18px; padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--band); font-family: var(--mono); font-size: .8rem; line-height: 1.55; color: var(--ink-2); overflow-x: auto; white-space: pre; }
 .btn small { font-family: var(--mono); font-size: .66rem; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; }
 
 section { padding-block: clamp(46px, 7vw, 76px) 0; scroll-margin-top: 56px; }
@@ -280,14 +281,15 @@ footer a { color: var(--ink-2); }
 
 <main class="wrap">
   <div class="hero">
-    <p class="kicker">Technical report · 2026</p>
+    <p class="kicker">arXiv preprint · 2026</p>
     <h1>Delay-Tolerant Formation Tracking for Multi-AGV Systems via Reference-Shift Coupling</h1>
     <p class="subtitle">A cascade coupling law whose stability does not depend on the communication delay, Lyapunov stability proofs that were checked numerically, and 4,894 runs on a high-fidelity AGV simulator.</p>
     <p class="author"><a href="../">Yunfei Bi</a></p>
     <div class="buttons">
+      <a class="btn" href="https://arxiv.org/abs/2611.32409" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.8h5.5L12.5 5v9.2H4z M9.5 1.8V5h3 M6 8.5h4.5M6 11h4.5"/></svg>Paper (arXiv)</a>
+      <a class="btn" href="https://github.com/Yunfei-Bi8/AGV-2026/tree/release" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 4 1.8 8l3.7 4M10.5 4l3.7 4-3.7 4"/></svg>Code</a>
       <a class="btn" href="#replay"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l7-4.5z"/></svg>Interactive replay</a>
       <a class="btn" href="#study"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 13.5h11M4.5 11V7.5M8 11V4.5M11.5 11V8.5"/></svg>Results</a>
-      <span class="btn muted" title="The report and the simulation code are not public yet"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.8h5.5L12.5 5v9.2H4z M9.5 1.8V5h3"/></svg>Report &amp; code<small>on request</small></span>
     </div>
   </div>
 
@@ -377,7 +379,7 @@ footer a { color: var(--ink-2); }
       <div><p class="tl">Lemma + theorems · rates</p><h3>Exponential convergence, delay-independent gains</h3><p>A Halanay-type estimate for the delayed filter network gives exponential convergence and a local input-to-state estimate whose gains do not depend on the delay.</p></div>
       <div class="new"><p class="tl">Proposition · new</p><h3>Benefit of the coupling</h3><p>Persistent local errors reach the tracking errors through</p><div class="tex" data-tex="e^{\infty} = \lambda\,(\lambda I + \Lambda L)^{-1}\,\varepsilon^{\infty}"></div><p>On undirected graphs their mean is untouched, and the formation error shrinks by at least the factor λ/(λ + Λλ₂(L)), for any delay (λ₂(L): algebraic connectivity of the graph).</p></div>
     </div>
-    <div class="audit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8 4.5 5.6v6.1c0 4.4 3.1 8.1 7.5 9.5 4.4-1.4 7.5-5.1 7.5-9.5V5.6z M8.6 12.2l2.4 2.4 4.6-4.8"/></svg><p><b>Independently reviewed and checked numerically.</b> Two referee-style passes over the proofs found no error in the theorems; missing hypotheses, one incorrect remark and notation issues were fixed, and the proof of the direct-coupling delay bound was added. Every number in the report was re-checked against the stored results, and every reference against publisher records. Every statement was also checked with an event-driven, error-controlled simulation: 2×10⁷ random evaluations of the Lyapunov inequalities, 1,000 exactly integrated delayed networks and 280 closed-loop runs with delays up to 4.2 s and 13 % packet loss produced no violation.</p></div>
+    <div class="audit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8 4.5 5.6v6.1c0 4.4 3.1 8.1 7.5 9.5 4.4-1.4 7.5-5.1 7.5-9.5V5.6z M8.6 12.2l2.4 2.4 4.6-4.8"/></svg><p><b>Independently reviewed and checked numerically.</b> Two referee-style passes over the proofs found no error in the theorems; missing hypotheses, one incorrect remark and notation issues were fixed, and the proof of the direct-coupling delay bound was added. Every number in the paper was re-checked against the stored results, and every reference against publisher records. Every statement was also checked with an event-driven, error-controlled simulation: 2×10⁷ random evaluations of the Lyapunov inequalities, 1,000 exactly integrated delayed networks and 280 closed-loop runs with delays up to 4.2 s and 13 % packet loss produced no violation.</p></div>
   </section>
 
   <!-- ===================================================== study -->
@@ -430,7 +432,7 @@ footer a { color: var(--ink-2); }
     </div>
 
     <div class="chart-block">
-      <h3>Figures from the report</h3>
+      <h3>Figures from the paper</h3>
       <div class="gallery">
         <figure><a class="img" href="figures/r2_trajectories.png" target="_blank" rel="noopener"><img src="figures/r2_trajectories.png" alt="Driven paths of three AGVs in the transport manoeuvre" loading="lazy" width="1161" height="504"></a><figcaption><b>R2.</b> High-fidelity model, cascade, traction loss: driven paths (colour), reference paths (grey), actual (black) and reference (dashed) formation at selected times.</figcaption></figure>
         <figure><a class="img" href="figures/r6_events.png" target="_blank" rel="noopener"><img src="figures/r6_events.png" alt="Formation error around six disturbance events" loading="lazy" width="1473" height="826"></a><figcaption><b>R6.</b> Formation error around four events at 30 s, and tracking error after all links of one AGV fail, without and with a 0.5-s watchdog (median and interquartile range, 20 seeds).</figcaption></figure>
@@ -470,16 +472,27 @@ footer a { color: var(--ink-2); }
     <div class="repro">
       <div><b>Deterministic jobs</b><p>Every run is a function of a JSON job description. Six independent random streams per seed, and common random numbers: the number of draws never depends on the controller or on parameter values.</p></div>
       <div><b>Bit-identical re-runs</b><p>Job lists, metrics, the software environment and a hash of the simulator are stored with the results; re-running stored jobs gives bit-identical numbers. Reducing the integration step tenfold changes no reported metric by more than 0.63 %.</p></div>
-      <div><b>One command</b><p><code>run_all.py</code> runs the unit tests and regenerates every number, figure and table (4,894 runs, about 1.5 h on 18 cores). Python 3.10, NumPy 2.2.6, SciPy 1.15.3, Matplotlib 3.10.7.</p></div>
+      <div><b>One command</b><p><code>run_all.py</code> in the <a href="https://github.com/Yunfei-Bi8/AGV-2026/tree/release" target="_blank" rel="noopener">code repository</a> runs the unit tests and regenerates every number, figure and table (4,894 runs, about 1.5 h on 18 cores). Python 3.10, NumPy 2.2.6, SciPy 1.15.3, Matplotlib 3.10.7.</p></div>
     </div>
     <p class="prose">The animated runs above are ordinary jobs of the study (experiments R6, R2 and R7b), re-run with full trajectory recording; their metrics match the stored results.</p>
+  </section>
+
+  <!-- ===================================================== citation -->
+  <section id="cite" aria-labelledby="h-cite">
+    <h2 class="sec-title" id="h-cite">Citation</h2>
+    <pre class="bib">@article{bi2026delay,
+  title   = {Delay-Tolerant Formation Tracking for Multi-{AGV} Systems via Reference-Shift Coupling},
+  author  = {Bi, Yunfei},
+  journal = {arXiv preprint arXiv:2611.32409},
+  year    = {2026}
+}</pre>
   </section>
 </main>
 
 <footer>
   <div class="wrap">
     <span>© 2026 <a href="../">Yunfei Bi</a></span>
-    <span>Simulation data and figures from the technical report.</span>
+    <span>Simulation data and figures from the paper (<a href="https://arxiv.org/abs/2611.32409" target="_blank" rel="noopener">arXiv:2611.32409</a>).</span>
   </div>
 </footer>
 

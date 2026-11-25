@@ -16,7 +16,7 @@
 <style>
 /* Layout: an academic header over a 1040px column. The replay (two synchronised canvases and a time-series strip) comes
    first, then the numbers, the controller, the theory and the simulation study. Colours of the four controllers are the
-   ones used in the report's figures. */
+   ones used in the paper's figures. */
 :root {
   --bg: #ffffff;
   --band: #f4f6f9;
@@ -84,6 +84,7 @@ a.lang { display: inline-block; text-decoration: none; }
 .btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .btn.muted { border-style: dashed; color: var(--ink-3); cursor: default; }
 .btn.muted:hover { border-color: var(--line); color: var(--ink-3); }
+.bib { margin-top: 18px; padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--band); font-family: var(--mono); font-size: .8rem; line-height: 1.55; color: var(--ink-2); overflow-x: auto; white-space: pre; }
 .btn small { font-family: var(--mono); font-size: .66rem; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; }
 
 section { padding-block: clamp(46px, 7vw, 76px) 0; scroll-margin-top: 56px; }
@@ -280,14 +281,15 @@ footer a { color: var(--ink-2); }
 
 <main class="wrap">
   <div class="hero">
-    <p class="kicker">技术报告 · 2026</p>
+    <p class="kicker">arXiv 预印本 · 2026</p>
     <h1>通信时延下的多 AGV 编队跟踪控制：参考轨迹平移耦合方法</h1>
     <p class="subtitle">稳定性与通信时延无关的级联耦合控制律、经过数值核验的李雅普诺夫稳定性证明，以及在高保真 AGV 仿真器上的 4894 次仿真验证。</p>
     <p class="author"><a href="../">毕云飞</a></p>
     <div class="buttons">
+      <a class="btn" href="https://arxiv.org/abs/2611.32409" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.8h5.5L12.5 5v9.2H4z M9.5 1.8V5h3 M6 8.5h4.5M6 11h4.5"/></svg>论文（arXiv）</a>
+      <a class="btn" href="https://github.com/Yunfei-Bi8/AGV-2026/tree/release" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 4 1.8 8l3.7 4M10.5 4l3.7 4-3.7 4"/></svg>代码</a>
       <a class="btn" href="#replay"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l7-4.5z"/></svg>交互式动画</a>
       <a class="btn" href="#study"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 13.5h11M4.5 11V7.5M8 11V4.5M11.5 11V8.5"/></svg>仿真结果</a>
-      <span class="btn muted" title="The report and the simulation code are not public yet"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.8h5.5L12.5 5v9.2H4z M9.5 1.8V5h3"/></svg>报告与代码<small>可索取</small></span>
     </div>
   </div>
 
@@ -377,7 +379,7 @@ footer a { color: var(--ink-2); }
       <div><p class="tl">引理与定理 · 收敛速率</p><h3>指数收敛，增益与时延无关</h3><p>对带时延的滤波器网络给出 Halanay 型估计，由此得到指数收敛，以及增益与时延无关的局部输入-状态稳定（ISS）估计。</p></div>
       <div class="new"><p class="tl">命题 · 新结果</p><h3>耦合带来的收益</h3><p>持续存在的本地误差按下式传递到跟踪误差：</p><div class="tex" data-tex="e^{\infty} = \lambda\,(\lambda I + \Lambda L)^{-1}\,\varepsilon^{\infty}"></div><p>在无向图上，误差的均值不变，编队误差至少按因子 λ/(λ + Λλ₂(L)) 缩小，且对任意时延成立（λ₂(L) 为通信图的代数连通度）。</p></div>
     </div>
-    <div class="audit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8 4.5 5.6v6.1c0 4.4 3.1 8.1 7.5 9.5 4.4-1.4 7.5-5.1 7.5-9.5V5.6z M8.6 12.2l2.4 2.4 4.6-4.8"/></svg><p><b>经过独立审查和数值核验。</b>以审稿人的标准对证明做了两轮独立审查：定理本身未发现错误；补全了缺失的前提条件，修正了一处错误的注释和符号问题，并补充了直接耦合时延界的证明。报告中的每个数字都与保存的仿真结果重新核对过，每条参考文献都与出版方记录核实过。此外还用事件驱动、误差可控的仿真逐条核验：2×10⁷ 次李雅普诺夫不等式随机检验、1000 个精确积分的时延网络、280 次时延最长 4.2 s 且丢包 13 % 的闭环仿真，均未出现违反。</p></div>
+    <div class="audit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8 4.5 5.6v6.1c0 4.4 3.1 8.1 7.5 9.5 4.4-1.4 7.5-5.1 7.5-9.5V5.6z M8.6 12.2l2.4 2.4 4.6-4.8"/></svg><p><b>经过独立审查和数值核验。</b>以审稿人的标准对证明做了两轮独立审查：定理本身未发现错误；补全了缺失的前提条件，修正了一处错误的注释和符号问题，并补充了直接耦合时延界的证明。论文中的每个数字都与保存的仿真结果重新核对过，每条参考文献都与出版方记录核实过。此外还用事件驱动、误差可控的仿真逐条核验：2×10⁷ 次李雅普诺夫不等式随机检验、1000 个精确积分的时延网络、280 次时延最长 4.2 s 且丢包 13 % 的闭环仿真，均未出现违反。</p></div>
   </section>
 
   <!-- ===================================================== study -->
@@ -430,7 +432,7 @@ footer a { color: var(--ink-2); }
     </div>
 
     <div class="chart-block">
-      <h3>报告中的图</h3>
+      <h3>论文中的图</h3>
       <div class="gallery">
         <figure><a class="img" href="../../agv-formation/figures/r2_trajectories.png" target="_blank" rel="noopener"><img src="../../agv-formation/figures/r2_trajectories.png" alt="Driven paths of three AGVs in the transport manoeuvre" loading="lazy" width="1161" height="504"></a><figcaption><b>R2.</b> 高保真模型、级联耦合、打滑：实际路径（彩色）、参考路径（灰色），以及若干时刻的实际编队（黑色）与参考编队（虚线）。</figcaption></figure>
         <figure><a class="img" href="../../agv-formation/figures/r6_events.png" target="_blank" rel="noopener"><img src="../../agv-formation/figures/r6_events.png" alt="Formation error around six disturbance events" loading="lazy" width="1473" height="826"></a><figcaption><b>R6.</b> 30 s 时四种扰动事件前后的编队误差，以及某车所有链路失效后的跟踪误差（有无 0.5 s 看门狗），中位数与四分位距，20 个种子。</figcaption></figure>
@@ -469,17 +471,28 @@ footer a { color: var(--ink-2); }
     <h2 class="sec-title" id="h-repro">可复现性</h2>
     <div class="repro">
       <div><b>确定性任务</b><p>每次仿真都由一个 JSON 任务描述唯一确定。每个种子派生六路独立随机流，并使用公共随机数：随机数的抽取次数与控制器和参数取值无关。</p></div>
-      <div><b>逐位一致的重复运行</b><p>任务列表、指标、软件环境和仿真器源码哈希与结果一同保存；重新运行已存任务得到逐位一致的结果。积分步长缩小为 1/10 时，报告中的各项指标变化不超过 0.63 %。</p></div>
-      <div><b>一条命令</b><p><code>run_all.py</code> 依次运行单元测试并重新生成所有数据、图和表（4894 次仿真，18 核约 1.5 小时）。环境：Python 3.10、NumPy 2.2.6、SciPy 1.15.3、Matplotlib 3.10.7。</p></div>
+      <div><b>逐位一致的重复运行</b><p>任务列表、指标、软件环境和仿真器源码哈希与结果一同保存；重新运行已存任务得到逐位一致的结果。积分步长缩小为 1/10 时，论文报告的各项指标变化不超过 0.63 %。</p></div>
+      <div><b>一条命令</b><p><a href="https://github.com/Yunfei-Bi8/AGV-2026/tree/release" target="_blank" rel="noopener">代码仓库</a>中的 <code>run_all.py</code> 依次运行单元测试并重新生成所有数据、图和表（4894 次仿真，18 核约 1.5 小时）。环境：Python 3.10、NumPy 2.2.6、SciPy 1.15.3、Matplotlib 3.10.7。</p></div>
     </div>
     <p class="prose">上方动画中的仿真就是研究中的原始任务（实验 R6、R2、R7b），只是重新运行并记录了完整轨迹；其指标与已保存的结果一致。</p>
+  </section>
+
+  <!-- ===================================================== citation -->
+  <section id="cite" aria-labelledby="h-cite">
+    <h2 class="sec-title" id="h-cite">引用</h2>
+    <pre class="bib">@article{bi2026delay,
+  title   = {Delay-Tolerant Formation Tracking for Multi-{AGV} Systems via Reference-Shift Coupling},
+  author  = {Bi, Yunfei},
+  journal = {arXiv preprint arXiv:2611.32409},
+  year    = {2026}
+}</pre>
   </section>
 </main>
 
 <footer>
   <div class="wrap">
     <span>© 2026 <a href="../">毕云飞</a></span>
-    <span>仿真数据与图片来自技术报告。</span>
+    <span>仿真数据与图片来自论文（<a href="https://arxiv.org/abs/2611.32409" target="_blank" rel="noopener">arXiv:2611.32409</a>）。</span>
   </div>
 </footer>
 
