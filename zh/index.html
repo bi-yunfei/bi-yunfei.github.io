@@ -86,6 +86,7 @@ h2 { font-size: 1.35rem; font-weight: 740; font-stretch: 92%; letter-spacing: -.
 .btns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 11px; }
 .btns a { font-family: var(--mono); font-size: .76rem; font-weight: 600; letter-spacing: .02em; padding: 4px 10px; border-radius: 6px; background: var(--accent-wash); color: var(--accent); }
 .btns a:hover { background: var(--accent); color: #fff; text-decoration: none; }
+.btns .soon { font-family: var(--mono); font-size: .76rem; font-weight: 600; letter-spacing: .02em; padding: 3px 9px; border-radius: 6px; border: 1px dashed var(--line); color: var(--ink-3); cursor: default; }
 
 /* timelines */
 .tl { display: grid; gap: 24px; }
@@ -193,6 +194,25 @@ footer a { color: var(--ink-2); }
 
     <article class="pub">
       <div class="media-col">
+        <div class="thumb"><video data-src="../static/media/thesis_hrc.mp4" poster="../static/media/thesis_hrc.jpg" muted loop playsinline preload="none" aria-label="UR10e robot arm collaborating with a person"></video></div>
+        <div class="inst">
+          <span class="inst-k">研究机构</span>
+          <div class="inst-logos"><a href="https://www.ce.cit.tum.de/lsy/home/" target="_blank" rel="noopener" title="Learning Systems and Robotics Lab"><img class="ol-lsy" src="../static/media/lsy-logo.png" alt="Learning Systems and Robotics Lab" width="400" height="342"></a><a href="https://www.tum.de/en/" target="_blank" rel="noopener" title="Technical University of Munich"><img class="ol-tum" src="../static/media/tum-logo.svg" alt="Technical University of Munich" width="555" height="293"></a></div>
+          <a class="inst-name" href="https://www.ce.cit.tum.de/lsy/home/" target="_blank" rel="noopener">慕尼黑工业大学 · 学习系统与机器人实验室（LSY）</a>
+        </div>
+      </div>
+      <div>
+        <h3>Learning Trustworthy Human-Robot Collaboration Policies from Human-Human Demonstrations</h3>
+        <p class="sub">通过人类-人类操作视频学习可信的人机协作扩散策略</p>
+        <p class="authors"><b>Yunfei Bi</b></p>
+        <p class="venue">硕士论文 · 慕尼黑工业大学 · 2026 年</p>
+        <p class="desc">从双人视频和少量机器人示范中学习人机协作。</p>
+        <div class="btns"><span class="soon">项目主页（即将上线）</span></div>
+      </div>
+    </article>
+
+    <article class="pub">
+      <div class="media-col">
         <div class="thumb"><video data-src="../static/media/agv_formation.mp4" poster="../static/media/agv_formation.jpg" muted loop playsinline preload="none" aria-label="Simulated AGV formation during a safety stop of one vehicle: without coupling (grey) the formation tears apart, with the cascade coupling (blue) the other vehicles wait"></video></div>
         <div class="inst">
           <span class="inst-k">研究机构</span>
@@ -236,25 +256,6 @@ footer a { color: var(--ink-2); }
           <li><b>实验结果：</b>时间同步稳定，支持可扩展的多智能体仿真，并能无缝接入 IDM、基于采样的反应式规划器等兼容 CommonRoad 的运动规划器。</li>
         </ul>
         <div class="btns"><a href="https://arxiv.org/abs/2607.01382" target="_blank" rel="noopener">arXiv</a><a href="https://github.com/Yunfei-Bi8/CommonRoad-Game" target="_blank" rel="noopener">代码</a></div>
-      </div>
-    </article>
-
-    <article class="pub">
-      <div class="media-col">
-        <div class="thumb"><video data-src="../static/media/thesis_hrc.mp4" poster="../static/media/thesis_hrc.jpg" muted loop playsinline preload="none" aria-label="UR10e robot arm collaborating with a person"></video></div>
-        <div class="inst">
-          <span class="inst-k">研究机构</span>
-          <div class="inst-logos"><a href="https://www.ce.cit.tum.de/lsy/home/" target="_blank" rel="noopener" title="Learning Systems and Robotics Lab"><img class="ol-lsy" src="../static/media/lsy-logo.png" alt="Learning Systems and Robotics Lab" width="400" height="342"></a><a href="https://www.tum.de/en/" target="_blank" rel="noopener" title="Technical University of Munich"><img class="ol-tum" src="../static/media/tum-logo.svg" alt="Technical University of Munich" width="555" height="293"></a></div>
-          <a class="inst-name" href="https://www.ce.cit.tum.de/lsy/home/" target="_blank" rel="noopener">慕尼黑工业大学 · 学习系统与机器人实验室（LSY）</a>
-        </div>
-      </div>
-      <div>
-        <h3><a href="https://yunfei-bi8.github.io/Trustworthy-HRC-from-Human-human-videos/" target="_blank" rel="noopener">Learning Trustworthy Human-Robot Collaboration Policies from Human-Human Demonstrations</a></h3>
-        <p class="sub">通过人类-人类操作视频学习可信的人机协作扩散策略</p>
-        <p class="authors"><b>Yunfei Bi</b></p>
-        <p class="venue">硕士论文 · 慕尼黑工业大学 · 2026 年</p>
-        <p class="desc">从双人视频和少量机器人示范中学习人机协作。</p>
-        <div class="btns"><a href="https://yunfei-bi8.github.io/Trustworthy-HRC-from-Human-human-videos/" target="_blank" rel="noopener">项目主页</a></div>
       </div>
     </article>
   </section>
