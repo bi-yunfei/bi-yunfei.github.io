@@ -225,13 +225,13 @@ footer a { color: var(--ink-2); }
         <p class="sub">通信时延下的多 AGV 编队跟踪控制</p>
         <p class="authors"><b>Yunfei Bi</b></p>
         <p class="venue">arXiv 预印本 · 2026 年 · 西门子 Garching 研究中心研究型实习（2025 年）</p>
-        <p class="desc">协同搬运的 AGV 需要在某辆车打滑或急停时仍保持队形，而车辆之间通过 Wi-Fi 通信，各链路时延不同、随时间变化甚至跳变。级联设计让带时延的邻居数据只驱动一个平移本车参考轨迹的滤波器，跟踪控制律完全不接触网络数据，因此对任意有界时延都能保证稳定。</p>
+        <p class="desc">协同搬运的 AGV 需要在某辆车打滑或急停时仍保持队形，而车辆之间通过 Wi-Fi 通信，各链路时延不同、随时间变化甚至跳变。级联设计让带时延的邻居数据只驱动一个平移本车参考轨迹的滤波器，跟踪控制律完全不接触网络数据。</p>
         <ul class="pts">
-          <li><b>理论：</b>任意有界时延、任意有向可切换拓扑下，跟踪误差与编队误差均收敛；给出带显式常数的严格李雅普诺夫函数、指数收敛结论与增益和时延无关的输入-状态稳定估计，以及刻画耦合能将编队误差降低多少的公式；全部证明经过独立审查和数值核验。</li>
-          <li><b>高保真仿真：</b>包含刚体动力学、带限幅的 PI 轮速环、打滑、激光雷达-里程计融合定位、时钟偏差和 Wi-Fi 突发丢包，共 4894 次仿真，其中包括与三种调参后对照控制器的配对比较；每次仿真都是确定性的，可逐位复现。</li>
-          <li><b>结果：</b>级联控制器在所有仿真中都没有失败（时延最长 4&nbsp;s、丢包 90&nbsp;%、12 辆车）；急停后的编队误差降低 47&nbsp;%，打滑后降低 21&ndash;24&nbsp;%，代价是跟踪精度有所下降。</li>
+          <li><b>理论：</b>耦合不会破坏跟踪：在任意有界时延、任意有向可切换拓扑下，误差以指数速度收敛，常数与时延无关；在无向图上，耦合可证明地减小持续本地误差造成的编队不一致。</li>
+          <li><b>高保真仿真：</b>包含刚体动力学、驱动限幅、打滑、激光雷达-里程计融合定位和 Wi-Fi 突发丢包，并与调参后的对照控制器作配对比较；代码公开，每次仿真都可逐位复现。</li>
+          <li><b>结果：</b>级联控制器在所有仿真中都没有失败，急停后的编队误差降低 47&nbsp;%，打滑后降低 21&nbsp;%，代价是跟踪精度有所下降。调参后的直接耦合在打滑后效果更好，但增益较大时会失败；时延达到 2&nbsp;s 及以上时，直接耦合的收益基本消失，级联反而使编队变差。</li>
         </ul>
-        <div class="btns"><a href="https://arxiv.org/abs/2611.32409" target="_blank" rel="noopener">arXiv</a><a href="https://github.com/Yunfei-Bi8/AGV-2026/tree/release" target="_blank" rel="noopener">代码</a><a href="agv-formation/">项目主页</a></div>
+        <div class="btns"><a href="https://arxiv.org/abs/2611.32409" target="_blank" rel="noopener">arXiv</a><a href="https://github.com/Yunfei-Bi8/Delay-tolerant-agv-formation/tree/release" target="_blank" rel="noopener">代码</a><a href="agv-formation/">项目主页</a></div>
       </div>
     </article>
 

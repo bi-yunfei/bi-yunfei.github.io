@@ -223,13 +223,13 @@ footer a { color: var(--ink-2); }
         <h3><a href="agv-formation/">Delay-Tolerant Formation Tracking for Multi-AGV Systems via Reference-Shift Coupling</a></h3>
         <p class="authors"><b>Yunfei Bi</b></p>
         <p class="venue">arXiv preprint, 2026 · research internship at Siemens Technology Center Garching, 2025</p>
-        <p class="desc">AGVs that carry a load together have to keep their formation when one of them slips or stops, while they talk over Wi-Fi with delays that differ per link, vary over time and jump. In the cascade design, delayed neighbour data only drive a filter that shifts each vehicle's own reference; the tracking law never sees the network, so stability holds for every bounded delay.</p>
+        <p class="desc">AGVs that carry a load together have to keep their formation when one of them slips or stops, while they talk over Wi-Fi with delays that differ per link, vary over time and jump. In the cascade design, delayed neighbour data only drive a filter that shifts each vehicle's own reference, and the tracking law never sees the network.</p>
         <ul class="pts">
-          <li><b>Theory:</b> tracking and formation errors converge for any bounded delay and any directed, switching graph; a strict Lyapunov function with explicit constants, exponential convergence and an input-to-state estimate with delay-independent gains, and a formula for how much the coupling reduces the formation error. The proofs were reviewed independently and checked numerically.</li>
-          <li><b>High-fidelity simulation:</b> 4,894 runs with rigid-body vehicle dynamics, PI wheel loops with limits, slip, LiDAR&ndash;odometry localisation, clock offsets and Wi-Fi burst loss, including paired comparisons against three tuned baselines; every run is deterministic and reproduces bit for bit.</li>
-          <li><b>Results:</b> the cascade never failed (latency up to 4&nbsp;s, 90&nbsp;% packet loss, 12 vehicles); it cut the formation error after a safety stop by 47&nbsp;% and after traction losses by 21&ndash;24&nbsp;%, at the price of tracking accuracy.</li>
+          <li><b>Theory:</b> the coupling cannot destroy tracking: the errors converge for every bounded delay on directed, switching graphs, exponentially with delay-independent constants. On undirected graphs, the coupling provably reduces the formation disagreement caused by persistent local errors.</li>
+          <li><b>High-fidelity simulation:</b> rigid-body vehicle dynamics, drive limits, slip, LiDAR&ndash;odometry localisation and Wi-Fi burst loss, with paired comparisons against tuned baselines; the code is open, and every run reproduces bit for bit.</li>
+          <li><b>Results:</b> the cascade never failed and cut the formation error after a safety stop by 47&nbsp;% and after a traction loss by 21&nbsp;%, at the price of tracking accuracy. A tuned direct coupling did better after traction losses but failed with large gains; with latencies of 2&nbsp;s or more, its benefit largely vanished and the cascade made the formation worse.</li>
         </ul>
-        <div class="btns"><a href="https://arxiv.org/abs/2611.32409" target="_blank" rel="noopener">arXiv</a><a href="https://github.com/Yunfei-Bi8/AGV-2026/tree/release" target="_blank" rel="noopener">Code</a><a href="agv-formation/">Project page</a></div>
+        <div class="btns"><a href="https://arxiv.org/abs/2611.32409" target="_blank" rel="noopener">arXiv</a><a href="https://github.com/Yunfei-Bi8/Delay-tolerant-agv-formation/tree/release" target="_blank" rel="noopener">Code</a><a href="agv-formation/">Project page</a></div>
       </div>
     </article>
 

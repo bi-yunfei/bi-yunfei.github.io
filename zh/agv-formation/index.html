@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>通信时延下的多 AGV 编队跟踪控制 · 毕云飞</title>
-<meta name="description" content="面向通信时延的多 AGV 编队跟踪：级联（参考平移）耦合控制律、李雅普诺夫稳定性证明、数值验证，以及在高保真 AGV 模型上的 4,894 次仿真，附交互式回放。">
+<meta name="description" content="面向通信时延的多 AGV 编队跟踪：级联（参考平移）耦合控制律对任意有界时延都不会破坏跟踪。论文、交互式回放、仿真结果与代码。">
 <meta property="og:type" content="website">
 <meta property="og:title" content="通信时延下的多 AGV 编队跟踪控制">
-<meta property="og:description" content="通信时延下多 AGV 编队的参考平移耦合：稳定性证明与高保真仿真研究。">
+<meta property="og:description" content="通信时延下多 AGV 编队的参考平移耦合：稳定性保证与高保真仿真研究。">
 <meta property="og:image" content="https://bi-yunfei.github.io/agv-formation/media/og.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -178,12 +178,6 @@ section { padding-block: clamp(46px, 7vw, 76px) 0; scroll-margin-top: 56px; }
 .tex .katex-display > .katex { text-align: left; }
 .tex.raw { font-family: var(--mono); font-size: .82rem; color: var(--ink-2); white-space: pre-wrap; }
 .params { margin-top: 10px; font-size: .9rem; color: var(--ink-3); }
-.why { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 18px; }
-@media (max-width: 860px) { .why { grid-template-columns: 1fr; } }
-.why div { border-left: 3px solid var(--c-cascade); padding: 4px 0 4px 14px; }
-.why b { display: block; font-size: 1.02rem; font-stretch: 95%; }
-.why p { margin-top: 4px; font-size: .94rem; color: var(--ink-2); }
-.builds { margin-top: 18px; font-size: .94rem; color: var(--ink-2); max-width: 85ch; }
 
 /* ---------------- theory */
 .thm { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 22px; }
@@ -193,45 +187,8 @@ section { padding-block: clamp(46px, 7vw, 76px) 0; scroll-margin-top: 56px; }
 .thm h3 { margin-top: 4px; font-size: 1.08rem; font-stretch: 94%; line-height: 1.3; }
 .thm p { margin-top: 6px; font-size: .94rem; color: var(--ink-2); }
 .thm .new { border-color: color-mix(in srgb, var(--c-cascade) 55%, var(--line)); background: color-mix(in srgb, var(--c-cascade) 6%, var(--bg)); }
-.audit { margin-top: 16px; display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border-radius: var(--radius); background: var(--band); color: var(--ink-2); font-size: .95rem; }
-.audit svg { width: 22px; height: 22px; flex: none; fill: none; stroke: var(--ok); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; margin-top: 1px; }
-.audit b { color: var(--ink); }
 
 /* ---------------- simulation study */
-.layers { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin-top: 22px; }
-@media (max-width: 900px) { .layers { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 460px) { .layers { grid-template-columns: 1fr; } }
-.layer { border: 1px solid var(--line); border-radius: 9px; padding: 12px 13px; background: var(--bg); min-width: 0; }
-.layer b { font-size: .98rem; font-stretch: 95%; }
-.layer ul { margin-top: 6px; padding-left: 1em; font-size: .86rem; line-height: 1.45; color: var(--ink-2); display: grid; gap: 3px; }
-.layer li::marker { color: var(--ink-3); }
-.fair { margin-top: 16px; color: var(--ink-2); font-size: .96rem; max-width: 85ch; }
-.fair b { color: var(--ink); }
-.exps { margin-top: 18px; width: 100%; border-collapse: collapse; font-size: .92rem; }
-.exps th, .exps td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
-.exps th { font-family: var(--mono); font-size: .74rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
-.exps td:first-child { font-family: var(--mono); font-weight: 600; color: var(--ink); white-space: nowrap; }
-.exps td { color: var(--ink-2); }
-.tbl-wrap { overflow-x: auto; }
-.chart-block { margin-top: 34px; }
-.chart-block h3 { font-size: 1.2rem; font-stretch: 93%; font-weight: 720; }
-.chart-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 10px 20px; flex-wrap: wrap; }
-.metric button { padding: 4px 12px; min-height: 32px; font-size: .86rem; }
-.smalls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 26px; margin-top: 14px; }
-@media (max-width: 760px) { .smalls { grid-template-columns: 1fr; } }
-.small h4 { margin: 0 0 4px; font-size: .95rem; font-weight: 650; color: var(--ink); }
-.chart { position: relative; }
-.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 12px; font-size: .9rem; color: var(--ink-2); }
-.legend span { display: inline-flex; align-items: center; gap: 7px; }
-.legend i { width: 11px; height: 11px; border-radius: 3px; display: inline-block; }
-.caption { margin-top: 10px; font-size: .92rem; color: var(--ink-2); max-width: 85ch; }
-details.table { margin-top: 10px; font-size: .9rem; }
-details.table summary { cursor: pointer; color: var(--ink-3); font-weight: 600; }
-details.table table { margin-top: 8px; border-collapse: collapse; font-size: .86rem; min-width: 100%; }
-details.table th, details.table td { padding: 4px 10px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
-details.table th:first-child, details.table td:first-child { text-align: left; }
-details.table th { color: var(--ink-3); font-weight: 600; }
-details.table td { font-family: var(--mono); color: var(--ink-2); }
 
 .gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 18px; margin-top: 20px; }
 @media (max-width: 760px) { .gallery { grid-template-columns: 1fr; } }
@@ -259,6 +216,15 @@ footer { margin-top: clamp(56px, 8vw, 90px); padding-block: 22px 34px; border-to
 footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 20px; }
 footer a { color: var(--ink-2); }
 .noscript { padding: 14px; border: 1px dashed var(--line); border-radius: 9px; color: var(--ink-3); }
+.thm.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 900px) { .thm.three { grid-template-columns: minmax(0, 1fr); } }
+.cards.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 760px) { .cards.three { grid-template-columns: minmax(0, 1fr); } }
+.gallery.one { grid-template-columns: minmax(0, 1fr); }
+details.more { margin-top: 18px; }
+details.more > summary { cursor: pointer; color: var(--ink-2); font-weight: 600; width: fit-content; }
+details.more > summary:hover { color: var(--ink); }
+details.more .eqs { margin-top: 10px; }
 </style>
 <link rel="alternate" hreflang="en" href="https://bi-yunfei.github.io/agv-formation/">
 <link rel="alternate" hreflang="zh-CN" href="https://bi-yunfei.github.io/zh/agv-formation/">
@@ -270,10 +236,9 @@ footer a { color: var(--ink-2); }
     <a class="brand" href="../">← 毕云飞</a>
     <nav aria-label="Sections">
       <a href="#replay">动画</a>
-      <a href="#controller">控制律</a>
-      <a href="#theory">理论</a>
-      <a href="#study">仿真研究</a>
-      <a href="#lessons">结论</a>
+      <a href="#method">方法</a>
+      <a href="#results">结果</a>
+      <a href="#paper">论文与代码</a>
       <a class="lang" href="../../agv-formation/" hreflang="en" lang="en">English</a>
     </nav>
   </div>
@@ -283,20 +248,20 @@ footer a { color: var(--ink-2); }
   <div class="hero">
     <p class="kicker">arXiv 预印本 · 2026</p>
     <h1>通信时延下的多 AGV 编队跟踪控制：参考轨迹平移耦合方法</h1>
-    <p class="subtitle">稳定性与通信时延无关的级联耦合控制律、经过数值核验的李雅普诺夫稳定性证明，以及在高保真 AGV 仿真器上的 4894 次仿真验证。</p>
+    <p class="subtitle">编队行驶的 AGV 通过 Wi-Fi 交换数据，各链路时延不同且随时间变化。本文的级联结构让带时延的邻居数据只用于平移每辆车自己的参考轨迹，因此对任意有界时延，耦合都不会破坏跟踪。</p>
     <p class="author"><a href="../">毕云飞</a></p>
     <div class="buttons">
       <a class="btn" href="https://arxiv.org/abs/2611.32409" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.8h5.5L12.5 5v9.2H4z M9.5 1.8V5h3 M6 8.5h4.5M6 11h4.5"/></svg>论文（arXiv）</a>
-      <a class="btn" href="https://github.com/Yunfei-Bi8/AGV-2026/tree/release" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 4 1.8 8l3.7 4M10.5 4l3.7 4-3.7 4"/></svg>代码</a>
+      <a class="btn" href="https://github.com/Yunfei-Bi8/Delay-tolerant-agv-formation/tree/release" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 4 1.8 8l3.7 4M10.5 4l3.7 4-3.7 4"/></svg>代码</a>
       <a class="btn" href="#replay"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l7-4.5z"/></svg>交互式动画</a>
-      <a class="btn" href="#study"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 13.5h11M4.5 11V7.5M8 11V4.5M11.5 11V8.5"/></svg>仿真结果</a>
+      <a class="btn" href="#results"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 13.5h11M4.5 11V7.5M8 11V4.5M11.5 11V8.5"/></svg>仿真结果</a>
     </div>
   </div>
 
   <!-- ===================================================== replay -->
   <section id="replay" aria-labelledby="h-replay" style="padding-top: clamp(28px, 4vw, 44px)">
     <h2 class="sec-title" id="h-replay">同一次仿真，两种控制器</h2>
-    <p class="sec-sub">两个画面回放的是高保真 AGV 模型上的同一次仿真：随机种子、车辆参数、传感器噪声、Wi-Fi 时延和扰动完全相同，只有耦合控制律不同，可在每个画面上方切换。</p>
+    <p class="sec-sub">两个画面回放高保真 AGV 模型上的同一次仿真（车辆、噪声、Wi-Fi 时延和扰动都相同），只有耦合控制律不同，可在每个画面上方切换。</p>
     <div class="player" id="player">
       <div class="chips" role="group" aria-label="Scenario" id="chips"></div>
       <p class="scen-desc" id="scen-desc" aria-live="polite"></p>
@@ -321,24 +286,11 @@ footer a { color: var(--ink-2); }
     </div>
   </section>
 
-  <!-- ===================================================== numbers -->
-  <section id="numbers" aria-labelledby="h-numbers">
-    <h2 class="sec-title" id="h-numbers">主要结果</h2>
-    <div class="cards">
-      <div class="card"><p class="num">4,894</p><p>次高保真模型上的仿真，包括与对照控制器的配对比较，对照控制器在独立的随机种子上调参。</p></div>
-      <div class="card"><p class="num blue">0</p><p>次级联控制器失败：时延最长 4 s、丢包率 90 %、通信中断、12 辆车、8 倍调参增益下均未失败。</p></div>
-      <div class="card"><p class="num blue">−47 %</p><p>单车急停 3 s 后的编队误差积分（IAE），级联耦合相对无耦合（R6）。</p></div>
-      <div class="card"><p class="num blue">−21…32 %</p><p>打滑后的编队误差积分，耦合控制律相对无耦合（R2 与 R6）。</p></div>
-    </div>
-    <p class="prose">耦合并非没有代价：其他车辆等待受扰车辆时会落后于各自的参考轨迹，跟踪误差因此增大（级联耦合的中位数增加 24 %）。正常运行时编队精度约为 3 cm RMS，由定位误差决定，任何耦合控制律都无法观测并消除它。</p>
-  </section>
-
-  <!-- ===================================================== problem + controller -->
-  <section id="controller" aria-labelledby="h-ctrl">
-    <h2 class="sec-title" id="h-ctrl">问题与控制律</h2>
+  <!-- ===================================================== method -->
+  <section id="method" aria-labelledby="h-method">
+    <h2 class="sec-title" id="h-method">方法</h2>
     <div class="prose">
-      <p>一组差速驱动 AGV 需要像一个刚体一样保持队形运动，例如协同搬运大件物体。每辆车跟踪各自的参考轨迹，所有参考轨迹合起来构成队形。只要每辆车都跟踪得好，队形就能保持；但一旦某辆车受到扰动（打滑或安全急停），其他车并不知道，队形就会被拉开。通过网络把车辆耦合起来，可以让其他车做出反应；然而网络是 Wi-Fi：各链路时延不同、随时间变化甚至跳变，还会丢包。<b>带时延的耦合可能使整个车队失稳。</b></p>
-      <p>下面的设计让带时延的数据完全不进入反馈回路：邻居数据只驱动每辆车上的一个小型滤波器，用来平移本车自己的参考轨迹；跟踪控制律保持不变，去跟踪平移后的参考轨迹。</p>
+      <p>一组差速驱动 AGV 以编队方式行驶，例如共同搬运一件货物。每辆车跟踪各自的参考轨迹，并通过 Wi-Fi 与其他车辆交换数据；每条链路都有各自随时间变化的时延，丢包也会成串出现。如果把带时延的邻居误差直接送进每辆车的跟踪控制律，时延就进入了非线性的车辆闭环。级联结构则让带时延的数据只驱动一个小型滤波器，用来平移本车的参考轨迹，跟踪控制律保持不变，去跟踪平移后的参考。</p>
     </div>
 
     <div class="flow" aria-label="Cascade structure">
@@ -353,6 +305,8 @@ footer a { color: var(--ink-2); }
       <div class="step"><span class="lab">AGV</span><b>(v, ω)</b><span class="d">线速度与角速度</span></div>
     </div>
 
+    <details class="more">
+      <summary>公式与参数</summary>
     <div class="eqs">
       <div class="eq"><div class="what"><b>本地误差与广播量</b>z：平移量，w：平移速度</div><div class="tex" data-tex="\varepsilon_i = p_{r,i} - z_i - p_i,\qquad \zeta_i = z_i + \tfrac{1}{\gamma}\,w_i,\qquad \sigma_i = \zeta_i + \varepsilon_i"></div></div>
       <div class="eq"><div class="what"><b>滤波器输入</b>时延数据唯一进入的地方</div><div class="tex" data-tex="g_i = -\lambda\,\zeta_i - \Lambda \sum_j a_{ij}\Big[\zeta_i + \phi(\varepsilon_i) - \sigma_j\big(t-\tau_{ij}(t)\big)\Big],\qquad \phi(\varepsilon) = \varepsilon\,\min\!\Big\{1,\tfrac{\bar e}{|\varepsilon|}\Big\}"></div></div>
@@ -360,126 +314,48 @@ footer a { color: var(--ink-2); }
       <div class="eq"><div class="what"><b>跟踪控制律</b>μ、ν、ϑ 为车体坐标系下的误差；带帽的速度取自平移后的参考</div><div class="tex" data-tex="v_i = \hat v_i\cos\vartheta_i + k_i\,\mu_i,\qquad \omega_i = \hat\omega_i + k_i\,\vartheta_i + b\,\hat v_i\,\mathrm{sinc}(\vartheta_i)\,\nu_i,\qquad k_i = 2\psi\sqrt{\hat\omega_i^2 + b\,\hat v_i^2}"></div></div>
     </div>
     <p class="params">研究中使用的参数：λ = 1 s⁻¹，Λ = 1 s⁻¹（调参所得），γ = 5 s⁻¹，ρ = 0.6，ē = 5 cm，ψ = 0.7，b = 3 m⁻²。</p>
+    </details>
 
-    <div class="why">
-      <div><b>时延只进入滤波器</b><p>跟踪律只用本车位姿和平移后的参考。迟到或丢失的数据包只影响参考如何平移，不影响反馈回路，因此每辆车的李雅普诺夫函数完全不受网络影响。</p></div>
-      <div><b>平移有界</b><p>平移速度限制在参考速度的 ρ = 60 % 以内，平移后的参考始终是速度为原参考 40–160 % 的可行轨迹。车辆可以减速等待，而耦合带来的额外需求始终有界，不会随增益增大；研究中直接时延耦合正是在增益把驱动推入饱和时发散的。</p></div>
-      <div><b>本车误差限幅</b><p>本车误差进入滤波器时被限制在 ē 以内，因此无法跟随的车辆（卡住或打滑）不会把自己的参考继续往前推；扰动结束后，泄漏项 λ 让平移量回到零。</p></div>
-    </div>
-    <p class="builds"><b>借鉴与创新。</b>跟踪律采用 De Luca、Oriolo 与 Vendittelli（2001）的增益调度独轮车跟踪律；“时延数据只进入参考滤波器”的思路借鉴了机器人编队的同步滤波器，特别是 Peng、Ngo 与 Liu（Control Engineering Practice，2023），以及协同路径跟踪方法。据文献调研，本工作的新意在于：针对“各自跟踪独立参考轨迹的运动学独轮车”给出这一组合（二阶滤波器保证前馈精确、饱和保证可行、泄漏项保证精确收敛），给出与时延无关的显式估计，以及一个刻画“耦合到底带来多少收益”的公式。</p>
-  </section>
-
-  <!-- ===================================================== theory -->
-  <section id="theory" aria-labelledby="h-theory">
-    <h2 class="sec-title" id="h-theory">理论结果</h2>
-    <p class="sec-sub">适用于运动学独轮车模型、任意有界时延（各链路不同、时变、可跳变）以及任意有向、可切换的通信拓扑。</p>
-    <div class="thm">
-      <div><p class="tl">定理 · 收敛性</p><h3>任意有界时延下误差有界且收敛</h3><p>跟踪误差与编队误差有界并收敛到零；有界性对时延的大小没有任何限制（Razumikhin 方法与最大范数论证）。</p></div>
-      <div><p class="tl">命题 · 严格李雅普诺夫函数</p><h3>跟踪律的显式常数</h3><p>为增益调度跟踪律构造严格李雅普诺夫函数，并引入自由长度尺度，使所有常数量纲一致。</p></div>
-      <div><p class="tl">引理与定理 · 收敛速率</p><h3>指数收敛，增益与时延无关</h3><p>对带时延的滤波器网络给出 Halanay 型估计，由此得到指数收敛，以及增益与时延无关的局部输入-状态稳定（ISS）估计。</p></div>
-      <div class="new"><p class="tl">命题 · 新结果</p><h3>耦合带来的收益</h3><p>持续存在的本地误差按下式传递到跟踪误差：</p><div class="tex" data-tex="e^{\infty} = \lambda\,(\lambda I + \Lambda L)^{-1}\,\varepsilon^{\infty}"></div><p>在无向图上，误差的均值不变，编队误差至少按因子 λ/(λ + Λλ₂(L)) 缩小，且对任意时延成立（λ₂(L) 为通信图的代数连通度）。</p></div>
-    </div>
-    <div class="audit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8 4.5 5.6v6.1c0 4.4 3.1 8.1 7.5 9.5 4.4-1.4 7.5-5.1 7.5-9.5V5.6z M8.6 12.2l2.4 2.4 4.6-4.8"/></svg><p><b>经过独立审查和数值核验。</b>以审稿人的标准对证明做了两轮独立审查：定理本身未发现错误；补全了缺失的前提条件，修正了一处错误的注释和符号问题，并补充了直接耦合时延界的证明。论文中的每个数字都与保存的仿真结果重新核对过，每条参考文献都与出版方记录核实过。此外还用事件驱动、误差可控的仿真逐条核验：2×10⁷ 次李雅普诺夫不等式随机检验、1000 个精确积分的时延网络、280 次时延最长 4.2 s 且丢包 13 % 的闭环仿真，均未出现违反。</p></div>
-  </section>
-
-  <!-- ===================================================== study -->
-  <section id="study" aria-labelledby="h-study">
-    <h2 class="sec-title" id="h-study">仿真研究：在真实 AGV 上是否有效？</h2>
-    <p class="sec-sub">理论结果针对运动学独轮车模型。为了缩小 sim-to-real 差距，我们在一个刻意违反理论假设的高保真模型上测试控制器。每一层都可以切换为理想版本；在理想极限下，该仿真器与另一个独立的事件驱动仿真器的结果相差不到 0.34 mm。</p>
-    <div class="layers">
-      <div class="layer"><b>控制器</b><ul><li>每车按本地时钟以 50 Hz 运行</li><li>时钟偏差 ±5 ms，漂移 ±20 ppm</li><li>执行延迟 10 ms</li></ul></div>
-      <div class="layer"><b>驱动</b><ul><li>PI 轮速环，带抗饱和</li><li>扭矩上限 20 N·m，轮速上限 1.5 m/s</li><li>设定值斜坡 1 m/s²</li></ul></div>
-      <div class="layer"><b>车辆</b><ul><li>刚体动力学，150 kg + 载荷</li><li>轮径与轮距误差 ±1 %</li><li>纵向与侧向打滑</li></ul></div>
-      <div class="layer"><b>定位</b><ul><li>激光雷达定位 20 Hz，延迟 50 ms</li><li>噪声 10 mm，缓慢漂移的偏差</li><li>与轮式里程计融合</li></ul></div>
-      <div class="layer"><b>网络</b><ul><li>20 Hz 广播，30 ± 15 ms 时延并有尖峰</li><li>突发丢包（Gilbert–Elliott）、通信中断</li><li>链路切换</li></ul></div>
-    </div>
-    <p class="fair"><b>公平对比。</b>四种控制律使用同一个跟踪律：<b>无耦合</b>；<b>级联耦合</b>（本文）；<b>σ-leak 滤波器</b>（把 Peng 等人参考滤波器的结构原样移植到独轮车模型，并非他们的控制器）；以及<b>直接耦合</b>（把带时延的邻居误差直接加入跟踪律）。每个耦合增益都在十个从不用于测试的种子上调参。所有比较都是配对的（同一种子下所有控制器的初始误差、车辆参数、网络、噪声和打滑完全相同），结果给出均值或中位数及 95 % bootstrap 置信区间，并用带 Holm 校正的 Wilcoxon 符号秩检验做显著性检验。</p>
-    <div class="tbl-wrap">
-    <table class="exps">
-      <thead><tr><th>实验</th><th>内容</th></tr></thead>
-      <tbody>
-        <tr><td>R0</td><td>在独立种子上公平调参；直接耦合为何发散（驱动饱和）</td></tr>
-        <tr><td>R1</td><td>参考文献中的异构正弦时延下的对比，搬运工况</td></tr>
-        <tr><td>R2</td><td>高保真模型上有无同步的对比：正常运行与打滑</td></tr>
-        <tr><td>R3</td><td>网络扫描：时延（10 ms–4 s）、丢包（最高 90 %）、通信中断、广播频率</td></tr>
-        <tr><td>R4</td><td>逐一考察 sim-to-real 因素：定位、标定、打滑、载荷、延迟、控制频率、时钟、轮速上限</td></tr>
-        <tr><td>R5</td><td>对所有因素做域随机化蒙特卡洛（150 组）</td></tr>
-        <tr><td>R6</td><td>扰动事件：打滑、急停、重定位跳变、链路切换、链路永久失效</td></tr>
-        <tr><td>R7</td><td>拓扑与规模（最多 12 辆车）；按度归一化权重（R7b）</td></tr>
-        <tr><td>R8</td><td>级联参数敏感性</td></tr>
-        <tr><td>R9</td><td>步长收敛性、逐位一致的重复运行、仿真器交叉验证</td></tr>
-      </tbody>
-    </table>
-    </div>
-
-    <div class="chart-block" id="events-block">
-      <div class="chart-head">
-        <h3>扰动事件（R6）</h3>
-        <div class="metric" id="metric" role="group" aria-label="Metric"></div>
-      </div>
-      <div class="smalls" id="events"></div>
-      <div class="legend" id="events-legend"></div>
-      <p class="caption">仓库路线，20 个种子，均值及 95 % bootstrap 置信区间，统计窗口为扰动发生后 15 s。耦合降低了打滑和急停后的编队误差，代价是跟踪误差变大，因为其他车辆在等待。重定位跳变是定位层面的误差，任何耦合控制律都无法察觉。σ-leak 滤波器在这条路线上打滑后反而比无耦合更差，部分仿真到结束时仍未恢复。</p>
-      <details class="table"><summary>以表格显示</summary><div class="tbl-wrap" id="events-table"></div></details>
-    </div>
-
-    <div class="chart-block" id="latency-block">
-      <h3>时延多大会失效？（R3）</h3>
-      <div class="chart" id="latency"></div>
-      <div class="legend" id="latency-legend"></div>
-      <p class="caption">2 s 打滑后 15 s 内的编队误差积分随平均网络时延的变化（仓库路线，10 个种子；中位数与四分位距）。两种耦合控制律在所有时延下都保持稳定，但当数据比扰动本身还“旧”时，耦合的收益就消失了：时延达到 2 s 及以上时，级联耦合比无耦合差 4–13 %，直接耦合也只好 2–4 %。</p>
-      <details class="table"><summary>以表格显示</summary><div class="tbl-wrap" id="latency-table"></div></details>
-    </div>
-
-    <div class="chart-block">
-      <h3>论文中的图</h3>
-      <div class="gallery">
-        <figure><a class="img" href="../../agv-formation/figures/r2_trajectories.png" target="_blank" rel="noopener"><img src="../../agv-formation/figures/r2_trajectories.png" alt="Driven paths of three AGVs in the transport manoeuvre" loading="lazy" width="1161" height="504"></a><figcaption><b>R2.</b> 高保真模型、级联耦合、打滑：实际路径（彩色）、参考路径（灰色），以及若干时刻的实际编队（黑色）与参考编队（虚线）。</figcaption></figure>
-        <figure><a class="img" href="../../agv-formation/figures/r6_events.png" target="_blank" rel="noopener"><img src="../../agv-formation/figures/r6_events.png" alt="Formation error around six disturbance events" loading="lazy" width="1473" height="826"></a><figcaption><b>R6.</b> 30 s 时四种扰动事件前后的编队误差，以及某车所有链路失效后的跟踪误差（有无 0.5 s 看门狗），中位数与四分位距，20 个种子。</figcaption></figure>
-        <figure><a class="img" href="../../agv-formation/figures/r3_network.png" target="_blank" rel="noopener"><img src="../../agv-formation/figures/r3_network.png" alt="Formation IAE under six network sweeps" loading="lazy" width="1366" height="828"></a><figcaption><b>R3.</b> 网络扫描：时延、丢包、通信中断（有无看门狗）、广播频率，以及参考文献中的正弦时延。</figcaption></figure>
-        <figure><a class="img" href="../../agv-formation/figures/r4_simreal_steady.png" target="_blank" rel="noopener"><img src="../../agv-formation/figures/r4_simreal_steady.png" alt="Steady formation RMS against eleven sim-to-real factors" loading="lazy" width="1372" height="1087"></a><figcaption><b>R4.</b> 逐一改变 sim-to-real 因素时的稳态编队 RMS。定位偏差和时钟偏差占主导，控制律无法消除。</figcaption></figure>
-        <figure><a class="img" href="../../agv-formation/figures/r5_domain_rand.png" target="_blank" rel="noopener"><img src="../../agv-formation/figures/r5_domain_rand.png" alt="Distributions of IAE ratios over 150 randomised draws" loading="lazy" width="1366" height="439"></a><figcaption><b>R5.</b> 150 组域随机化：编队与跟踪误差积分相对无耦合的配对比值分布，以及编队误差峰值。</figcaption></figure>
-        <figure><a class="img" href="../../agv-formation/figures/r7_scaling.png" target="_blank" rel="noopener"><img src="../../agv-formation/figures/r7_scaling.png" alt="Formation IAE for 3 to 12 vehicles on five graphs" loading="lazy" width="1363" height="468"></a><figcaption><b>R7.</b> 3 到 12 辆车、五种拓扑（单位权重）。完全图下直接耦合在 N = 5 时 6 次中失败 1 次，N ≥ 8 时全部失败；按度归一化权重可解决（R7b）。</figcaption></figure>
-        <figure><a class="img" href="../../agv-formation/figures/r8_sensitivity.png" target="_blank" rel="noopener"><img src="../../agv-formation/figures/r8_sensitivity.png" alt="Sensitivity of the cascade to its parameters" loading="lazy" width="1364" height="357"></a><figcaption><b>R8.</b> 逐一改变级联参数：性能变化平缓；增大泄漏项 λ 可降低跟踪代价，ē 取 0.1–0.2 m 优于默认值。</figcaption></figure>
-        <figure><a class="img" href="../../agv-formation/figures/form.png" target="_blank" rel="noopener"><img src="../../agv-formation/figures/form.png" alt="Measured formation-error ratio against the predicted factor" loading="lazy" width="1365" height="472"></a><figcaption><b>理论核验。</b> 有无耦合时稳态编队误差之比的实测值与预测因子 λ/(λ + Λλ₂(L)) 的对比：完全图下两者相等。</figcaption></figure>
-      </div>
+    <div class="thm three">
+      <div><p class="tl">引理 1 · 可行性</p><h3>平移后的参考始终可行</h3><p>饱和使平移后的参考始终是一条独轮车轨迹，速度有已知的下界，因此跟踪控制律在无时延情形下的分析可以原样沿用。</p></div>
+      <div><p class="tl">定理 1 和 2 · 收敛性</p><h3>耦合不会破坏跟踪</h3><p>与无耦合时一样，在任意有界时延和有向、可切换的通信拓扑下，误差都以指数速度收敛，常数与时延无关，只有收敛速率依赖时延上界。</p></div>
+      <div class="new"><p class="tl">命题 1 · 收益</p><h3>持续误差由全队分担</h3><p>在无向图上，低于限幅 ē 的持续本地误差所造成的编队不一致量，至多缩小为无耦合时的 λ/(λ + Λλ₂(L)) 倍：某辆车持续掉速时，其余车辆会随之放慢。更大的误差可能被放大，因此 ē 应大于预期的持续误差。</p></div>
     </div>
   </section>
 
-  <!-- ===================================================== lessons -->
-  <section id="lessons" aria-labelledby="h-lessons">
-    <h2 class="sec-title" id="h-lessons">结论与部署建议</h2>
+  <!-- ===================================================== results -->
+  <section id="results" aria-labelledby="h-results">
+    <h2 class="sec-title" id="h-results">仿真结果</h2>
+    <p class="sec-sub">高保真模型（通用工业差速 AGV）补上了定理没有涵盖的因素：在漂移时钟上以 50 Hz 运行的控制、激光雷达与里程计融合定位（25 Hz、时延 40 ms、噪声与偏差各 10 mm）、轮速与扭矩限幅、打滑，以及时延 30 ± 15 ms 并带尖峰和突发丢包的 Wi-Fi 链路。级联与无耦合、不带饱和的直接耦合（把带时延的误差直接送入跟踪律）以及 σ-leak 滤波器作比较，各耦合增益都在独立的随机种子上调参。</p>
+    <div class="cards three">
+      <div class="card"><p class="num blue">−21 %</p><p>单车打滑后的编队误差积分（IAE），级联相对无耦合。直接耦合达到 −26 %，跟踪代价也更低（+15 %，级联为 +80 %）。</p></div>
+      <div class="card"><p class="num blue">−47 %</p><p>单车急停 3 s 后的编队误差积分，级联相对无耦合；直接耦合为 −32 %。</p></div>
+      <div class="card"><p class="num blue">0</p><p>级联在 1673 次仿真中的失败次数：时延最长 4 s、丢包率 90 %、12 辆车、8 倍调参增益下都没有失败。直接耦合在增益较大时会失败。</p></div>
+    </div>
+
+    <div class="gallery one">
+      <figure><a class="img" href="../../agv-formation/figures/fig_hifi.png" target="_blank" rel="noopener"><img src="../../agv-formation/figures/fig_hifi.png" alt="Formation error after a traction loss and a safety stop, formation IAE against the mean latency, and the gain selection" loading="lazy" width="2343" height="582"></a><figcaption><b>论文图 3。</b> (a) 2 号车打滑（2 s 内只能实现 40 % 的指令速度）与 (b) 2 号车急停 3 s 时的编队误差，20 个种子的中位数与四分位距。(c) 打滑后的编队误差积分相对无耦合的比值随名义平均时延的变化。(d) 在独立种子上选择增益：每个点对应一个增益，圆圈为选定的增益，叉号为出现失败的增益（数字为 20 次中的失败次数）。</figcaption></figure>
+    </div>
+
     <ul class="learn">
-      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8 4.5 5.6v6.1c0 4.4 3.1 8.1 7.5 9.5 4.4-1.4 7.5-5.1 7.5-9.5V5.6z"/></svg><p><b>失败情况。</b>级联耦合在所有仿真中都没有失败。直接耦合在较大的有效增益把驱动推入饱和时、以及定位噪声较大时会失败；σ-leak 滤波器在 13 % 的域随机化样本中失败。</p></li>
-      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18 9.5 12l4 3.5L20 7 M15 7h5v5"/></svg><p><b>收益。</b>对于车辆能够观测到的扰动，耦合能减小编队误差：打滑（编队误差积分降低 21–32 %）、急停（级联降低 47 %），以及标定误差、打滑噪声和驱动饱和（编队 RMS 降低 21–38 %）；但它无法消除定位偏差和时钟偏差。</p></li>
-      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16M17 4v16M7 9h10M7 15h10"/></svg><p><b>级联还是直接耦合。</b>时延为几十毫秒时，直接耦合在打滑后的编队改善与级联相当，且跟踪代价更低；级联在急停、驱动饱和、打滑和定位噪声较大时更好，坏情况的尾部更小，并且是唯一一个在所有测试增益下都没有失败的控制律。</p></li>
-      <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/></svg><p><b>时延。</b>两种耦合控制律在所有测试的时延下都没有失败，但当数据比扰动本身还旧时（对 2 s 打滑而言，时延超过 1–2 s），收益就会消失。</p></li>
-      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h10M4 17h7 M16.5 15.5l2 2 3.5-4"/></svg><p><b>部署建议。</b>要实现厘米级编队，需要约 1 cm 以内的定位偏差和几毫秒以内的时钟同步；耦合权重应按节点度归一化；建议加入看门狗，剔除长时间无数据的邻居，避免过期数据一直起作用。</p></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16M17 4v16M7 9h10M7 15h10"/></svg><p><b>级联还是直接耦合。</b>时延为几十毫秒时，直接耦合在打滑后效果更好，跟踪代价也更低。级联在急停后更好，在任何增益下都没有失败，在全部参数随机抽样中的坏情况尾部也更小；定位噪声为 4 cm 时，直接耦合的稳态编队误差是无耦合的十倍，级联只高 49 %。</p></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/></svg><p><b>时延。</b>平均时延不超过 0.3 s 时，两种耦合都能把打滑后的编队误差积分降低 18–27 %。时延达到 2 s 及以上时，直接耦合的收益基本消失，级联在每个种子上都比无耦合更差。在所有时延下都没有出现失败，因此与时延无关的理论保证并没有体现为可测的优势。</p></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5.5" cy="12" r="2.3"/><circle cx="18.5" cy="6" r="2.3"/><circle cx="18.5" cy="18" r="2.3"/><path d="M7.6 11 16.4 7M7.6 13l8.8 4"/></svg><p><b>车队规模与通信拓扑。</b>在 8 辆和 12 辆车的完全图上使用单位权重时，直接耦合会失败，级联也失去收益；按节点度归一化权重后两者都恢复正常。在稀疏图上，直接耦合把编队误差积分降低 6–13 %，级联最多降低 8 %，在有向链上反而略有升高（1–5 %）。</p></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18 9.5 12l4 3.5L20 7 M15 7h5v5"/></svg><p><b>代价。</b>其他车辆等待受扰车辆时会落后于各自的参考轨迹，跟踪精度因此下降。两种耦合都会把定位噪声在车辆之间传递；正常运行时约 3 cm 的编队精度由定位偏差决定，任何耦合都无法消除。</p></li>
     </ul>
     <div class="limits">
       <h3>局限性</h3>
       <ul>
-        <li>本研究仅为仿真。车辆参数为工业差速 AGV 的通用取值，而非某款具体车辆，跟踪增益 ψ 和 b 为假定值。</li>
-        <li>定理针对运动学独轮车模型；在动力学模型上，结论由仿真而非证明支撑。</li>
-        <li>创新性是增量式的：整体架构和分析工具都是已有的；贡献在于针对各自跟踪参考轨迹的运动学独轮车给出这一组合、显式常数，以及编队收益的结论。</li>
+        <li>仅为仿真：车辆参数是工业差速 AGV 的通用取值，而非某款具体车辆的参数。</li>
+        <li>定理针对参考轨迹持续运动的运动学独轮车模型，不涵盖停止的编队，给出的显式收敛速率也非常保守。</li>
       </ul>
     </div>
   </section>
 
-  <!-- ===================================================== reproducibility -->
-  <section id="repro" aria-labelledby="h-repro">
-    <h2 class="sec-title" id="h-repro">可复现性</h2>
-    <div class="repro">
-      <div><b>确定性任务</b><p>每次仿真都由一个 JSON 任务描述唯一确定。每个种子派生六路独立随机流，并使用公共随机数：随机数的抽取次数与控制器和参数取值无关。</p></div>
-      <div><b>逐位一致的重复运行</b><p>任务列表、指标、软件环境和仿真器源码哈希与结果一同保存；重新运行已存任务得到逐位一致的结果。积分步长缩小为 1/10 时，论文报告的各项指标变化不超过 0.63 %。</p></div>
-      <div><b>一条命令</b><p><a href="https://github.com/Yunfei-Bi8/AGV-2026/tree/release" target="_blank" rel="noopener">代码仓库</a>中的 <code>run_all.py</code> 依次运行单元测试并重新生成所有数据、图和表（4894 次仿真，18 核约 1.5 小时）。环境：Python 3.10、NumPy 2.2.6、SciPy 1.15.3、Matplotlib 3.10.7。</p></div>
-    </div>
-    <p class="prose">上方动画中的仿真就是研究中的原始任务（实验 R6、R2、R7b），只是重新运行并记录了完整轨迹；其指标与已保存的结果一致。</p>
-  </section>
-
-  <!-- ===================================================== citation -->
-  <section id="cite" aria-labelledby="h-cite">
-    <h2 class="sec-title" id="h-cite">引用</h2>
+  <!-- ===================================================== paper, code and citation -->
+  <section id="paper" aria-labelledby="h-paper">
+    <h2 class="sec-title" id="h-paper">论文、代码与引用</h2>
+    <div class="prose"><p><a href="https://arxiv.org/abs/2611.32409" target="_blank" rel="noopener">论文</a>（6 页）给出控制律、带证明梗概的稳定性分析和仿真研究。<a href="https://github.com/Yunfei-Bi8/Delay-tolerant-agv-formation/tree/arxiv-v2" target="_blank" rel="noopener">代码仓库</a>（标签 <code>arxiv-v2</code>）包含仿真器和全部已保存的结果：<code>paper/make_paper_figures.py</code> 与 <code>paper/make_paper_tables.py</code> 重新生成论文中的图和表，<code>paper/paper_numbers.py</code> 打印仿真部分每个数字及其来源，<code>run_all.py</code> 重新运行整个研究（18 核约 1.5 小时）。每次仿真都可逐位复现。</p></div>
     <pre class="bib">@article{bi2026delay,
   title   = {Delay-Tolerant Formation Tracking for Multi-{AGV} Systems via Reference-Shift Coupling},
   author  = {Bi, Yunfei},
@@ -518,13 +394,13 @@ footer a { color: var(--ink-2); }
           e_traction: "Traction loss of AGV 2 (40 % for 2 s)", e_stop: "Safety stop of AGV 2 (3 s)", e_reloc: "Relocalisation jump of AGV 2 (10 cm)", e_switching: "Traction loss with switching links",
           lat_x: "mean latency (s)", lat_y: "formation IAE (m·s)", lat_band: "No coupling (median, IQR)", ctrl: "Controller", event: "Event", median: "median", iqr: "IQR", latency: "latency",
           play: "Play", pause: "Pause", speed: "speed",
-          sc: { stop: ["Safety stop", "R6"], traction: ["Traction loss", "R2"], n12: ["12 vehicles", "R7b"] },
+          sc: { stop: ["Safety stop", "3 s"], traction: ["Traction loss", "2 s"], n12: ["12 vehicles", "traction loss"] },
           desc: {
             stop: "Warehouse route at 0.8 m/s. AGV 2 makes a safety stop for 3 s at t = 30 s. Without coupling the other two drive on and the triangle is torn apart; with coupling they slow down and wait, then the team catches up with its references.",
             traction: "Transport manoeuvre: L-shaped formation along an S-shaped aisle at 0.4 m/s, turning by −0.6 rad and back. One AGV delivers only 40 % of its motion for 2 s (wheel slip).",
             n12: "12 AGVs on a wide loop at 0.8 m/s, complete graph with degree-normalised weights (1/11 per neighbour); AGV 2 loses traction for 2 s at t = 30 s. With such small weights the coupling helps only a little here, but the formation stays stable."
           },
-          run: "Run: experiment {exp}, {note}." },
+          run: "Run: {note}." },
     zh: { uncoupled: "无耦合", cascade: "级联耦合（本文）", direct: "直接耦合", sigleak: "σ-leak 滤波器",
           s_uncoupled: "无耦合", s_cascade: "级联", s_direct: "直接耦合", s_sigleak: "σ-leak",
           form: "编队误差", track: "平均跟踪误差", stop: "急停", slip: "打滑 40 %",
@@ -535,18 +411,18 @@ footer a { color: var(--ink-2); }
           e_traction: "2 号车打滑（40 %，2 s）", e_stop: "2 号车安全急停（3 s）", e_reloc: "2 号车重定位跳变（10 cm）", e_switching: "打滑 + 链路切换",
           lat_x: "平均时延 (s)", lat_y: "编队误差积分 (m·s)", lat_band: "无耦合（中位数与四分位距）", ctrl: "控制律", event: "事件", median: "中位数", iqr: "四分位距", latency: "时延",
           play: "播放", pause: "暂停", speed: "速度",
-          sc: { stop: ["安全急停", "R6"], traction: ["打滑", "R2"], n12: ["12 车编队", "R7b"] },
+          sc: { stop: ["安全急停", "3 s"], traction: ["打滑", "2 s"], n12: ["12 车编队", "打滑"] },
           desc: {
             stop: "仓库路线，速度 0.8 m/s。2 号车在 t = 30 s 安全急停 3 s。无耦合时另外两车继续前进，三角队形被拉开；有耦合时它们减速等待，之后整个车队再追上各自的参考轨迹。",
             traction: "搬运工况：L 形编队沿 S 形通道以 0.4 m/s 行驶，并整体旋转 −0.6 rad 后转回。其中一辆车在 2 s 内只能实现 40 % 的运动（车轮打滑）。",
             n12: "12 辆车沿大环线以 0.8 m/s 行驶，完全图通信、按度归一化权重（每个邻居 1/11）；2 号车在 t = 30 s 打滑 2 s。权重这么小时耦合的改善有限，但编队始终稳定。"
           },
-          run: "仿真来源：实验 {exp}，{note}。" }
+          run: "仿真来源：{note}。" }
   };
   function t(k) { return T[L()][k]; }
   var CTRL_ORDER = ["uncoupled", "cascade", "direct", "sigleak"];
-  var NOTE_ZH = { stop: "20 个种子中的种子 {seed}（其级联/无耦合编队误差积分比接近中位数）", traction: "种子 7，即报告 R2 轨迹图中的那次仿真", n12: "6 个种子中的种子 0，按度归一化权重" };
-  var NOTE_EN = { stop: "seed {seed} of 20, whose cascade-to-no-coupling ratio of the formation IAE is close to the median", traction: "seed 7, the run shown in the trajectory figure of R2", n12: "seed 0 of 6, degree-normalised weights" };
+  var NOTE_ZH = { stop: "20 个种子中的种子 {seed}（其级联/无耦合编队误差积分比接近中位数）", traction: "种子 7", n12: "6 个种子中的种子 0，按度归一化权重" };
+  var NOTE_EN = { stop: "seed {seed} of 20, whose cascade-to-no-coupling ratio of the formation IAE is close to the median", traction: "seed 7", n12: "seed 0 of 6, degree-normalised weights" };
 
   /* ------------------------------------------------------------------ colours */
   var C = {};
@@ -917,150 +793,14 @@ footer a { color: var(--ink-2); }
     window.addEventListener("resize", function () { renderTS(); });
   }
 
-  /* ================================================================== charts */
-  var R = null, metric = "iae";
-  function legend(host, keys, extra) {
-    host.innerHTML = "";
-    keys.forEach(function (k) { var sp = el("span", null, host); var i = el("i", null, sp); i.style.background = ccol(k); sp.appendChild(document.createTextNode(t(k))); });
-    if (extra) extra(host);
-  }
-  function buildMetric() {
-    var host = document.getElementById("metric"); host.innerHTML = "";
-    ["iae", "peak", "track"].forEach(function (m) {
-      var b = el("button", { type: "button", "data-m": m, "aria-pressed": String(metric === m), text: t("m_" + m) }, host);
-      b.addEventListener("click", function () { metric = m; buildMetric(); renderEvents(); });
-    });
-  }
-  function renderEvents() {
-    var host = document.getElementById("events"); host.innerHTML = "";
-    var order = ["uncoupled", "cascade", "direct", "sigleak"];
-    ["traction", "stop", "reloc", "switching"].forEach(function (ev) {
-      var box = el("div", { "class": "small" }, host);
-      var h4 = el("h4", { text: t("e_" + ev) }, box); el("span", { text: "  ·  " + t("m_" + metric) + " (" + t("u_" + metric) + ")", style: "font-weight:500;color:var(--ink-3);font-size:.88em" }, h4);
-      var wrap = el("div", { "class": "chart" }, box);
-      var W = wrap.clientWidth || box.clientWidth || 440, rowH = 30, m = { l: 92, r: 10, t: 4, b: 22 }, H = m.t + m.b + rowH * order.length;
-      var svg = s("svg", { viewBox: "0 0 " + W + " " + H, height: H, role: "img", "aria-label": t("e_" + ev) + ", " + t("m_" + metric) }, wrap);
-      var d = R.r6[ev], hi = 0;
-      order.forEach(function (k) { hi = Math.max(hi, d[k][metric][2] / 1000); });
-      var xMax = niceMax(hi * 1.32);
-      var X = function (v) { return m.l + v / xMax * (W - m.l - m.r); };
-      ticks(xMax, 4).forEach(function (v) {
-        s("line", { x1: X(v), x2: X(v), y1: m.t, y2: H - m.b, stroke: C.line, "stroke-width": 1 }, svg);
-        s("text", { x: X(v), y: H - m.b + 15, "text-anchor": "middle", "font-size": 10.5, fill: C["ink-3"], "font-family": "var(--mono)", text: fmt(v, tickNd(xMax, 4)) }, svg);
-      });
-      var base = d.uncoupled[metric][0];
-      var tip = el("div", { "class": "tip" }, wrap);
-      order.forEach(function (k, i) {
-        var v = d[k][metric], y = m.t + i * rowH + 6, bh = rowH - 12;
-        s("text", { x: m.l - 8, y: y + bh / 2 + 4, "text-anchor": "end", "font-size": 12, fill: C["ink-2"], text: t("s_" + k) }, svg);
-        var x1 = X(v[0] / 1000), r = Math.min(4, (x1 - m.l) / 2);
-        var path = "M" + m.l + " " + y + "H" + (x1 - r) + "Q" + x1 + " " + y + " " + x1 + " " + (y + r) + "V" + (y + bh - r) + "Q" + x1 + " " + (y + bh) + " " + (x1 - r) + " " + (y + bh) + "H" + m.l + "Z";
-        s("path", { d: path, fill: ccol(k) }, svg);
-        var cy = y + bh / 2;
-        s("line", { x1: X(v[1] / 1000), x2: X(v[2] / 1000), y1: cy, y2: cy, stroke: C.ink, "stroke-width": 1.2 }, svg);
-        [v[1], v[2]].forEach(function (b) { s("line", { x1: X(b / 1000), x2: X(b / 1000), y1: cy - 4, y2: cy + 4, stroke: C.ink, "stroke-width": 1.2 }, svg); });
-        var lab = fmt(v[0] / 1000, 2);
-        var rel = k === "uncoupled" ? "" : " (" + (v[0] < base ? "−" : "+") + Math.abs(Math.round((v[0] / base - 1) * 100)) + " %)";
-        s("text", { x: X(v[2] / 1000) + 6, y: cy + 4, "font-size": 11, fill: C["ink-2"], "font-family": "var(--mono)", text: lab + rel }, svg);
-        var hit = s("rect", { x: 0, y: y - 4, width: W, height: rowH, fill: "transparent" }, svg);
-        hit.addEventListener("pointermove", function (e) {
-          tip.innerHTML = "<i style='background:" + ccol(k) + "'></i>" + t(k) + "<br>" + t("m_" + metric) + ": <b>" + fmt(v[0] / 1000, 2) + " " + t("u_" + metric) + "</b> [" + fmt(v[1] / 1000, 2) + ", " + fmt(v[2] / 1000, 2) + "]" + (rel ? "<br>" + rel.trim().replace(/[()]/g, "") + " " + t("vs") : "");
-          tip.style.display = "block";
-          var rr = wrap.getBoundingClientRect();
-          tip.style.left = Math.min(Math.max(0, e.clientX - rr.left + 12), rr.width - tip.offsetWidth) + "px";
-          tip.style.top = (y + rowH) + "px";
-        });
-        hit.addEventListener("pointerleave", function () { tip.style.display = "none"; });
-      });
-    });
-    legend(document.getElementById("events-legend"), order);
-    // table
-    var tb = document.getElementById("events-table"); tb.innerHTML = "";
-    var table = el("table", null, tb), tr = el("tr", null, el("thead", null, table));
-    [t("event"), t("ctrl"), t("m_iae") + " (m·s)", t("m_peak") + " (m)", t("m_track") + " (m·s)"].forEach(function (h) { el("th", { text: h }, tr); });
-    var body = el("tbody", null, table);
-    ["traction", "stop", "reloc", "switching"].forEach(function (ev) {
-      order.forEach(function (k, i) {
-        var r = el("tr", null, body), d = R.r6[ev][k];
-        el("td", { text: i === 0 ? t("e_" + ev) : "" }, r); el("td", { text: t(k) }, r);
-        ["iae", "peak", "track"].forEach(function (mm) { el("td", { text: fmt(d[mm][0] / 1000, 2) + " [" + fmt(d[mm][1] / 1000, 2) + ", " + fmt(d[mm][2] / 1000, 2) + "]" }, r); });
-      });
-    });
-  }
-  function renderLatency() {
-    var host = document.getElementById("latency"); host.innerHTML = "";
-    var d = R.r3_latency, keys = ["cascade", "direct"];
-    var W = host.clientWidth || 700, H = 300, m = { l: 50, r: 100, t: 26, b: 40 };
-    var svg = s("svg", { viewBox: "0 0 " + W + " " + H, height: H, role: "img", "aria-label": t("lat_y") + " / " + t("lat_x") }, host);
-    var lv = d.cascade.map(function (r) { return r[0]; });
-    var lx0 = Math.log10(lv[0]), lx1 = Math.log10(lv[lv.length - 1]);
-    var yMax = 0; keys.forEach(function (k) { d[k].forEach(function (r) { yMax = Math.max(yMax, r[3] / 1000); }); }); yMax = Math.max(yMax, d.uncoupled[2] / 1000);
-    yMax = Math.ceil(yMax * 1.1 * 5) / 5;
-    var X = function (v) { return m.l + (Math.log10(v) - lx0) / (lx1 - lx0) * (W - m.l - m.r); };
-    var Y = function (v) { return H - m.b - v / yMax * (H - m.t - m.b); };
-    for (var g = 0; g <= yMax + 1e-9; g += 0.2) {
-      s("line", { x1: m.l, x2: W - m.r, y1: Y(g), y2: Y(g), stroke: C.line, "stroke-width": 1 }, svg);
-      s("text", { x: m.l - 7, y: Y(g) + 4, "text-anchor": "end", "font-size": 11, fill: C["ink-3"], "font-family": "var(--mono)", text: fmt(g, 1) }, svg);
-    }
-    lv.forEach(function (v) { s("text", { x: X(v), y: H - m.b + 17, "text-anchor": "middle", "font-size": 11, fill: C["ink-3"], "font-family": "var(--mono)", text: String(v) }, svg); });
-    s("text", { x: (m.l + W - m.r) / 2, y: H - 4, "text-anchor": "middle", "font-size": 11.5, fill: C["ink-3"], text: t("lat_x") }, svg);
-    s("text", { x: m.l - 40, y: m.t - 12, "font-size": 11.5, fill: C["ink-3"], text: t("lat_y") }, svg);
-    // no-coupling band
-    var u = d.uncoupled;
-    s("rect", { x: m.l, width: W - m.l - m.r, y: Y(u[2] / 1000), height: Y(u[0] / 1000) - Y(u[2] / 1000), fill: alpha(C["c-uncoupled"], 0.18) }, svg);
-    s("line", { x1: m.l, x2: W - m.r, y1: Y(u[1] / 1000), y2: Y(u[1] / 1000), stroke: C["c-uncoupled"], "stroke-width": 2, "stroke-dasharray": "6 4" }, svg);
-    var ends = [["uncoupled", Y(u[1] / 1000)]];
-    keys.forEach(function (k) {
-      var rows = d[k], band = "", line = "";
-      rows.forEach(function (r, i) { band += (i ? "L" : "M") + X(r[0]) + " " + Y(r[3] / 1000); line += (i ? "L" : "M") + X(r[0]) + " " + Y(r[2] / 1000); });
-      for (var i = rows.length - 1; i >= 0; i--) band += "L" + X(rows[i][0]) + " " + Y(rows[i][1] / 1000);
-      s("path", { d: band + "Z", fill: alpha(ccol(k), 0.15) }, svg);
-      s("path", { d: line, fill: "none", stroke: ccol(k), "stroke-width": 2 }, svg);
-      rows.forEach(function (r) { s("circle", { cx: X(r[0]), cy: Y(r[2] / 1000), r: 4.5, fill: ccol(k), stroke: C.bg, "stroke-width": 2 }, svg); });
-      ends.push([k, Y(rows[rows.length - 1][2] / 1000)]);
-    });
-    ends.sort(function (a, b) { return a[1] - b[1]; });
-    for (var e = 1; e < ends.length; e++) if (ends[e][1] - ends[e - 1][1] < 15) ends[e][1] = ends[e - 1][1] + 15;
-    ends.forEach(function (en) { s("text", { x: W - m.r + 6, y: en[1] + 4, "font-size": 11.5, fill: C["ink-2"], text: t("s_" + en[0]) }, svg); });
-    // crosshair
-    var cross = s("line", { y1: m.t, y2: H - m.b, stroke: C["ink-3"], "stroke-width": 1, "stroke-dasharray": "3 3", opacity: 0 }, svg);
-    var tip = el("div", { "class": "tip" }, host);
-    var hit = s("rect", { x: m.l, y: m.t, width: W - m.l - m.r, height: H - m.t - m.b, fill: "transparent" }, svg);
-    hit.addEventListener("pointermove", function (e) {
-      var r = svg.getBoundingClientRect(), x = (e.clientX - r.left) * W / r.width, best = 0, bd = 1e9;
-      lv.forEach(function (v, i) { var dd = Math.abs(X(v) - x); if (dd < bd) { bd = dd; best = i; } });
-      cross.setAttribute("x1", X(lv[best])); cross.setAttribute("x2", X(lv[best])); cross.setAttribute("opacity", 1);
-      var html = "<b>" + t("latency") + " " + lv[best] + " s</b>";
-      keys.forEach(function (k) { var rr = d[k][best]; html += "<br><i style='background:" + ccol(k) + "'></i>" + t("s_" + k) + ": <b>" + fmt(rr[2] / 1000, 2) + "</b> m·s"; });
-      html += "<br><i style='background:" + C["c-uncoupled"] + "'></i>" + t("s_uncoupled") + ": <b>" + fmt(u[1] / 1000, 2) + "</b> m·s";
-      tip.innerHTML = html; tip.style.display = "block";
-      tip.style.left = Math.min(Math.max(0, X(lv[best]) * r.width / W + 12), r.width - tip.offsetWidth) + "px"; tip.style.top = "10px";
-    });
-    hit.addEventListener("pointerleave", function () { tip.style.display = "none"; cross.setAttribute("opacity", 0); });
-    legend(document.getElementById("latency-legend"), keys, function (h) { var sp = el("span", null, h); var i = el("i", null, sp); i.style.background = alpha(C["c-uncoupled"], 0.5); sp.appendChild(document.createTextNode(t("lat_band"))); });
-    var tb = document.getElementById("latency-table"); tb.innerHTML = "";
-    var table = el("table", null, tb), tr = el("tr", null, el("thead", null, table));
-    [t("lat_x"), t("s_cascade") + " (" + t("median") + ", " + t("iqr") + ")", t("s_direct") + " (" + t("median") + ", " + t("iqr") + ")"].forEach(function (h) { el("th", { text: h }, tr); });
-    var body = el("tbody", null, table);
-    lv.forEach(function (v, i) {
-      var r = el("tr", null, body); el("td", { text: String(v) }, r);
-      keys.forEach(function (k) { var q = d[k][i]; el("td", { text: fmt(q[2] / 1000, 2) + " [" + fmt(q[1] / 1000, 2) + ", " + fmt(q[3] / 1000, 2) + "]" }, r); });
-    });
-    var r0 = el("tr", null, body); el("td", { text: t("s_uncoupled") }, r0); el("td", { text: fmt(u[1] / 1000, 2) + " [" + fmt(u[0] / 1000, 2) + ", " + fmt(u[2] / 1000, 2) + "]" }, r0); el("td", { text: "" }, r0);
-  }
-  function renderCharts() { if (!R) return; buildMetric(); renderEvents(); renderLatency(); }
 
   /* ------------------------------------------------------------------ boot */
   listeners.push(function () {
     readColors();
     if (player.data) { labelChips(); labelPanels(); document.getElementById("scen-desc").textContent = t("desc")[player.sc.id]; renderTS(); peaks(); drawAll(); playLabel(); }
-    renderCharts();
   });
-  var rz = 0;
-  window.addEventListener("resize", function () { clearTimeout(rz); rz = setTimeout(renderCharts, 150); });
-  if (window.matchMedia) window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function () { readColors(); if (player.data) { renderTS(); drawAll(); } renderCharts(); });
+  if (window.matchMedia) window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function () { readColors(); if (player.data) { renderTS(); drawAll(); } });
 
-  fetch("../../agv-formation/data/results.json").then(function (r) { return r.json(); }).then(function (d) { R = d; renderCharts(); }).catch(function () {});
   fetch("../../agv-formation/data/anim.json").then(function (r) { return r.json(); }).then(initReplay).catch(function (e) {
     document.getElementById("scen-desc").textContent = "The replay data could not be loaded (" + e + ").";
   });
