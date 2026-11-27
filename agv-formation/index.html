@@ -7,7 +7,7 @@
 <meta name="description" content="Cascade coupling for AGV formations over Wi-Fi with link-dependent delays: the coupling cannot destroy tracking for any bounded delay. Paper, interactive replay, simulation results and code.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Delay-Tolerant Formation Tracking for Multi-AGV Systems via Reference-Shift Coupling">
-<meta property="og:description" content="Reference-shift coupling for AGV formations under communication delays: stability guarantees and a high-fidelity simulation study.">
+<meta property="og:description" content="Reference-shift coupling for AGV formations under communication delays: stability guarantees and a simulation study on a detailed AGV model.">
 <meta property="og:image" content="https://bi-yunfei.github.io/agv-formation/media/og.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -221,6 +221,7 @@ footer a { color: var(--ink-2); }
 .cards.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 @media (max-width: 760px) { .cards.three { grid-template-columns: minmax(0, 1fr); } }
 .gallery.one { grid-template-columns: minmax(0, 1fr); }
+.gallery.narrow { max-width: 700px; }
 details.more { margin-top: 18px; }
 details.more > summary { cursor: pointer; color: var(--ink-2); font-weight: 600; width: fit-content; }
 details.more > summary:hover { color: var(--ink); }
@@ -261,7 +262,7 @@ details.more .eqs { margin-top: 10px; }
   <!-- ===================================================== replay -->
   <section id="replay" aria-labelledby="h-replay" style="padding-top: clamp(28px, 4vw, 44px)">
     <h2 class="sec-title" id="h-replay">Same run, two controllers</h2>
-    <p class="sec-sub">Both panels replay the same run on the high-fidelity AGV model (same vehicles, noise, Wi-Fi delays and disturbance); only the coupling law differs. Pick it above each panel.</p>
+    <p class="sec-sub">Both panels replay the same run on the detailed AGV model (same vehicles, noise, Wi-Fi delays and disturbance); only the coupling law differs. Pick it above each panel.</p>
     <div class="player" id="player">
       <div class="chips" role="group" aria-label="Scenario" id="chips"></div>
       <p class="scen-desc" id="scen-desc" aria-live="polite"></p>
@@ -316,38 +317,44 @@ details.more .eqs { margin-top: 10px; }
     <p class="params">Gains used in the study: λ = 1 s⁻¹, Λ = 1 s⁻¹ (tuned), γ = 5 s⁻¹, ρ = 0.6, ē = 5 cm, ψ = 0.7, b = 3 m⁻².</p>
     </details>
 
-    <div class="thm three">
+    <div class="thm">
       <div><p class="tl">Lemma 1 · feasibility</p><h3>The shifted reference stays feasible</h3><p>Saturations keep the shifted reference a unicycle trajectory whose speed stays above a known bound, so the delay-free analysis of the tracking law applies unchanged.</p></div>
-      <div><p class="tl">Theorems 1 and 2 · convergence</p><h3>The coupling cannot destroy tracking</h3><p>As without coupling, the errors converge for every bounded delay on directed, switching graphs, exponentially with constants that do not depend on the delays; only the rate depends on the delay bound.</p></div>
-      <div class="new"><p class="tl">Proposition 1 · benefit</p><h3>Persistent errors are shared</h3><p>On undirected graphs, the disagreement caused by persistent local errors below the cap ē shrinks to at most λ/(λ + Λλ₂(L)) of its value without coupling: if one vehicle loses speed, the others fall back. Larger errors can be amplified, so ē should exceed the persistent errors to be expected.</p></div>
+      <div><p class="tl">Theorems 1 and 2 · convergence</p><h3>The coupling cannot destroy tracking</h3><p>As without coupling, the errors converge for every bounded delay on directed, switching graphs, exponentially on bounded sets of initial errors. The constants do not depend on the delays; only the rate depends on the delay bound.</p></div>
+      <div class="new"><p class="tl">Proposition 1 · benefit</p><h3>Persistent errors are shared</h3><p>On undirected graphs, the disagreement caused by persistent local errors below the cap ē shrinks to at most λ/(λ + Λλ₂(L)) of its value without coupling, whatever the delays: if one vehicle loses speed, the others fall back. For errors that rotate with the reference, as on curves, the attenuation weakens with the delay; larger errors can be amplified, so ē should exceed the persistent errors to be expected.</p></div>
+      <div><p class="tl">Proposition 2 · comparison</p><h3>Direct coupling has a delay limit</h3><p>If the delayed errors of the neighbours enter the tracking law directly, the linearized loop is stable for every delay only while the coupling gain times the node degree stays below 2ψ(1 + ψ); above that, it loses stability at a delay inversely proportional to the speed. All 288 simulated runs matched this boundary (Fig. 2), whereas the cascade converged for every gain and delay tested.</p></div>
+    </div>
+
+    <div class="gallery one narrow">
+      <figure><a class="img" href="figures/fig_kin.png" target="_blank" rel="noopener"><img src="figures/fig_kin.png" alt="Stability region of the direct coupling over delay and gain with simulated outcomes, and measured against predicted formation attenuation" loading="lazy" width="1500" height="714"></a><figcaption><b>Fig. 2 of the paper.</b> (a) Direct coupling on a straight reference at 0.6 m/s, three vehicles on a complete graph, constant delay: region where its linearization is unstable (shaded) and simulated runs whose tracking errors decayed (dots) or did not (crosses). (b) Measured attenuation of the formation disagreement against the prediction: the factor of Proposition 1 on a straight reference, and its delay-dependent extension on a circle.</figcaption></figure>
     </div>
   </section>
 
   <!-- ===================================================== results -->
   <section id="results" aria-labelledby="h-results">
     <h2 class="sec-title" id="h-results">Simulation results</h2>
-    <p class="sec-sub">A high-fidelity model of a generic industrial differential-drive AGV adds what the theorems leave out: 50 Hz control on drifting clocks, LiDAR–odometry localisation (25 Hz fixes, 40 ms latency, 10 mm noise and bias), wheel-speed and torque limits, slip, and Wi-Fi links with 30 ± 15 ms latency, spikes and bursty loss. The cascade is compared with no coupling, an unsaturated direct coupling of the delayed errors and a σ-leak filter; each coupling gain was tuned on separate seeds.</p>
+    <p class="sec-sub">A detailed model of a generic industrial differential-drive AGV adds what the theorems leave out: 50 Hz control on drifting clocks, LiDAR–odometry localisation (25 Hz fixes, 40 ms latency, 10 mm noise and bias), wheel-speed and torque limits, slip, and Wi-Fi links with 30 ± 15 ms latency, spikes and bursty loss. Three AGVs on a complete graph compare the cascade with no coupling, an unsaturated direct coupling of the delayed errors, a high-gain law that has the gains but not the data of the direct coupling, and a σ-leak filter; each coupling gain was tuned on separate seeds.</p>
     <div class="cards three">
-      <div class="card"><p class="num blue">−21 %</p><p>formation error (IAE) after a traction loss of one AGV, cascade vs. no coupling. The direct coupling reached −26 % at a lower tracking cost (+15 % instead of +80 %).</p></div>
-      <div class="card"><p class="num blue">−47 %</p><p>formation error (IAE) after a 3-s safety stop of one AGV, cascade vs. no coupling; direct coupling −32 %.</p></div>
-      <div class="card"><p class="num blue">0</p><p>failures of the cascade in 1,673 runs, with latencies up to 4 s, 90 % packet loss, 12 vehicles and 8× the tuned gain. The direct coupling failed with large gains.</p></div>
+      <div class="card"><p class="num blue">−21 %</p><p>formation error (IAE) after a traction loss of one AGV, cascade vs. no coupling. The direct coupling reached −26 % at a lower tracking cost (+15 % instead of +80 %), about half of it through its higher gain alone (−13 % without any data).</p></div>
+      <div class="card"><p class="num blue">−47 %</p><p>formation error (IAE) after a 3-s safety stop of one AGV, cascade vs. no coupling; direct coupling −32 %, the higher gain alone 0 %.</p></div>
+      <div class="card"><p class="num blue">0</p><p>failures of the cascade in 1,877 runs, with latencies up to 4 s, 90 % packet loss, 12 vehicles and 8× the tuned gain. The direct coupling failed with large gains, mainly because the higher gain saturates the drives.</p></div>
     </div>
 
     <div class="gallery one">
-      <figure><a class="img" href="figures/fig_hifi.png" target="_blank" rel="noopener"><img src="figures/fig_hifi.png" alt="Formation error after a traction loss and a safety stop, formation IAE against the mean latency, and the gain selection" loading="lazy" width="2343" height="582"></a><figcaption><b>Fig. 3 of the paper.</b> (a) Traction loss of AGV 2 (40 % of the commanded velocities for 2 s) and (b) safety stop of AGV 2 for 3 s: formation error, median and interquartile range over 20 seeds. (c) Formation IAE after the traction loss relative to no coupling, against the nominal mean latency. (d) Gain selection on separate seeds: one point per gain; circles mark the selected gains, crosses gains with failed runs (number out of 20).</figcaption></figure>
+      <figure><a class="img" href="figures/fig_hifi.png" target="_blank" rel="noopener"><img src="figures/fig_hifi.png" alt="Formation error after a traction loss and a safety stop, formation IAE against the mean latency, and the gain selection" loading="lazy" width="2343" height="550"></a><figcaption><b>Fig. 3 of the paper.</b> (a) Traction loss of AGV 2 (40 % of the commanded velocities for 2 s) and (b) safety stop of AGV 2 for 3 s: formation error, median and interquartile range over 20 seeds. (c) Formation IAE after the traction loss relative to no coupling, against the nominal mean latency; thin lines: with an age gate that discards samples older than 1.5 s. (d) Gain selection on separate seeds: one point per gain; circles mark the selected gains, crosses gains with failed runs (number out of 20).</figcaption></figure>
     </div>
 
     <ul class="learn">
-      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16M17 4v16M7 9h10M7 15h10"/></svg><p><b>Cascade or direct coupling.</b> With latencies of tens of milliseconds, the direct coupling did better after traction losses and at a lower tracking cost. The cascade was better after safety stops, never failed for any gain, and has the smaller tail over random draws of all parameters; at 4 cm of localisation noise, the steady formation error of the direct coupling was ten times that without coupling, that of the cascade 49 % higher.</p></li>
-      <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/></svg><p><b>Delays.</b> Up to a mean latency of 0.3 s, both couplings reduced the formation IAE after a traction loss by 18–27 %. At 2 s or more, the benefit of the direct coupling largely vanished, and the cascade was worse than no coupling on every seed. No run failed at any latency, so the delay-independent guarantee did not show up as a measured advantage.</p></li>
-      <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5.5" cy="12" r="2.3"/><circle cx="18.5" cy="6" r="2.3"/><circle cx="18.5" cy="18" r="2.3"/><path d="M7.6 11 16.4 7M7.6 13l8.8 4"/></svg><p><b>Team size and graph.</b> With unit weights on complete graphs of 8 and 12 vehicles, the direct coupling failed and the cascade lost its benefit; degree-normalised weights fixed both. On sparse graphs, the direct coupling lowered the formation IAE by 6–13 %, the cascade by at most 8 %; on directed chains the cascade raised it slightly (1–5 %).</p></li>
-      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18 9.5 12l4 3.5L20 7 M15 7h5v5"/></svg><p><b>Costs.</b> While the others wait for a disturbed vehicle, they fall behind their own references, so tracking accuracy suffers. Both couplings pass localisation noise between the vehicles, and the nominal formation accuracy of about 3 cm is set by the localisation bias, which no coupling can remove.</p></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16M17 4v16M7 9h10M7 15h10"/></svg><p><b>Cascade or direct coupling.</b> With latencies of tens of milliseconds, the direct coupling did better after traction losses and at a lower tracking cost, about half of its benefit coming from its higher gain; with intermittent links, the cascade was no better than that higher gain alone. The cascade was better after safety stops, never failed for any gain, and has the smaller tail over random draws of all parameters; at 4 cm of localisation noise, the steady formation error of the direct coupling was ten times that without coupling, that of the cascade 49 % higher.</p></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/></svg><p><b>Delays.</b> Up to a mean latency of 0.3 s, both couplings reduced the formation IAE after a traction loss by 18–27 %. At 2 s or more, the benefit of the direct coupling largely vanished, and the cascade was worse than no coupling on every seed; discarding samples older than 1.5 s removed this harm without changing the results at shorter latencies. No run failed at any latency: at the tuned gain, the direct coupling itself satisfies the delay condition of Proposition 2, so the delay-independent guarantee of the cascade did not show up as a measured advantage.</p></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5.5" cy="12" r="2.3"/><circle cx="18.5" cy="6" r="2.3"/><circle cx="18.5" cy="18" r="2.3"/><path d="M7.6 11 16.4 7M7.6 13l8.8 4"/></svg><p><b>Team size and graph.</b> The results above are for three vehicles on a complete graph. With unit weights on complete graphs of 8 and 12 vehicles, the direct coupling failed and the cascade lost its benefit; degree-normalised weights fixed both. On sparse graphs, the direct coupling lowered the formation IAE by 6–13 %, the cascade by at most 8 %; on directed chains the cascade raised it slightly (1–5 %).</p></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18 9.5 12l4 3.5L20 7 M15 7h5v5"/></svg><p><b>Costs.</b> While the others wait for a disturbed vehicle, they fall behind their own references, so tracking accuracy suffers. The direct coupling and the high-gain law double how fast the speed commands change; the cascade does not, but its heading deviates twice as much from the planned one. Both couplings pass localisation noise between the vehicles, and the nominal formation accuracy of about 3 cm is set by the localisation bias, which no coupling can remove.</p></li>
     </ul>
     <div class="limits">
       <h3>Limitations</h3>
       <ul>
         <li>Simulation only: the vehicle parameters are generic values for an industrial differential-drive AGV, not those of a specific vehicle.</li>
-        <li>The theorems hold for kinematic unicycles with moving references; formations that stop are not covered, and the explicit convergence rates are very conservative.</li>
+        <li>The theorems hold for kinematic unicycles with moving references; formations that stop are not covered, and the guaranteed convergence rates are far below the measured ones.</li>
+        <li>The benefit of the coupling was shown for three vehicles on a complete graph; on sparse graphs and in larger teams it was small.</li>
       </ul>
     </div>
   </section>
@@ -355,7 +362,7 @@ details.more .eqs { margin-top: 10px; }
   <!-- ===================================================== paper, code and citation -->
   <section id="paper" aria-labelledby="h-paper">
     <h2 class="sec-title" id="h-paper">Paper, code and citation</h2>
-    <div class="prose"><p>The <a href="https://arxiv.org/abs/2611.32409" target="_blank" rel="noopener">paper</a> (6 pages) gives the controller, the analysis with proof sketches and the simulation study. The <a href="https://github.com/Yunfei-Bi8/Delay-tolerant-agv-formation/tree/arxiv-v2" target="_blank" rel="noopener">code repository</a> (tag <code>arxiv-v2</code>) contains the simulators and all stored results: <code>paper/make_paper_figures.py</code> and <code>paper/make_paper_tables.py</code> regenerate the figures and the table of the paper, <code>paper/paper_numbers.py</code> prints every number of its simulation section with the source, and <code>run_all.py</code> re-runs the whole study (about 1.5 h on 18 cores). Every run reproduces bit for bit.</p></div>
+    <div class="prose"><p>The <a href="https://arxiv.org/abs/2611.32409" target="_blank" rel="noopener">paper</a> (6 pages plus an appendix with all proofs) gives the controller, the analysis and the simulation study. The <a href="https://github.com/Yunfei-Bi8/Delay-tolerant-agv-formation/tree/release" target="_blank" rel="noopener">code repository</a> (<code>release</code> branch) contains the simulators and all stored results: <code>paper/make_paper_figures.py</code> and <code>paper/make_paper_tables.py</code> regenerate the figures and the table of the paper, <code>paper/paper_numbers.py</code> prints every number of the paper with its source, and <code>run_all.py</code> re-runs the whole study (about 2 h on 18 cores). Every run reproduces bit for bit.</p></div>
     <pre class="bib">@article{bi2026delay,
   title   = {Delay-Tolerant Formation Tracking for Multi-{AGV} Systems via Reference-Shift Coupling},
   author  = {Bi, Yunfei},

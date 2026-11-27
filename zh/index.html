@@ -179,7 +179,7 @@ footer a { color: var(--ink-2); }
         <p>本科毕业于同济大学汽车学院，现于<a href="https://www.tum.de/en/" target="_blank" rel="noopener">慕尼黑工业大学（TUM）</a>攻读机电、机器人与生物力学工程硕士，研究兴趣为<b>机器人学习</b>、<b>控制理论</b>与<b>自动驾驶仿真</b>。硕士论文在 <a href="https://scholar.google.com/citations?user=QMfeRz0AAAAJ" target="_blank" rel="noopener">Schoellig 教授</a>的<a href="https://www.ce.cit.tum.de/lsy/home/" target="_blank" rel="noopener">学习系统与机器人实验室（LSY）</a>完成，学期论文在 <a href="https://scholar.google.com/citations?user=E3zazJAAAAAJ" target="_blank" rel="noopener">Althoff 教授</a>的<a href="https://www.ce.cit.tum.de/cps/home/" target="_blank" rel="noopener">信息物理系统实验室（CPS）</a>完成。曾在<a href="https://www.siemens.com/" target="_blank" rel="noopener">西门子</a> Garching 研究中心担任研究型实习生，并在 <a href="https://www.agile-robots.com/" target="_blank" rel="noopener">Agile Robots SE（思灵机器人）</a>实习。</p>
       </div>
       <div class="links">
-        <a href="../static/cv/Yunfei_Bi_CV_zh.pdf?v=2026-11-26" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z"/><path d="M9.5 1.5V5H13M6.2 8.2h4.6M6.2 10.8h4.6"/></svg>简历（PDF）</a>
+        <a href="../static/cv/Yunfei_Bi_CV_zh.pdf?v=2026-11-27" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z"/><path d="M9.5 1.5V5H13M6.2 8.2h4.6M6.2 10.8h4.6"/></svg>简历（PDF）</a>
         <a href="mailto:yunfei.bi@tum.de"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="3" width="13" height="10" rx="1.5"/><path d="m2 4 6 4.6L14 4"/></svg>yunfei.bi@tum.de</a>
         <a href="mailto:bi_yunfei1999@163.com"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="3" width="13" height="10" rx="1.5"/><path d="m2 4 6 4.6L14 4"/></svg>bi_yunfei1999@163.com</a>
         <a href="https://github.com/Yunfei-Bi8" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 4 1.8 8l3.7 4M10.5 4l3.7 4-3.7 4"/></svg>GitHub</a>
@@ -227,9 +227,9 @@ footer a { color: var(--ink-2); }
         <p class="venue">arXiv 预印本 · 2026 年 · 西门子 Garching 研究中心研究型实习（2025 年）</p>
         <p class="desc">协同搬运的 AGV 需要在某辆车打滑或急停时仍保持队形，而车辆之间通过 Wi-Fi 通信，各链路时延不同、随时间变化甚至跳变。级联设计让带时延的邻居数据只驱动一个平移本车参考轨迹的滤波器，跟踪控制律完全不接触网络数据。</p>
         <ul class="pts">
-          <li><b>理论：</b>耦合不会破坏跟踪：在任意有界时延、任意有向可切换拓扑下，误差以指数速度收敛，常数与时延无关；在无向图上，耦合可证明地减小持续本地误差造成的编队不一致。</li>
-          <li><b>高保真仿真：</b>包含刚体动力学、驱动限幅、打滑、激光雷达-里程计融合定位和 Wi-Fi 突发丢包，并与调参后的对照控制器作配对比较；代码公开，每次仿真都可逐位复现。</li>
-          <li><b>结果：</b>级联控制器在所有仿真中都没有失败，急停后的编队误差降低 47&nbsp;%，打滑后降低 21&nbsp;%，代价是跟踪精度有所下降。调参后的直接耦合在打滑后效果更好，但增益较大时会失败；时延达到 2&nbsp;s 及以上时，直接耦合的收益基本消失，级联反而使编队变差。</li>
+          <li><b>理论：</b>耦合不会破坏跟踪：在任意有界时延、任意有向可切换拓扑下，误差以指数速度收敛，常数与时延无关；在无向图上，耦合可证明地减小持续本地误差造成的编队不一致。相比之下，把时延误差直接耦合进跟踪律，只有在增益低于某一阈值时才对任意时延稳定。</li>
+          <li><b>精细仿真：</b>包含刚体动力学、驱动限幅、打滑、激光雷达-里程计融合定位和 Wi-Fi 突发丢包，并与调参后的对照控制器作配对比较，其中包括只提高增益、不交换数据的控制律；代码公开，每次仿真都可逐位复现。</li>
+          <li><b>结果（三车完全图）：</b>级联控制器在所有仿真中都没有失败，急停后的编队误差降低 47&nbsp;%，打滑后降低 21&nbsp;%，代价是跟踪精度有所下降。调参后的直接耦合在打滑后效果更好，其中约一半仅来自更高的增益，但增益较大时会失败；时延达到 2&nbsp;s 及以上时，除非丢弃过时数据，级联会使编队变差。</li>
         </ul>
         <div class="btns"><a href="https://arxiv.org/abs/2611.32409" target="_blank" rel="noopener">arXiv</a><a href="https://github.com/Yunfei-Bi8/Delay-tolerant-agv-formation/tree/release" target="_blank" rel="noopener">代码</a><a href="agv-formation/">项目主页</a></div>
       </div>

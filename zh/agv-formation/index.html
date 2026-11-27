@@ -7,7 +7,7 @@
 <meta name="description" content="面向通信时延的多 AGV 编队跟踪：级联（参考平移）耦合控制律对任意有界时延都不会破坏跟踪。论文、交互式回放、仿真结果与代码。">
 <meta property="og:type" content="website">
 <meta property="og:title" content="通信时延下的多 AGV 编队跟踪控制">
-<meta property="og:description" content="通信时延下多 AGV 编队的参考平移耦合：稳定性保证与高保真仿真研究。">
+<meta property="og:description" content="通信时延下多 AGV 编队的参考平移耦合：稳定性保证与精细 AGV 模型上的仿真研究。">
 <meta property="og:image" content="https://bi-yunfei.github.io/agv-formation/media/og.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -221,6 +221,7 @@ footer a { color: var(--ink-2); }
 .cards.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 @media (max-width: 760px) { .cards.three { grid-template-columns: minmax(0, 1fr); } }
 .gallery.one { grid-template-columns: minmax(0, 1fr); }
+.gallery.narrow { max-width: 700px; }
 details.more { margin-top: 18px; }
 details.more > summary { cursor: pointer; color: var(--ink-2); font-weight: 600; width: fit-content; }
 details.more > summary:hover { color: var(--ink); }
@@ -261,7 +262,7 @@ details.more .eqs { margin-top: 10px; }
   <!-- ===================================================== replay -->
   <section id="replay" aria-labelledby="h-replay" style="padding-top: clamp(28px, 4vw, 44px)">
     <h2 class="sec-title" id="h-replay">同一次仿真，两种控制器</h2>
-    <p class="sec-sub">两个画面回放高保真 AGV 模型上的同一次仿真（车辆、噪声、Wi-Fi 时延和扰动都相同），只有耦合控制律不同，可在每个画面上方切换。</p>
+    <p class="sec-sub">两个画面回放精细 AGV 模型上的同一次仿真（车辆、噪声、Wi-Fi 时延和扰动都相同），只有耦合控制律不同，可在每个画面上方切换。</p>
     <div class="player" id="player">
       <div class="chips" role="group" aria-label="Scenario" id="chips"></div>
       <p class="scen-desc" id="scen-desc" aria-live="polite"></p>
@@ -316,38 +317,44 @@ details.more .eqs { margin-top: 10px; }
     <p class="params">研究中使用的参数：λ = 1 s⁻¹，Λ = 1 s⁻¹（调参所得），γ = 5 s⁻¹，ρ = 0.6，ē = 5 cm，ψ = 0.7，b = 3 m⁻²。</p>
     </details>
 
-    <div class="thm three">
+    <div class="thm">
       <div><p class="tl">引理 1 · 可行性</p><h3>平移后的参考始终可行</h3><p>饱和使平移后的参考始终是一条独轮车轨迹，速度有已知的下界，因此跟踪控制律在无时延情形下的分析可以原样沿用。</p></div>
-      <div><p class="tl">定理 1 和 2 · 收敛性</p><h3>耦合不会破坏跟踪</h3><p>与无耦合时一样，在任意有界时延和有向、可切换的通信拓扑下，误差都以指数速度收敛，常数与时延无关，只有收敛速率依赖时延上界。</p></div>
-      <div class="new"><p class="tl">命题 1 · 收益</p><h3>持续误差由全队分担</h3><p>在无向图上，低于限幅 ē 的持续本地误差所造成的编队不一致量，至多缩小为无耦合时的 λ/(λ + Λλ₂(L)) 倍：某辆车持续掉速时，其余车辆会随之放慢。更大的误差可能被放大，因此 ē 应大于预期的持续误差。</p></div>
+      <div><p class="tl">定理 1 和 2 · 收敛性</p><h3>耦合不会破坏跟踪</h3><p>与无耦合时一样，在任意有界时延和有向、可切换的通信拓扑下，误差都会收敛，并且在有界的初始误差范围内以指数速度收敛。常数与时延无关，只有收敛速率依赖时延上界。</p></div>
+      <div class="new"><p class="tl">命题 1 · 收益</p><h3>持续误差由全队分担</h3><p>在无向图上，低于限幅 ē 的持续本地误差所造成的编队不一致量，无论时延多大，都至多缩小为无耦合时的 λ/(λ + Λλ₂(L)) 倍：某辆车持续掉速时，其余车辆会随之放慢。对随参考轨迹一起转动的误差（例如在弯道上），衰减随时延增大而减弱；更大的误差可能被放大，因此 ē 应大于预期的持续误差。</p></div>
+      <div><p class="tl">命题 2 · 对比</p><h3>直接耦合存在时延上限</h3><p>如果把邻居的时延误差直接送进跟踪控制律，线性化系统只有在耦合增益与节点度之积小于 2ψ(1 + ψ) 时才对任意时延稳定；超过这一阈值，系统会在与车速成反比的时延处失稳。288 次仿真全部与这一边界吻合（图 2），而级联在所有测试的增益和时延下都收敛。</p></div>
+    </div>
+
+    <div class="gallery one narrow">
+      <figure><a class="img" href="../../agv-formation/figures/fig_kin.png" target="_blank" rel="noopener"><img src="../../agv-formation/figures/fig_kin.png" alt="Stability region of the direct coupling over delay and gain with simulated outcomes, and measured against predicted formation attenuation" loading="lazy" width="1500" height="714"></a><figcaption><b>论文图 2。</b> (a) 直线参考、车速 0.6 m/s、三车完全图、常值时延下的直接耦合：线性化不稳定的区域（阴影），以及跟踪误差衰减（圆点）或未衰减（叉号）的仿真。(b) 编队不一致量的实测衰减与预测对比：直线参考上为命题 1 的因子，圆形参考上为其与时延相关的推广。</figcaption></figure>
     </div>
   </section>
 
   <!-- ===================================================== results -->
   <section id="results" aria-labelledby="h-results">
     <h2 class="sec-title" id="h-results">仿真结果</h2>
-    <p class="sec-sub">高保真模型（通用工业差速 AGV）补上了定理没有涵盖的因素：在漂移时钟上以 50 Hz 运行的控制、激光雷达与里程计融合定位（25 Hz、时延 40 ms、噪声与偏差各 10 mm）、轮速与扭矩限幅、打滑，以及时延 30 ± 15 ms 并带尖峰和突发丢包的 Wi-Fi 链路。级联与无耦合、不带饱和的直接耦合（把带时延的误差直接送入跟踪律）以及 σ-leak 滤波器作比较，各耦合增益都在独立的随机种子上调参。</p>
+    <p class="sec-sub">精细模型（通用工业差速 AGV）补上了定理没有涵盖的因素：在漂移时钟上以 50 Hz 运行的控制、激光雷达与里程计融合定位（25 Hz、时延 40 ms、噪声与偏差各 10 mm）、轮速与扭矩限幅、打滑，以及时延 30 ± 15 ms 并带尖峰和突发丢包的 Wi-Fi 链路。在三车完全图上，级联与无耦合、不带饱和的直接耦合（把带时延的误差直接送入跟踪律）、只采用直接耦合的增益而不使用邻居数据的高增益律以及 σ-leak 滤波器作比较，各耦合增益都在独立的随机种子上调参。</p>
     <div class="cards three">
-      <div class="card"><p class="num blue">−21 %</p><p>单车打滑后的编队误差积分（IAE），级联相对无耦合。直接耦合达到 −26 %，跟踪代价也更低（+15 %，级联为 +80 %）。</p></div>
-      <div class="card"><p class="num blue">−47 %</p><p>单车急停 3 s 后的编队误差积分，级联相对无耦合；直接耦合为 −32 %。</p></div>
-      <div class="card"><p class="num blue">0</p><p>级联在 1673 次仿真中的失败次数：时延最长 4 s、丢包率 90 %、12 辆车、8 倍调参增益下都没有失败。直接耦合在增益较大时会失败。</p></div>
+      <div class="card"><p class="num blue">−21 %</p><p>单车打滑后的编队误差积分（IAE），级联相对无耦合。直接耦合达到 −26 %，跟踪代价也更低（+15 %，级联为 +80 %），其中约一半仅来自更高的增益（完全不用邻居数据也有 −13 %）。</p></div>
+      <div class="card"><p class="num blue">−47 %</p><p>单车急停 3 s 后的编队误差积分，级联相对无耦合；直接耦合为 −32 %，单纯提高增益为 0 %。</p></div>
+      <div class="card"><p class="num blue">0</p><p>级联在 1877 次仿真中的失败次数：时延最长 4 s、丢包率 90 %、12 辆车、8 倍调参增益下都没有失败。直接耦合在增益较大时会失败，主要原因是更高的增益使驱动饱和。</p></div>
     </div>
 
     <div class="gallery one">
-      <figure><a class="img" href="../../agv-formation/figures/fig_hifi.png" target="_blank" rel="noopener"><img src="../../agv-formation/figures/fig_hifi.png" alt="Formation error after a traction loss and a safety stop, formation IAE against the mean latency, and the gain selection" loading="lazy" width="2343" height="582"></a><figcaption><b>论文图 3。</b> (a) 2 号车打滑（2 s 内只能实现 40 % 的指令速度）与 (b) 2 号车急停 3 s 时的编队误差，20 个种子的中位数与四分位距。(c) 打滑后的编队误差积分相对无耦合的比值随名义平均时延的变化。(d) 在独立种子上选择增益：每个点对应一个增益，圆圈为选定的增益，叉号为出现失败的增益（数字为 20 次中的失败次数）。</figcaption></figure>
+      <figure><a class="img" href="../../agv-formation/figures/fig_hifi.png" target="_blank" rel="noopener"><img src="../../agv-formation/figures/fig_hifi.png" alt="Formation error after a traction loss and a safety stop, formation IAE against the mean latency, and the gain selection" loading="lazy" width="2343" height="550"></a><figcaption><b>论文图 3。</b> (a) 2 号车打滑（2 s 内只能实现 40 % 的指令速度）与 (b) 2 号车急停 3 s 时的编队误差，20 个种子的中位数与四分位距。(c) 打滑后的编队误差积分相对无耦合的比值随名义平均时延的变化；细线为加入样本年龄门控（丢弃超过 1.5 s 的旧数据）后的结果。(d) 在独立种子上选择增益：每个点对应一个增益，圆圈为选定的增益，叉号为出现失败的增益（数字为 20 次中的失败次数）。</figcaption></figure>
     </div>
 
     <ul class="learn">
-      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16M17 4v16M7 9h10M7 15h10"/></svg><p><b>级联还是直接耦合。</b>时延为几十毫秒时，直接耦合在打滑后效果更好，跟踪代价也更低。级联在急停后更好，在任何增益下都没有失败，在全部参数随机抽样中的坏情况尾部也更小；定位噪声为 4 cm 时，直接耦合的稳态编队误差是无耦合的十倍，级联只高 49 %。</p></li>
-      <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/></svg><p><b>时延。</b>平均时延不超过 0.3 s 时，两种耦合都能把打滑后的编队误差积分降低 18–27 %。时延达到 2 s 及以上时，直接耦合的收益基本消失，级联在每个种子上都比无耦合更差。在所有时延下都没有出现失败，因此与时延无关的理论保证并没有体现为可测的优势。</p></li>
-      <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5.5" cy="12" r="2.3"/><circle cx="18.5" cy="6" r="2.3"/><circle cx="18.5" cy="18" r="2.3"/><path d="M7.6 11 16.4 7M7.6 13l8.8 4"/></svg><p><b>车队规模与通信拓扑。</b>在 8 辆和 12 辆车的完全图上使用单位权重时，直接耦合会失败，级联也失去收益；按节点度归一化权重后两者都恢复正常。在稀疏图上，直接耦合把编队误差积分降低 6–13 %，级联最多降低 8 %，在有向链上反而略有升高（1–5 %）。</p></li>
-      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18 9.5 12l4 3.5L20 7 M15 7h5v5"/></svg><p><b>代价。</b>其他车辆等待受扰车辆时会落后于各自的参考轨迹，跟踪精度因此下降。两种耦合都会把定位噪声在车辆之间传递；正常运行时约 3 cm 的编队精度由定位偏差决定，任何耦合都无法消除。</p></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16M17 4v16M7 9h10M7 15h10"/></svg><p><b>级联还是直接耦合。</b>时延为几十毫秒时，直接耦合在打滑后效果更好，跟踪代价也更低，其收益约一半来自更高的增益；链路时断时续时，级联并不比单纯提高增益更好。级联在急停后更好，在任何增益下都没有失败，在全部参数随机抽样中的坏情况尾部也更小；定位噪声为 4 cm 时，直接耦合的稳态编队误差是无耦合的十倍，级联只高 49 %。</p></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/></svg><p><b>时延。</b>平均时延不超过 0.3 s 时，两种耦合都能把打滑后的编队误差积分降低 18–27 %。时延达到 2 s 及以上时，直接耦合的收益基本消失，级联在每个种子上都比无耦合更差；丢弃超过 1.5 s 的旧数据即可消除这一负面影响，且不改变较短时延下的结果。在所有时延下都没有出现失败：调参后的直接耦合本身满足命题 2 的时延条件，因此级联与时延无关的理论保证并没有体现为可测的优势。</p></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5.5" cy="12" r="2.3"/><circle cx="18.5" cy="6" r="2.3"/><circle cx="18.5" cy="18" r="2.3"/><path d="M7.6 11 16.4 7M7.6 13l8.8 4"/></svg><p><b>车队规模与通信拓扑。</b>以上结果针对三车完全图。在 8 辆和 12 辆车的完全图上使用单位权重时，直接耦合会失败，级联也失去收益；按节点度归一化权重后两者都恢复正常。在稀疏图上，直接耦合把编队误差积分降低 6–13 %，级联最多降低 8 %，在有向链上反而略有升高（1–5 %）。</p></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18 9.5 12l4 3.5L20 7 M15 7h5v5"/></svg><p><b>代价。</b>其他车辆等待受扰车辆时会落后于各自的参考轨迹，跟踪精度因此下降。直接耦合和高增益律使速度指令的变化率翻倍；级联不会，但其航向偏离规划航向的程度是无耦合时的两倍。两种耦合都会把定位噪声在车辆之间传递；正常运行时约 3 cm 的编队精度由定位偏差决定，任何耦合都无法消除。</p></li>
     </ul>
     <div class="limits">
       <h3>局限性</h3>
       <ul>
         <li>仅为仿真：车辆参数是工业差速 AGV 的通用取值，而非某款具体车辆的参数。</li>
-        <li>定理针对参考轨迹持续运动的运动学独轮车模型，不涵盖停止的编队，给出的显式收敛速率也非常保守。</li>
+        <li>定理针对参考轨迹持续运动的运动学独轮车模型，不涵盖停止的编队，理论保证的收敛速率也远低于实测速率。</li>
+        <li>耦合的收益是在三车完全图上得到的；在稀疏图和更大的车队中收益较小。</li>
       </ul>
     </div>
   </section>
@@ -355,7 +362,7 @@ details.more .eqs { margin-top: 10px; }
   <!-- ===================================================== paper, code and citation -->
   <section id="paper" aria-labelledby="h-paper">
     <h2 class="sec-title" id="h-paper">论文、代码与引用</h2>
-    <div class="prose"><p><a href="https://arxiv.org/abs/2611.32409" target="_blank" rel="noopener">论文</a>（6 页）给出控制律、带证明梗概的稳定性分析和仿真研究。<a href="https://github.com/Yunfei-Bi8/Delay-tolerant-agv-formation/tree/arxiv-v2" target="_blank" rel="noopener">代码仓库</a>（标签 <code>arxiv-v2</code>）包含仿真器和全部已保存的结果：<code>paper/make_paper_figures.py</code> 与 <code>paper/make_paper_tables.py</code> 重新生成论文中的图和表，<code>paper/paper_numbers.py</code> 打印仿真部分每个数字及其来源，<code>run_all.py</code> 重新运行整个研究（18 核约 1.5 小时）。每次仿真都可逐位复现。</p></div>
+    <div class="prose"><p><a href="https://arxiv.org/abs/2611.32409" target="_blank" rel="noopener">论文</a>（6 页正文加含全部证明的附录）给出控制律、稳定性分析和仿真研究。<a href="https://github.com/Yunfei-Bi8/Delay-tolerant-agv-formation/tree/release" target="_blank" rel="noopener">代码仓库</a>（<code>release</code> 分支）包含仿真器和全部已保存的结果：<code>paper/make_paper_figures.py</code> 与 <code>paper/make_paper_tables.py</code> 重新生成论文中的图和表，<code>paper/paper_numbers.py</code> 打印论文中每个数字及其来源，<code>run_all.py</code> 重新运行整个研究（18 核约 2 小时）。每次仿真都可逐位复现。</p></div>
     <pre class="bib">@article{bi2026delay,
   title   = {Delay-Tolerant Formation Tracking for Multi-{AGV} Systems via Reference-Shift Coupling},
   author  = {Bi, Yunfei},
